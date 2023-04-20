@@ -1,5 +1,9 @@
 const initialState = {
-  some: {},
+  loginData: {
+    data: {},
+    initialPath: "",
+    isAuthenticated: false,
+  },
 };
 
 export default initialState;
