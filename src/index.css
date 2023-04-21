@@ -7,7 +7,8 @@
 body {
   margin: 0;
   box-sizing: border-box;
-  background-color: #fafaff;
+  background-color: #f7f7fc;
+  background-attachment: fixed;
   font-family: Roboto, Montserrat, "Open Sans", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

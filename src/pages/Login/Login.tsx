@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 
 // Components
 import Button from "../../components/form/Button/Button";
@@ -11,43 +11,60 @@ import logoExample from "../../static/img/logo-example.png";
 
 // helpers
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { ROUTES } from "../../constants/routes";
 import { formConfig } from "./fotmConfig/formConfig";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { createSchemaByConfig } from "../../components/form/DynamicForm/helpers/createSchemaByConfig";
 import { getDefaultValuesByConfig } from "../../components/form/DynamicForm/helpers/getDefaultValuesByConfig";
+
+// Redux
+import { useDispatch } from "react-redux";
+import { updateLoginData } from "../../store/loginData/actions";
 
 interface LoginProps {}
 
 const Login: FC<LoginProps> = () => {
   const [needRememberUser, setNeedRememberUser] = useState(false);
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const {
     register,
     handleSubmit,
-    reset,
-    control,
     setValue,
     formState: { errors },
-    watch,
-    getValues,
   } = useForm({
     resolver: yupResolver(createSchemaByConfig(formConfig)),
     defaultValues: getDefaultValuesByConfig(formConfig),
   });
 
+  useEffect(() => {
+    const loginData = JSON.parse(localStorage.getItem("loginData") || "{}");
+    console.log("loginData", loginData);
+    if (loginData?.isAuthenticated) {
+      dispatch(updateLoginData(loginData));
+      return navigate(ROUTES.PROGRAMMING);
+    }
+  }, []);
+
   const setRememberUser = (isActive: boolean) => {
-    console.log("isActive", isActive);
     setNeedRememberUser(isActive);
   };
 
   const loginUser = (data: any) => {
     setLoading(true);
     try {
+      const loginData = {
+        isAuthenticated: true,
+        data,
+      };
       if (needRememberUser)
-        localStorage.setItem("loginData", JSON.stringify(data));
+        localStorage.setItem("loginData", JSON.stringify(loginData));
       setTimeout(() => {
         console.log(data);
+        dispatch(updateLoginData(loginData));
         setLoading(false);
       }, 2000);
     } catch (error) {
