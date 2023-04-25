@@ -1,12 +1,6 @@
 import { IConfig } from "../../../components/form/DynamicForm/models";
-import { FEEDBACK_MESSAGES } from "../constants/form";
-import { fieldTypeEnum, formConfigType } from "./models";
-
-const shouldNumbersLettersAndOneSpace = /^[a-zA-Z0-9]+( [a-zA-Z0-9]+)?$/;
-const shouldNumbersAndLetters = /^[a-zA-Z0-9]$/;
-const shouldOnlyLetters = /^[a-zA-Z]+$/;
-const shouldOnlyNumbers = /^[0-9]+$/;
-const shouldOnlyEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+import { FEEDBACK_MESSAGES, REGEX_VALIDATION } from "../../../constants/form";
+import { fieldTypeEnum } from "./models";
 
 export const formConfig: IConfig[] = [
   {
@@ -26,7 +20,7 @@ export const formConfig: IConfig[] = [
         {
           type: "matches",
           message: FEEDBACK_MESSAGES.EMAIL,
-          regex: shouldOnlyEmail,
+          regex: REGEX_VALIDATION.SHOULD_ONLY_EMAIL,
         },
       ],
     },
