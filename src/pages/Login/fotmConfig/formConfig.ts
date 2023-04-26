@@ -1,5 +1,5 @@
-import { IConfig } from "../../../components/form/DynamicForm/models";
 import { FEEDBACK_MESSAGES, REGEX_VALIDATION } from "../../../constants/form";
+import { IConfig } from "../../../models";
 import { fieldTypeEnum } from "./models";
 
 export const formConfig: IConfig[] = [

@@ -1,43 +1,50 @@
-import { FC } from "react";
+import { FC, Fragment } from "react";
 
 // Components
+import TextInput from "../TextInput/TextInput";
 
 // Styles
 import { DynamicFormWrapper } from "./styles";
 
 // Model
-import { IConfig } from "./models";
+import { DynamicFormProps } from "./model";
+import { Controller } from "react-hook-form";
 
 // helpers
-import TextInput from "../TextInput/TextInput";
-
-interface DynamicFormProps {
-  formConfig: IConfig[];
-  errors: any;
-  setValue: (nameOfField: string, valueForChange: any) => any;
-  register: (s: string) => any;
-}
 
 const DynamicForm: FC<DynamicFormProps> = ({
-  formConfig,
+  mb,
   errors,
+  control,
   setValue,
-  register,
+  formConfig,
+  numberOfColumns = 1,
 }) => {
   return (
-    <DynamicFormWrapper>
-      {formConfig.map(({ name, label, mb, type, placeholder }, index) => (
-        <TextInput
-          key={`${name}_${index}`}
-          label={label}
-          type={type}
-          placeholder={placeholder}
-          handleChange={(e) => setValue(name, e)}
-          otherProps={register(name)}
-          error={!!errors[name]}
-          errorMessage={errors[name]?.message || ""}
-          mb={mb}
-        />
+    <DynamicFormWrapper numberOfColumns={numberOfColumns}>
+      {formConfig.map(({ name, label, type, placeholder, value }, index) => (
+        <Fragment key={`${name}_${index}`}>
+          <Controller
+            name={name}
+            control={control}
+            render={() => {
+              return (
+                <TextInput
+                  key={`${name}_${index}`}
+                  name={name}
+                  label={label}
+                  type={type}
+                  value={value}
+                  placeholder={placeholder}
+                  handleChange={(e) => setValue(name, e)}
+                  mb={mb}
+                  error={!!errors[name]}
+                  errorMessage={errors[name]?.message || ""}
+                />
+              );
+            }}
+          />
+        </Fragment>
       ))}
     </DynamicFormWrapper>
   );

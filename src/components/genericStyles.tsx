@@ -24,7 +24,19 @@ export const ChildrenContainer = styled.div`
   background-color: ${({ theme }) => theme.coolGray100};
   grid-row: 2 / 3;
   grid-column: auto / span 12;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
   @media ${MIN_WIDTH_QUERIES.TABLET.query} {
     padding-top: 60px;
+    grid-template-columns: repeat(10, 1fr);
   }
+  @media ${MIN_WIDTH_QUERIES.DESKTOP.query} {
+    grid-template-columns: repeat(12, 1fr);
+    gap: 16px;
+  }
+`;
+
+export const Container = styled.div`
+  padding: 24px 36px;
+  grid-column: 1 / -1;
 `;

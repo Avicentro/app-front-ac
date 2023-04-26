@@ -1,8 +1,4 @@
-import { IConfig } from "../models";
-
-type defaultValuesType = {
-  [key: string]: any;
-};
+import { defaultValuesType, IConfig } from "../../../../models";
 
 export const getDefaultValuesByConfig = (formConfig: IConfig[]) => {
   const defaultValues: defaultValuesType = {};

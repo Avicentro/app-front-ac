@@ -1,28 +1,31 @@
-import { FC, ReactNode } from "react";
+import { FC } from "react";
+import { theme } from "../../../static/styles/theme";
+import { ButtonProps } from "./model";
 
 // Components
 
 // Styles
+import { ButtonWrapper } from "./styles";
 
 // helpers
 
-import { ButtonWrapper } from "./styles";
-
-interface ButtonProps {
-  children: ReactNode;
-  type: "button" | "submit";
-  mb?: number;
-  loading?: boolean;
-}
-
 const Button: FC<ButtonProps> = ({
-  children,
-  type = "button",
   mb,
   loading,
+  children,
+  typeButton,
+  extraProps,
+  type = "button",
+  color = theme.white,
 }) => {
   return (
-    <ButtonWrapper type={type} mb={mb}>
+    <ButtonWrapper
+      type={type}
+      mb={mb}
+      typeButton={typeButton}
+      color={color}
+      {...extraProps}
+    >
       {loading ? <>Cargando...</> : <>{children}</>}
     </ButtonWrapper>
   );
