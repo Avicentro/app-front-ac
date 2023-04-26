@@ -9,6 +9,7 @@ import { DynamicFormWrapper } from "./styles";
 // Model
 import { DynamicFormProps } from "./model";
 import { Controller } from "react-hook-form";
+import ComponentSelector from "./components/ComponentSelector/ComponentSelector";
 
 // helpers
 
@@ -22,24 +23,17 @@ const DynamicForm: FC<DynamicFormProps> = ({
 }) => {
   return (
     <DynamicFormWrapper numberOfColumns={numberOfColumns}>
-      {formConfig.map(({ name, label, type, placeholder, value }, index) => (
+      {formConfig.map(({ name, ...props }, index) => (
         <Fragment key={`${name}_${index}`}>
           <Controller
             name={name}
             control={control}
             render={() => {
               return (
-                <TextInput
-                  key={`${name}_${index}`}
-                  name={name}
-                  label={label}
-                  type={type}
-                  value={value}
-                  placeholder={placeholder}
+                <ComponentSelector
                   handleChange={(e) => setValue(name, e)}
-                  mb={mb}
-                  error={!!errors[name]}
-                  errorMessage={errors[name]?.message || ""}
+                  name={name}
+                  {...props}
                 />
               );
             }}

@@ -14,7 +14,7 @@ interface TextInputProps {
   type: typeType;
   name?: string;
   value?: any;
-  placeholder?: string;
+  placeholder: string | number;
   required?: boolean;
   disabled?: boolean;
   readOnly?: boolean;

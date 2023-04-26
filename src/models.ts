@@ -64,7 +64,7 @@ export type formConfigType = {
   mb?: number;
   type: typeType;
   fieldType: fieldTypeEnum;
-  placeholder?: any;
+  placeholder: number | string;
 };
 
 export interface IConfig extends formConfigType {}
