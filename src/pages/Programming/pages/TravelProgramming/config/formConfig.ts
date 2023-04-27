@@ -19,6 +19,40 @@ export const formConfig: IConfig[] = [
     },
   },
   {
+    name: "disponibilidad",
+    label: "Horas de disponibilidad",
+    value: "",
+    type: "text",
+    fieldType: fieldTypeEnum.select,
+    placeholder: "Horas de disponibilidad",
+    validation: {
+      type: "string",
+      settings: [
+        {
+          type: "required",
+        },
+      ],
+    },
+    options: [
+      {
+        label: "Seleccione",
+        value: "",
+      },
+      {
+        label: "8:00 a.m",
+        value: "2023-04-25 8:00:00",
+      },
+      {
+        label: "9:00 a.m",
+        value: "2023-04-25 9:00:00",
+      },
+      {
+        label: "10:00 a.m",
+        value: "2023-04-25 10:00:00",
+      },
+    ],
+  },
+  {
     name: "client",
     label: "Cliente",
     value: "",
@@ -34,6 +68,10 @@ export const formConfig: IConfig[] = [
       ],
     },
     options: [
+      {
+        label: "Seleccione",
+        value: "",
+      },
       {
         label: "Cliente 1",
         value: "Cliente 1",
@@ -65,6 +103,10 @@ export const formConfig: IConfig[] = [
     },
     options: [
       {
+        label: "Seleccione",
+        value: "",
+      },
+      {
         label: "Provedor 1",
         value: "Provedor 1",
       },
@@ -94,6 +136,10 @@ export const formConfig: IConfig[] = [
       ],
     },
     options: [
+      {
+        label: "Seleccione",
+        value: "",
+      },
       {
         label: "Sub-Cliente 1",
         value: "Sub-Cliente 1",
