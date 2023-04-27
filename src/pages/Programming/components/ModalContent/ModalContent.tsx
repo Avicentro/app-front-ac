@@ -32,15 +32,6 @@ const ModalContent: FC<ModalContentProps> = ({ dateSelected }) => {
         >
           Programar viaje
         </Button>
-        <Button
-          extraProps={{
-            onClick: () =>
-              navigate(`${ROUTES.PROGRAMMING}${ROUTES.REST}/${dateSelected}`),
-          }}
-          typeButton={typeButtonEnum.stroke}
-        >
-          Programar descanso
-        </Button>
       </div>
     </ModalContentWrapper>
   );

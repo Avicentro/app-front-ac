@@ -28,12 +28,15 @@ const DynamicForm: FC<DynamicFormProps> = ({
           <Controller
             name={name}
             control={control}
-            render={() => {
+            render={({ field }) => {
               return (
                 <ComponentSelector
                   handleChange={(e) => setValue(name, e)}
-                  name={name}
+                  mb={mb}
+                  error={!!errors[name]}
+                  errorMessage={errors[name]?.message || ""}
                   {...props}
+                  {...field}
                 />
               );
             }}

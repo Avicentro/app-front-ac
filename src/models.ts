@@ -65,6 +65,7 @@ export type formConfigType = {
   type: typeType;
   fieldType: fieldTypeEnum;
   placeholder: number | string;
+  disabled?: boolean;
 };
 
 export interface IConfig extends formConfigType {}
@@ -73,3 +74,29 @@ export interface IConfig extends formConfigType {}
 export type defaultValuesType = {
   [key: string]: any;
 };
+
+// TEXT INPUT
+export interface TextInputProps {
+  type: typeType;
+  name?: string;
+  value?: any;
+  placeholder: string | number;
+  required?: boolean;
+  disabled?: boolean;
+  readOnly?: boolean;
+  maxLength?: number;
+  size?: number;
+  min?: number;
+  max?: number;
+  step?: number;
+  pattern?: string;
+  autoComplete?: string;
+  autoFocus?: boolean;
+  form?: string;
+  handleChange: (s: any) => any;
+  otherProps?: any;
+  label?: string;
+  error?: boolean;
+  errorMessage?: any;
+  mb?: number;
+}

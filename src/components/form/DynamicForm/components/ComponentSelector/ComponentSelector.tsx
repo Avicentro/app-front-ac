@@ -5,6 +5,8 @@ import COMPONENT_TYPES from "../../constants/componentTypes";
 
 interface ComponentSelectorProps extends IConfig {
   handleChange: (e: any) => any;
+  error: boolean;
+  errorMessage: string;
 }
 
 const ComponentSelector: FC<ComponentSelectorProps> = ({ ...props }) => {

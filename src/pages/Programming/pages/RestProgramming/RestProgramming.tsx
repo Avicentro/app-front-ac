@@ -4,7 +4,6 @@ import { useForm } from "react-hook-form";
 import DynamicForm from "../../../../components/form/DynamicForm/DynamicForm";
 import { createSchemaByConfig } from "../../../../components/form/DynamicForm/helpers/createSchemaByConfig";
 import { getDefaultValuesByConfig } from "../../../../components/form/DynamicForm/helpers/getDefaultValuesByConfig";
-import { Container } from "../../../../components/genericStyles";
 import { formConfig } from "./config/formConfig";
 
 // Components
