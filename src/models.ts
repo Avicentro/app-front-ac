@@ -55,7 +55,13 @@ type validationType = {
 export enum fieldTypeEnum {
   text = "text",
   date = "date",
+  select = "select",
 }
+
+export type optionsType = {
+  label: string;
+  value: string;
+};
 
 export type formConfigType = {
   name: string;
@@ -67,6 +73,7 @@ export type formConfigType = {
   fieldType: fieldTypeEnum;
   placeholder: number | string;
   disabled?: boolean;
+  options?: optionsType[];
 };
 
 export interface IConfig extends formConfigType {}

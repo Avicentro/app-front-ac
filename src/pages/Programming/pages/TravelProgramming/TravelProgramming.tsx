@@ -12,6 +12,8 @@ import { getDefaultValuesByConfig } from "../../../../components/form/DynamicFor
 import { useForm } from "react-hook-form";
 import { mergeDate } from "./helpers/mergeDate";
 import { useParams } from "react-router-dom";
+import Button from "../../../../components/form/Button/Button";
+import { typeButtonEnum } from "../../../../models";
 
 // helpers
 
@@ -31,14 +33,27 @@ const TravelProgramming: FC<TravelProgrammingProps> = () => {
     ),
   });
 
+  const saveProgramming = async (data: any) => {
+    try {
+    } catch (error) {
+    } finally {
+    }
+  };
+
   return (
     <TravelProgrammingWrapper>
-      <DynamicForm
-        formConfig={formConfig}
-        errors={errors}
-        setValue={setValue}
-        control={control}
-      />
+      <form onSubmit={handleSubmit(saveProgramming)}>
+        <DynamicForm
+          formConfig={formConfig}
+          errors={errors}
+          setValue={setValue}
+          control={control}
+        />
+        <div className="buttons-container">
+          <Button typeButton={typeButtonEnum.stroke}>Cancelar</Button>
+          <Button typeButton={typeButtonEnum.fill}>Guardar</Button>
+        </div>
+      </form>
     </TravelProgrammingWrapper>
   );
 };

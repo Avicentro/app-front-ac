@@ -6,11 +6,30 @@ import { FC } from "react";
 import { DropdownWrapper } from "./styles";
 
 // helpers
+import { optionsType, TextInputProps } from "../../../models";
 
-interface DropdownProps {}
+interface DropdownProps extends TextInputProps {
+  options?: optionsType[];
+}
 
-const Dropdown: FC<DropdownProps> = () => {
-  return <DropdownWrapper></DropdownWrapper>;
+const Dropdown: FC<DropdownProps> = ({
+  label,
+  options,
+  name,
+  handleChange,
+}) => {
+  return (
+    <DropdownWrapper>
+      <label htmlFor={name}>{label}</label>
+      <select name={name} id={name} className="select">
+        {options?.map(({ label: innerLabel, value }) => (
+          <option value={value} onClick={() => handleChange(value)}>
+            {innerLabel}
+          </option>
+        ))}
+      </select>
+    </DropdownWrapper>
+  );
 };
 
 export default Dropdown;
