@@ -39,17 +39,30 @@ export const formConfig: IConfig[] = [
         value: "",
       },
       {
-        label: "8:00 a.m",
+        label: "7:00 p.m",
         value: "2023-04-25 8:00:00",
       },
       {
-        label: "9:00 a.m",
+        label: "7:30 p.m",
         value: "2023-04-25 9:00:00",
       },
       {
-        label: "10:00 a.m",
+        label: "8:00 p.m",
         value: "2023-04-25 10:00:00",
       },
+      {
+        label: "8:30 p.m",
+        value: "2023-04-25 8:00:00",
+      },
+      {
+        label: "9:00 p.m",
+        value: "2023-04-25 9:00:00",
+      },
+      {
+        label: "9:30 p.m",
+        value: "2023-04-25 8:00:00",
+      },
+
     ],
   },
   {
