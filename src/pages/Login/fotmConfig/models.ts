@@ -49,6 +49,7 @@ type validationType = {
 
 export enum fieldTypeEnum {
   text = "text",
+  date = "date",
 }
 
 export type formConfigType = {

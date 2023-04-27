@@ -1,5 +1,4 @@
-import { IConfig } from "../../../../../models";
-import { fieldTypeEnum } from "../../../../Login/fotmConfig/models";
+import { fieldTypeEnum, IConfig } from "../../../../../models";
 
 export const formConfig: IConfig[] = [
   {
@@ -9,6 +8,7 @@ export const formConfig: IConfig[] = [
     type: "text",
     fieldType: fieldTypeEnum.text,
     placeholder: "Fecha de descanso",
+    disabled: true,
     validation: {
       type: "date",
       settings: [
