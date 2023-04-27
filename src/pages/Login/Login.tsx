@@ -21,14 +21,28 @@ import { getDefaultValuesByConfig } from "../../components/form/DynamicForm/help
 // Redux
 import { useDispatch } from "react-redux";
 import { updateLoginData } from "../../store/loginData/actions";
+import ApiService from "../../core/api.services";
+import { useMutation } from "@tanstack/react-query";
+import { useLoginMutation } from "../../hook/useLogin";
+
+
 
 interface LoginProps {}
 
 const Login: FC<LoginProps> = () => {
+
+  const loginMutation = useLoginMutation();
+
+  const handleLogin = async (data: any) => {
+    await loginMutation.mutateAsync(data);
+  };
+
   const [needRememberUser, setNeedRememberUser] = useState(false);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  
+
 
   const {
     control,
@@ -53,6 +67,7 @@ const Login: FC<LoginProps> = () => {
   };
 
   const loginUser = (data: any) => {
+    handleLogin(data);
     setLoading(true);
     try {
       const loginData = {

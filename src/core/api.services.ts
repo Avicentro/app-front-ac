@@ -10,14 +10,14 @@ const API_CLIENT = axios.create({
 
 // auth API
 
-const login = async () => {
-    const { data } = await API_CLIENT.post("/auth/login");
+const AuthLogin = async (payload: any) => {
+    const { data } = await API_CLIENT.post("/auth/login", payload);
     return data;
 }
 
 
 const ApiService = {
-    login,
+    AuthLogin,
   }
   
   export default ApiService;
