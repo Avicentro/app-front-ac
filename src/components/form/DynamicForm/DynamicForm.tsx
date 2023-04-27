@@ -1,43 +1,47 @@
-import { FC } from "react";
+import { FC, Fragment } from "react";
 
 // Components
+import TextInput from "../TextInput/TextInput";
 
 // Styles
 import { DynamicFormWrapper } from "./styles";
 
 // Model
-import { IConfig } from "./models";
+import { DynamicFormProps } from "./model";
+import { Controller } from "react-hook-form";
+import ComponentSelector from "./components/ComponentSelector/ComponentSelector";
 
 // helpers
-import TextInput from "../TextInput/TextInput";
-
-interface DynamicFormProps {
-  formConfig: IConfig[];
-  errors: any;
-  setValue: (nameOfField: string, valueForChange: any) => any;
-  register: (s: string) => any;
-}
 
 const DynamicForm: FC<DynamicFormProps> = ({
-  formConfig,
+  mb,
   errors,
+  control,
   setValue,
-  register,
+  formConfig,
+  numberOfColumns = 1,
 }) => {
   return (
-    <DynamicFormWrapper>
-      {formConfig.map(({ name, label, mb, type, placeholder }, index) => (
-        <TextInput
-          key={`${name}_${index}`}
-          label={label}
-          type={type}
-          placeholder={placeholder}
-          handleChange={(e) => setValue(name, e)}
-          otherProps={register(name)}
-          error={!!errors[name]}
-          errorMessage={errors[name]?.message || ""}
-          mb={mb}
-        />
+    <DynamicFormWrapper numberOfColumns={numberOfColumns}>
+      {formConfig.map(({ name, ...props }, index) => (
+        <Fragment key={`${name}_${index}`}>
+          <Controller
+            name={name}
+            control={control}
+            render={({ field }) => {
+              return (
+                <ComponentSelector
+                  handleChange={(e) => setValue(name, e)}
+                  mb={mb}
+                  error={!!errors[name]}
+                  errorMessage={errors[name]?.message || ""}
+                  {...props}
+                  {...field}
+                />
+              );
+            }}
+          />
+        </Fragment>
       ))}
     </DynamicFormWrapper>
   );

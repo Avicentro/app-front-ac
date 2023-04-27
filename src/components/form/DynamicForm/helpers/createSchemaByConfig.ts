@@ -1,5 +1,5 @@
 import * as Yup from "yup";
-import { IConfig } from "../models";
+import { IConfig } from "../../../../models";
 
 export const createSchemaByConfig: any = (config: IConfig[]) => {
   const yupObjectShape: any = {};

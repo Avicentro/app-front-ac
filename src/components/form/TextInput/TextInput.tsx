@@ -8,32 +8,7 @@ import { TextInputWrapper } from "./styles";
 // helpers
 
 // Model
-import { typeType } from "../../../models";
-
-interface TextInputProps {
-  type: typeType;
-  name?: string;
-  value?: any;
-  placeholder?: string;
-  required?: boolean;
-  disabled?: boolean;
-  readOnly?: boolean;
-  maxLength?: number;
-  size?: number;
-  min?: number;
-  max?: number;
-  step?: number;
-  pattern?: string;
-  autoComplete?: string;
-  autoFocus?: boolean;
-  form?: string;
-  handleChange: (s: any) => any;
-  otherProps?: any;
-  label?: string;
-  error?: boolean;
-  errorMessage?: any;
-  mb?: number;
-}
+import { TextInputProps, typeType } from "../../../models";
 
 const TextInput: FC<TextInputProps> = ({
   type = "text",

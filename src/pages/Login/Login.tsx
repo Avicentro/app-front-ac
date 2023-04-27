@@ -21,17 +21,29 @@ import { getDefaultValuesByConfig } from "../../components/form/DynamicForm/help
 // Redux
 import { useDispatch } from "react-redux";
 import { updateLoginData } from "../../store/loginData/actions";
+import { useLoginMutation } from "../../hook/useLogin";
+
+
 
 interface LoginProps {}
 
 const Login: FC<LoginProps> = () => {
+
+  const loginMutation = useLoginMutation();
+
+  const handleLogin = async (data: any) => {
+    await loginMutation.mutateAsync(data);
+  };
+
   const [needRememberUser, setNeedRememberUser] = useState(false);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  
+
 
   const {
-    register,
+    control,
     handleSubmit,
     setValue,
     formState: { errors },
@@ -42,18 +54,18 @@ const Login: FC<LoginProps> = () => {
 
   useEffect(() => {
     const loginData = JSON.parse(localStorage.getItem("loginData") || "{}");
-    console.log("loginData", loginData);
     if (loginData?.isAuthenticated) {
       dispatch(updateLoginData(loginData));
       return navigate(ROUTES.PROGRAMMING);
     }
-  }, []);
+  }, [navigate, dispatch]);
 
   const setRememberUser = (isActive: boolean) => {
     setNeedRememberUser(isActive);
   };
 
   const loginUser = (data: any) => {
+    handleLogin(data);
     setLoading(true);
     try {
       const loginData = {
@@ -63,8 +75,8 @@ const Login: FC<LoginProps> = () => {
       if (needRememberUser)
         localStorage.setItem("loginData", JSON.stringify(loginData));
       setTimeout(() => {
-        console.log(data);
         dispatch(updateLoginData(loginData));
+        navigate(ROUTES.PROGRAMMING);
         setLoading(false);
       }, 2000);
     } catch (error) {
@@ -88,7 +100,7 @@ const Login: FC<LoginProps> = () => {
             formConfig={formConfig}
             errors={errors}
             setValue={setValue}
-            register={register}
+            control={control}
           />
           <div className="remember-user">
             <p>Recordar usuario</p>

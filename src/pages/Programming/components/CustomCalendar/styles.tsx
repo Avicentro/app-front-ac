@@ -18,6 +18,12 @@ export const CustomCalendarWrapper = styled.div`
     font: 600 14px Poppins SemiBold;
     color: ${({ theme }) => theme.coolGray500};
   }
+  .fc-day {
+    cursor: pointer;
+    :hover {
+      background-color: ${({ theme }) => theme.red200};
+    }
+  }
   .fc-daygrid-day-number {
     font: 600 14px Poppins SemiBold;
     color: ${({ theme }) => theme.coolGray500};
