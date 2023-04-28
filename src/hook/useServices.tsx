@@ -5,4 +5,4 @@ const useService = ( label: string, fnAction: QueryFunction ) => {
     return serviceQuery;
 }
 
-export {  useService };
+export { useService };

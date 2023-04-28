@@ -21,15 +21,30 @@ import { getDefaultValuesByConfig } from "../../components/form/DynamicForm/help
 // Redux
 import { useDispatch } from "react-redux";
 import { updateLoginData } from "../../store/loginData/actions";
+<<<<<<< HEAD
 import { sizeButtonEnum } from "../../models";
+=======
+import { useLoginMutation } from "../../hook/useLogin";
+
+
+>>>>>>> fe1b20b497b973ceb510cfbbd133b2485f5f36bf
 
 interface LoginProps {}
 
 const Login: FC<LoginProps> = () => {
+
+  const loginMutation = useLoginMutation();
+
+  const handleLogin = async (data: any) => {
+    await loginMutation.mutateAsync(data);
+  };
+
   const [needRememberUser, setNeedRememberUser] = useState(false);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  
+
 
   const {
     control,
@@ -54,6 +69,7 @@ const Login: FC<LoginProps> = () => {
   };
 
   const loginUser = (data: any) => {
+    handleLogin(data);
     setLoading(true);
     try {
       const loginData = {

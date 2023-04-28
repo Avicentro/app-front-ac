@@ -4,8 +4,8 @@ import { fieldTypeEnum } from "./models";
 
 export const formConfig: IConfig[] = [
   {
-    name: "email",
-    label: "Email",
+    name: "user",
+    label: "Usuario",
     value: "",
     type: "text",
     mb: 22,
