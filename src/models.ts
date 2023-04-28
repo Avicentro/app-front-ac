@@ -108,3 +108,11 @@ export interface TextInputProps {
   errorMessage?: any;
   mb?: number;
 }
+
+// BUTTON:
+export enum sizeButtonEnum {
+  small = 32,
+  medium = 40,
+  big = 48,
+  extraBig = 72,
+}

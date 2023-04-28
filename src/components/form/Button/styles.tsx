@@ -57,7 +57,7 @@ export const ButtonWrapper = styled.button<ButtonWrapperProps>`
   all: unset;
   box-sizing: border-box;
   width: 100%;
-  padding: 20px 0;
+  height: ${({ sizeButton }) => `${sizeButton}px`};
   text-align: center;
   color: ${({ theme, color, typeButton }) =>
     getColorByTypeButton({
@@ -79,7 +79,6 @@ export const ButtonWrapper = styled.button<ButtonWrapperProps>`
         theme,
         typeButton,
       })};
-  min-height: 72px;
   margin-bottom: ${({ mb }) => (mb ? `${mb}px` : 0)};
   cursor: pointer;
 `;

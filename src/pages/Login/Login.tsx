@@ -21,6 +21,7 @@ import { getDefaultValuesByConfig } from "../../components/form/DynamicForm/help
 // Redux
 import { useDispatch } from "react-redux";
 import { updateLoginData } from "../../store/loginData/actions";
+import { sizeButtonEnum } from "../../models";
 
 interface LoginProps {}
 
@@ -96,7 +97,12 @@ const Login: FC<LoginProps> = () => {
               handleChange={(rememberUser) => setRememberUser(rememberUser)}
             />
           </div>
-          <Button type="submit" mb={28} loading={loading}>
+          <Button
+            type="submit"
+            mb={28}
+            sizeButton={sizeButtonEnum.extraBig}
+            loading={loading}
+          >
             Iniciar sesión {"->"}
           </Button>
           <p className="question">¿Aún no tienes cuenta?</p>
