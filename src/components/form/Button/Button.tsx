@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { sizeButtonEnum } from "../../../models";
+import { sizeButtonEnum, typeButtonEnum } from "../../../models";
 import { theme } from "../../../static/styles/theme";
 import { ButtonProps } from "./model";
 
@@ -14,7 +14,7 @@ const Button: FC<ButtonProps> = ({
   mb,
   loading,
   children,
-  typeButton,
+  typeButton = typeButtonEnum.fill,
   extraProps,
   type = "button",
   color = theme.white,

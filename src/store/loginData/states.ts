@@ -1,16 +1,8 @@
 import { ILoginData } from "./models";
 
 const initLogin = {
-  data: {
-    role: "",
-    name: "",
-    email: "",
-    permissions: "",
-    imageProfile: "",
-    accessToken: "",
-  },
-  initialPath: "",
-  isAuthenticated: false,
+  user: "",
+  access_token: "",
 };
 
 const loginData: ILoginData = initLogin;

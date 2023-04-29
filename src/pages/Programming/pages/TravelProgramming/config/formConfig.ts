@@ -2,7 +2,7 @@ import { fieldTypeEnum, IConfig } from "../../../../../models";
 
 export const formConfig: IConfig[] = [
   {
-    name: "dateRest",
+    name: "date",
     label: "Fecha",
     value: "",
     type: "text",
@@ -19,7 +19,7 @@ export const formConfig: IConfig[] = [
     },
   },
   {
-    name: "disponibilidad",
+    name: "availability",
     label: "Horas de disponibilidad",
     value: "",
     type: "text",
@@ -62,11 +62,10 @@ export const formConfig: IConfig[] = [
         label: "9:30 p.m",
         value: "2023-04-25 8:00:00",
       },
-
     ],
   },
   {
-    name: "client",
+    name: "idCustomer",
     label: "Cliente",
     value: "",
     type: "text",
@@ -100,7 +99,7 @@ export const formConfig: IConfig[] = [
     ],
   },
   {
-    name: "provider",
+    name: "idSupplier",
     label: "Provedor",
     value: "",
     type: "text",
@@ -134,7 +133,7 @@ export const formConfig: IConfig[] = [
     ],
   },
   {
-    name: "subClient",
+    name: "idSubCustomer",
     label: "Sub-cliente",
     value: "",
     type: "text",
@@ -166,5 +165,21 @@ export const formConfig: IConfig[] = [
         value: "Sub-Cliente 3",
       },
     ],
+  },
+  {
+    name: "count",
+    label: "Cantidad de pollos",
+    value: "",
+    type: "number",
+    fieldType: fieldTypeEnum.text,
+    placeholder: "Cantidad de pollos",
+    validation: {
+      type: "number",
+      settings: [
+        {
+          type: "required",
+        },
+      ],
+    },
   },
 ];

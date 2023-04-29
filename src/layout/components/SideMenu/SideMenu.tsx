@@ -1,8 +1,10 @@
 import { FC } from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
 // Constants
 import { ICON_BY_ICON_NAME } from "../../../constants/dynamic";
+import { cleanLogin } from "../../../store/loginData/actions";
 import { configMenu } from "./config";
 
 // Config
@@ -13,6 +15,12 @@ import { SideMenuWrapper } from "./styles";
 interface SideMenuProps {}
 
 const SideMenu: FC<SideMenuProps> = () => {
+  const dispatch = useDispatch();
+
+  const logout = () => {
+    dispatch(cleanLogin());
+  };
+
   return (
     <SideMenuWrapper>
       <ul>
@@ -29,7 +37,9 @@ const SideMenu: FC<SideMenuProps> = () => {
       </ul>
       <span className="logout">
         <span className="icon">{ICON_BY_ICON_NAME["out"]}</span>
-        <span className="label">Cerrar sesión</span>
+        <span className="label" onClick={() => logout()}>
+          Cerrar sesión
+        </span>
       </span>
     </SideMenuWrapper>
   );

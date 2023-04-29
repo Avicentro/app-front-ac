@@ -21,44 +21,33 @@ import { getDefaultValuesByConfig } from "../../components/form/DynamicForm/help
 // Redux
 import { useDispatch } from "react-redux";
 import { updateLoginData } from "../../store/loginData/actions";
-<<<<<<< HEAD
 import { sizeButtonEnum } from "../../models";
-=======
 import { useLoginMutation } from "../../hook/useLogin";
-
-
->>>>>>> fe1b20b497b973ceb510cfbbd133b2485f5f36bf
+import { loginDataType } from "./models";
 
 interface LoginProps {}
 
 const Login: FC<LoginProps> = () => {
-
-  const loginMutation = useLoginMutation();
-
-  const handleLogin = async (data: any) => {
-    await loginMutation.mutateAsync(data);
-  };
-
-  const [needRememberUser, setNeedRememberUser] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [needRememberUser, setNeedRememberUser] = useState(false);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  
-
+  const loginMutation = useLoginMutation();
 
   const {
     control,
-    handleSubmit,
     setValue,
+    handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(createSchemaByConfig(formConfig)),
     defaultValues: getDefaultValuesByConfig(formConfig),
+    resolver: yupResolver(createSchemaByConfig(formConfig)),
   });
 
   useEffect(() => {
     const loginData = JSON.parse(localStorage.getItem("loginData") || "{}");
-    if (loginData?.isAuthenticated) {
+    if (loginData?.access_token) {
       dispatch(updateLoginData(loginData));
       return navigate(ROUTES.PROGRAMMING);
     }
@@ -68,27 +57,29 @@ const Login: FC<LoginProps> = () => {
     setNeedRememberUser(isActive);
   };
 
-  const loginUser = (data: any) => {
-    handleLogin(data);
+  const saveUserInLocalStorage = (loginData: loginDataType) => {
+    if (needRememberUser) {
+      localStorage.setItem("loginData", JSON.stringify(loginData));
+    }
+    localStorage.setItem("access_token", loginData.access_token);
+  };
+
+  const saveUserInRedux = (loginData: loginDataType) => {
+    dispatch(updateLoginData(loginData));
+  };
+
+  const loginUser = async (data: any) => {
     setLoading(true);
     try {
-      const loginData = {
-        isAuthenticated: true,
-        data,
-      };
-      if (needRememberUser)
-        localStorage.setItem("loginData", JSON.stringify(loginData));
-      setTimeout(() => {
-        dispatch(updateLoginData(loginData));
-        navigate(ROUTES.PROGRAMMING);
-        setLoading(false);
-      }, 2000);
+      const loginData = await loginMutation.mutateAsync(data);
+      saveUserInLocalStorage(loginData);
+      saveUserInRedux(loginData);
+      navigate(ROUTES.PROGRAMMING);
     } catch (error) {
       console.error(error);
+    } finally {
+      setLoading(false);
     }
-    // finally {
-    //   setLoading(false);
-    // }
   };
 
   return (

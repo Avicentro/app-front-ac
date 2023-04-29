@@ -6,7 +6,7 @@ import { FC, ReactElement, useEffect } from "react";
 
 // helpers
 import { useSelector } from "react-redux";
-import { getIsAuthenticated } from "../../../store/loginData/selectors";
+import { getAccessToken } from "../../../store/loginData/selectors";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../../constants/routes";
 
@@ -15,12 +15,12 @@ interface AuthSheetProps {
 }
 
 const AuthSheet: FC<AuthSheetProps> = ({ children }) => {
-  const isAuthenticated = useSelector(getIsAuthenticated);
+  const hasToken = useSelector(getAccessToken);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!isAuthenticated) return navigate(ROUTES.LOGIN);
-  }, [isAuthenticated, navigate]);
+    if (!hasToken) return navigate(ROUTES.LOGIN);
+  }, [hasToken, navigate]);
 
   return children;
 };

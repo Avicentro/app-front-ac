@@ -1,5 +1,6 @@
 import { lazy } from "react";
 import { COMPOSED_ROUTES, ROUTES } from "../../constants/routes";
+import SummarySchedule from "../../pages/Programming/pages/SummarySchedule/SummarySchedule";
 import { IRoutes } from "../models";
 
 const Login = lazy(() => import("../../pages/Login/Login"));
@@ -24,6 +25,10 @@ export const generalRoutes: IRoutes[] = [
   {
     path: `${COMPOSED_ROUTES.TRAVEL}/:dateSelected`,
     component: TravelProgramming,
+  },
+  {
+    path: `${COMPOSED_ROUTES.SUMMARY_PROGRAMMING}`,
+    component: SummarySchedule,
   },
   {
     path: `${COMPOSED_ROUTES.REST}/:dateSelected`,

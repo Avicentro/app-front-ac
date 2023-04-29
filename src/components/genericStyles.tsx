@@ -37,6 +37,6 @@ export const ChildrenContainer = styled.div`
 `;
 
 export const Container = styled.div`
-  padding: 24px 36px;
+  padding: 24px 36px 36px;
   grid-column: 1 / -1;
 `;

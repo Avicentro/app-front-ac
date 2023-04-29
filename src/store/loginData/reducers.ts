@@ -11,12 +11,13 @@ const handleOnUpdateUser = (state: object, payload: any) => {
 
 const handleOnRefreshToken = (state: { data: any }, payload: any) => {
   const oldData = state.data;
-  const data = { ...oldData, accessToken: payload };
+  const data = { ...oldData, access_token: payload };
   return { ...state, data };
 };
 
-const handleOnCleanLogin = (payload: any) => {
-  localStorage.setItem("loginData", "");
+const handleOnCleanLogin = () => {
+  localStorage.removeItem("loginData");
+  localStorage.removeItem("access_token");
   return { ...initLogin };
 };
 
