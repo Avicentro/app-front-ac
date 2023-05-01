@@ -106,9 +106,9 @@ const SummarySchedule: FC<SummaryScheduleProps> = ({ data }) => {
           <img src={data ? data?.qr : scheduling?.data?.qr} alt="QR Code" />
         </div>
       </section>
-      <section className="buttons-container">
+      {/* <section className="buttons-container">
         <Button typeButton={typeButtonEnum.fill}>Imprimir</Button>
-      </section>
+      </section> */}
     </SummaryScheduleWrapper>
   );
 };
