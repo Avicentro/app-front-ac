@@ -4,13 +4,14 @@ import { MIN_WIDTH_QUERIES } from "../constants/constants";
 export const LayoutWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: 96px 1fr;
   ${MIN_WIDTH_QUERIES.TABLET.query} {
     grid-template-columns: repeat(8, 1fr);
-    grid-template-rows: 96px calc(100vh - 80px);
+    grid-template-rows: 96px 1fr;
   }
   @media ${MIN_WIDTH_QUERIES.DESKTOP.query} {
     grid-template-columns: repeat(12, 1fr);
-    grid-template-rows: 96px calc(100vh - 80px);
+    grid-template-rows: 96px 1fr;
   }
 
   // Custom styles

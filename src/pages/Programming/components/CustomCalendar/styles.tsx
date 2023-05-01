@@ -3,10 +3,6 @@ import styled from "styled-components";
 export const CustomCalendarWrapper = styled.div`
   width: 920px;
   height: 736px;
-  .fc-event {
-    background-color: #17a2b8;
-    color: ${({ theme }) => theme.coolGray400};
-  }
   .fc-toolbar-title {
     font: 600 32px Poppins SemiBold;
   }
@@ -27,5 +23,11 @@ export const CustomCalendarWrapper = styled.div`
   .fc-daygrid-day-number {
     font: 600 14px Poppins SemiBold;
     color: ${({ theme }) => theme.coolGray500};
+  }
+  .fc-button-group {
+    .fc-button {
+      background-color: ${({ theme }) => theme.primary};
+      border: 1px solid ${({ theme }) => theme.primary};
+    }
   }
 `;

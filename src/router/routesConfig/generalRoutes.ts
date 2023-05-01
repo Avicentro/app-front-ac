@@ -27,7 +27,7 @@ export const generalRoutes: IRoutes[] = [
     component: TravelProgramming,
   },
   {
-    path: `${COMPOSED_ROUTES.SUMMARY_PROGRAMMING}`,
+    path: `${COMPOSED_ROUTES.SUMMARY_PROGRAMMING}/:orderId`,
     component: SummarySchedule,
   },
   {

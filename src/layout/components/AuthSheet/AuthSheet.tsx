@@ -15,7 +15,7 @@ interface AuthSheetProps {
 }
 
 const AuthSheet: FC<AuthSheetProps> = ({ children }) => {
-  const hasToken = useSelector(getAccessToken);
+  const hasToken = !!localStorage.getItem("loginData");
   const navigate = useNavigate();
 
   useEffect(() => {

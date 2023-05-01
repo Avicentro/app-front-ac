@@ -22,11 +22,14 @@ const Dropdown: FC<DropdownProps> = ({
   return (
     <DropdownWrapper>
       <label htmlFor={name}>{label}</label>
-      <select name={name} id={name} className="select">
+      <select
+        name={name}
+        id={name}
+        className="select"
+        onChange={(e) => handleChange(e.target.value)}
+      >
         {options?.map(({ label: innerLabel, value: innerValue }) => (
-          <option value={innerValue} onClick={() => handleChange(innerValue)}>
-            {innerLabel}
-          </option>
+          <option value={innerValue}>{innerLabel}</option>
         ))}
       </select>
     </DropdownWrapper>

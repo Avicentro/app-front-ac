@@ -4,10 +4,30 @@ import { MIN_WIDTH_QUERIES } from "../../constants/constants";
 export const LoginWrapper = styled.div`
   display: grid;
   height: 100vh;
+  padding: 32px;
+  overflow: auto;
+  .brand-container {
+    display: none;
+  }
+  .form-container {
+    form {
+      .title {
+        font: 600 32px Poppins SemiBold;
+        text-align: center;
+      }
+      .create-account {
+        all: unset;
+        font: 600 18px Poppins SemiBold;
+        color: ${({ theme }) => theme.primary};
+        cursor: pointer;
+      }
+    }
+  }
   @media ${MIN_WIDTH_QUERIES.TABLET.query} {
     grid-template-columns: repeat(2, 1fr);
     grid-column-gap: 24px;
     grid-row-gap: 24px;
+    padding: 0;
   }
   @media ${MIN_WIDTH_QUERIES.DESKTOP.query} {
     grid-template-columns: repeat(12, 1fr);
@@ -52,12 +72,6 @@ export const LoginWrapper = styled.div`
           margin: 0 0 4px 0;
           font: 400 18px Poppins Regular;
           color: ${({ theme }) => theme.coolGray600};
-        }
-        .create-account {
-          all: unset;
-          font: 600 18px Poppins SemiBold;
-          color: ${({ theme }) => theme.primary};
-          cursor: pointer;
         }
       }
     }

@@ -31,7 +31,10 @@ const DynamicForm: FC<DynamicFormProps> = ({
             render={({ field }) => {
               return (
                 <ComponentSelector
-                  handleChange={(e) => setValue(name, e)}
+                  handleChange={(e) => {
+                    console.log("ejecuta el gandle?", e);
+                    setValue(name, e);
+                  }}
                   mb={mb}
                   error={!!errors[name]}
                   errorMessage={errors[name]?.message || ""}

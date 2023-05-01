@@ -1,32 +1,46 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 
 // Styles
 import { HeaderWrapper } from "./styles";
+// Components
+import { faBars } from "@fortawesome/free-solid-svg-icons";
+import Letter from "../../../components/display/Letter/Letter";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import SearchBar from "./components/SearchBar/SearchBar";
+// Storage
 import logoContrast from "../../../static/img/logo-contrast.png";
-import avatar01 from "../../../static/img/avatar-01.png";
-import bell from "../../../static/vectors/bell-icon.svg";
+
+// Helpers
+import { getUserEmail } from "../../../helpers/getData/getUserEmail";
+import LateralModal from "../../../components/display/LateralModal/LateralModal";
+import SideMenu from "../SideMenu/SideMenu";
 
 interface HeaderProps {}
 
 const Header: FC<HeaderProps> = () => {
+  const userName = getUserEmail();
+  const [isOpenModal, setIsOpenModal] = useState(false);
   return (
     <HeaderWrapper>
       <div className="brandContainer">
         <img src={logoContrast} alt="logo" />
       </div>
-      <div className="searchBar">
-        <SearchBar></SearchBar>
-      </div>
       <div className="actions-container">
-        <span className="bell-icon">
-          <img src={bell} alt="alert-to-user" width={24} height={24} />
-        </span>
-        <span className="user-image">
-          <img src={avatar01} alt="user-avatar" />
+        <span className="user-letter">
+          <Letter label={userName} />
         </span>
       </div>
+      <div className="hamburgerMenu">
+        <span onClick={() => setIsOpenModal(true)}>
+          <FontAwesomeIcon icon={faBars} />
+        </span>
+      </div>
+      <LateralModal
+        isOpen={isOpenModal}
+        handleClose={() => setIsOpenModal(false)}
+      >
+        <SideMenu handleClickLink={() => setIsOpenModal(false)} />
+      </LateralModal>
     </HeaderWrapper>
   );
 };

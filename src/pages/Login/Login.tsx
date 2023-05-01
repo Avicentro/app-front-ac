@@ -29,7 +29,7 @@ interface LoginProps {}
 
 const Login: FC<LoginProps> = () => {
   const [loading, setLoading] = useState(false);
-  const [needRememberUser, setNeedRememberUser] = useState(false);
+  const [needRememberUser, setNeedRememberUser] = useState(true);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -57,9 +57,21 @@ const Login: FC<LoginProps> = () => {
     setNeedRememberUser(isActive);
   };
 
+  const decodedToken = (token: string) => {
+    const [, payloadEncoded] = token.split(".");
+    const payloadDecoded = JSON.parse(atob(payloadEncoded));
+    return payloadDecoded;
+  };
+
   const saveUserInLocalStorage = (loginData: loginDataType) => {
     if (needRememberUser) {
-      localStorage.setItem("loginData", JSON.stringify(loginData));
+      localStorage.setItem(
+        "loginData",
+        JSON.stringify({
+          ...loginData,
+          ...decodedToken(loginData.access_token),
+        })
+      );
     }
     localStorage.setItem("access_token", loginData.access_token);
   };
@@ -74,7 +86,7 @@ const Login: FC<LoginProps> = () => {
       const loginData = await loginMutation.mutateAsync(data);
       saveUserInLocalStorage(loginData);
       saveUserInRedux(loginData);
-      navigate(ROUTES.PROGRAMMING);
+      window.location.reload();
     } catch (error) {
       console.error(error);
     } finally {
@@ -97,13 +109,13 @@ const Login: FC<LoginProps> = () => {
             setValue={setValue}
             control={control}
           />
-          <div className="remember-user">
+          {/* <div className="remember-user">
             <p>Recordar usuario</p>
             <ToggleButton
-              isActive={false}
+              isActive={needRememberUser}
               handleChange={(rememberUser) => setRememberUser(rememberUser)}
             />
-          </div>
+          </div> */}
           <Button
             type="submit"
             mb={28}

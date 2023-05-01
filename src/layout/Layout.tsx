@@ -1,4 +1,4 @@
-import { FC, ReactNode } from "react";
+import { FC, ReactNode, useEffect, useState } from "react";
 import { ChildrenContainer } from "../components/genericStyles";
 import Footer from "./components/Footer/Footer";
 import Header from "./components/Header/Header";
@@ -10,12 +10,31 @@ interface LayoutProps {
 }
 
 const Layout: FC<LayoutProps> = ({ children }) => {
+  const [isSmallScreen, setIsSmallScreen] = useState(true);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 768px)");
+
+    function handleResize() {
+      setIsSmallScreen(mediaQuery.matches);
+    }
+
+    handleResize();
+
+    // Agregar un listener para escuchar cambios en el tamaño de la pantalla
+    mediaQuery.addEventListener("change", handleResize);
+
+    // Remover el listener cuando el componente se desmonta
+    return () => {
+      mediaQuery.removeEventListener("change", handleResize);
+    };
+  }, []);
+
   return (
     <LayoutWrapper>
       <Header></Header>
-      <SideMenu></SideMenu>
+      {!isSmallScreen && <SideMenu></SideMenu>}
       <ChildrenContainer>{children}</ChildrenContainer>
-      <Footer></Footer>
     </LayoutWrapper>
   );
 };
