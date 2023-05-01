@@ -1,16 +1,6 @@
-interface IData {
-  role: string;
-  name: string;
-  email: string;
-  permissions: any;
-  imageProfile: string;
-  accessToken: string;
-}
-
 export interface ILoginData {
-  data: IData;
-  initialPath: string;
-  isAuthenticated: boolean;
+  access_token: string;
+  user: string;
 }
 
 interface IState {

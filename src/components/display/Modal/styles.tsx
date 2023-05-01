@@ -38,8 +38,14 @@ export const ModalWrapper = styled.div`
     padding: 14px 16px;
     transition: top 0.2s ease-out;
     border-radius: 4px;
-    height: 70%;
     overflow: auto;
+    &-title {
+      text-align: center;
+      font: 600 32px Poppins Semibold;
+      h2 {
+        margin: 0;
+      }
+    }
   }
 
   .--slide-down {

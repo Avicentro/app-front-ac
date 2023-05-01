@@ -7,6 +7,13 @@ export const theme = {
   primaryLight: "#FFA48E",
   primaryBG: "#FFE8E7",
 
+  // SECONDARY:
+  secondary: "#005BD4",
+  secondaryDark: "#0041AC",
+  secondaryDarkMode: "#50C8FC",
+  secondaryLight: "#8DE9FF",
+  secondaryBG: "#E3FEFF",
+
   // RED
   red100: "#FFF2F1",
   red200: "#FFC3C0",

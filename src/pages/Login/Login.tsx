@@ -21,40 +21,33 @@ import { getDefaultValuesByConfig } from "../../components/form/DynamicForm/help
 // Redux
 import { useDispatch } from "react-redux";
 import { updateLoginData } from "../../store/loginData/actions";
+import { sizeButtonEnum } from "../../models";
 import { useLoginMutation } from "../../hook/useLogin";
-
-
+import { loginDataType } from "./models";
 
 interface LoginProps {}
 
 const Login: FC<LoginProps> = () => {
-
-  const loginMutation = useLoginMutation();
-
-  const handleLogin = async (data: any) => {
-    await loginMutation.mutateAsync(data);
-  };
-
-  const [needRememberUser, setNeedRememberUser] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [needRememberUser, setNeedRememberUser] = useState(true);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  
-
+  const loginMutation = useLoginMutation();
 
   const {
     control,
-    handleSubmit,
     setValue,
+    handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(createSchemaByConfig(formConfig)),
     defaultValues: getDefaultValuesByConfig(formConfig),
+    resolver: yupResolver(createSchemaByConfig(formConfig)),
   });
 
   useEffect(() => {
     const loginData = JSON.parse(localStorage.getItem("loginData") || "{}");
-    if (loginData?.isAuthenticated) {
+    if (loginData?.access_token) {
       dispatch(updateLoginData(loginData));
       return navigate(ROUTES.PROGRAMMING);
     }
@@ -64,27 +57,41 @@ const Login: FC<LoginProps> = () => {
     setNeedRememberUser(isActive);
   };
 
-  const loginUser = (data: any) => {
-    handleLogin(data);
+  const decodedToken = (token: string) => {
+    const [, payloadEncoded] = token.split(".");
+    const payloadDecoded = JSON.parse(atob(payloadEncoded));
+    return payloadDecoded;
+  };
+
+  const saveUserInLocalStorage = (loginData: loginDataType) => {
+    if (needRememberUser) {
+      localStorage.setItem(
+        "loginData",
+        JSON.stringify({
+          ...loginData,
+          ...decodedToken(loginData.access_token),
+        })
+      );
+    }
+    localStorage.setItem("access_token", loginData.access_token);
+  };
+
+  const saveUserInRedux = (loginData: loginDataType) => {
+    dispatch(updateLoginData(loginData));
+  };
+
+  const loginUser = async (data: any) => {
     setLoading(true);
     try {
-      const loginData = {
-        isAuthenticated: true,
-        data,
-      };
-      if (needRememberUser)
-        localStorage.setItem("loginData", JSON.stringify(loginData));
-      setTimeout(() => {
-        dispatch(updateLoginData(loginData));
-        navigate(ROUTES.PROGRAMMING);
-        setLoading(false);
-      }, 2000);
+      const loginData = await loginMutation.mutateAsync(data);
+      saveUserInLocalStorage(loginData);
+      saveUserInRedux(loginData);
+      window.location.reload();
     } catch (error) {
       console.error(error);
+    } finally {
+      setLoading(false);
     }
-    // finally {
-    //   setLoading(false);
-    // }
   };
 
   return (
@@ -102,14 +109,19 @@ const Login: FC<LoginProps> = () => {
             setValue={setValue}
             control={control}
           />
-          <div className="remember-user">
+          {/* <div className="remember-user">
             <p>Recordar usuario</p>
             <ToggleButton
-              isActive={false}
+              isActive={needRememberUser}
               handleChange={(rememberUser) => setRememberUser(rememberUser)}
             />
-          </div>
-          <Button type="submit" mb={28} loading={loading}>
+          </div> */}
+          <Button
+            type="submit"
+            mb={28}
+            sizeButton={sizeButtonEnum.extraBig}
+            loading={loading}
+          >
             Iniciar sesión {"->"}
           </Button>
           <p className="question">¿Aún no tienes cuenta?</p>

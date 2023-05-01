@@ -7,7 +7,7 @@ import Button from "../../../../components/form/Button/Button";
 import { ModalContentWrapper } from "./styles";
 
 // helpers
-import { typeButtonEnum } from "../../../../models";
+import { sizeButtonEnum } from "../../../../models";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../../../constants/routes";
 
@@ -29,6 +29,7 @@ const ModalContent: FC<ModalContentProps> = ({ dateSelected }) => {
             onClick: () =>
               navigate(`${ROUTES.PROGRAMMING}${ROUTES.TRAVEL}/${dateSelected}`),
           }}
+          sizeButton={sizeButtonEnum.extraBig}
         >
           Programar viaje
         </Button>

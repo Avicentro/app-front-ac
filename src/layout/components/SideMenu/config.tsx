@@ -7,19 +7,19 @@ export const configMenu: configMenuType[] = [
     route: ROUTES.PROGRAMMING,
     icon: "programming",
   },
-  {
-    label: "Entrada",
-    route: ROUTES.PROGRAMMING,
-    icon: "enter",
-  },
-  {
-    label: "Salida",
-    route: ROUTES.PROGRAMMING,
-    icon: "out",
-  },
-  {
-    label: "Datos",
-    route: ROUTES.PROGRAMMING,
-    icon: "dataBase",
-  },
+  // {
+  //   label: "Entrada",
+  //   route: ROUTES.PROGRAMMING,
+  //   icon: "enter",
+  // },
+  // {
+  //   label: "Salida",
+  //   route: ROUTES.PROGRAMMING,
+  //   icon: "out",
+  // },
+  // {
+  //   label: "Datos",
+  //   route: ROUTES.PROGRAMMING,
+  //   icon: "dataBase",
+  // },
 ];

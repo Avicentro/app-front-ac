@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { MIN_WIDTH_QUERIES } from "../../../constants/constants";
 
 export const SideMenuWrapper = styled.nav`
   grid-row: 2 / 3;
@@ -8,6 +9,7 @@ export const SideMenuWrapper = styled.nav`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  height: 100%;
   ul {
     list-style: none;
     margin: 0;
@@ -55,7 +57,23 @@ export const SideMenuWrapper = styled.nav`
             }
           }
         }
-        &:active {
+      }
+      .active {
+        background-color: ${({ theme }) => theme.primaryBG};
+        border-radius: 12px;
+        color: ${({ theme }) => theme.primary};
+        .logo-item {
+          svg {
+            rect {
+              stroke: ${({ theme }) => theme.primary};
+            }
+            path {
+              stroke: ${({ theme }) => theme.primary};
+            }
+            ellipse {
+              stroke: ${({ theme }) => theme.primary};
+            }
+          }
         }
       }
     }
@@ -80,5 +98,10 @@ export const SideMenuWrapper = styled.nav`
       font: 600 15px Poppins SemiBold;
       color: ${({ theme }) => theme.coolGray500};
     }
+  }
+  @media ${MIN_WIDTH_QUERIES.TABLET.query} {
+    grid-column: 1 / 2;
+  }
+  @media ${MIN_WIDTH_QUERIES.DESKTOP.query} {
   }
 `;

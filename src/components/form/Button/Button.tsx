@@ -1,4 +1,5 @@
 import { FC } from "react";
+import { sizeButtonEnum, typeButtonEnum } from "../../../models";
 import { theme } from "../../../static/styles/theme";
 import { ButtonProps } from "./model";
 
@@ -13,10 +14,11 @@ const Button: FC<ButtonProps> = ({
   mb,
   loading,
   children,
-  typeButton,
+  typeButton = typeButtonEnum.fill,
   extraProps,
   type = "button",
   color = theme.white,
+  sizeButton = sizeButtonEnum.medium,
 }) => {
   return (
     <ButtonWrapper
@@ -25,6 +27,7 @@ const Button: FC<ButtonProps> = ({
       typeButton={typeButton}
       color={color}
       {...extraProps}
+      sizeButton={sizeButton}
     >
       {loading ? <>Cargando...</> : <>{children}</>}
     </ButtonWrapper>

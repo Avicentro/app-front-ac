@@ -2,7 +2,7 @@ import { fieldTypeEnum, IConfig } from "../../../../../models";
 
 export const formConfig: IConfig[] = [
   {
-    name: "dateRest",
+    name: "dateSelected",
     label: "Fecha",
     value: "",
     type: "text",
@@ -19,7 +19,7 @@ export const formConfig: IConfig[] = [
     },
   },
   {
-    name: "disponibilidad",
+    name: "date",
     label: "Horas de disponibilidad",
     value: "",
     type: "text",
@@ -33,40 +33,10 @@ export const formConfig: IConfig[] = [
         },
       ],
     },
-    options: [
-      {
-        label: "Seleccione",
-        value: "",
-      },
-      {
-        label: "7:00 p.m",
-        value: "2023-04-25 8:00:00",
-      },
-      {
-        label: "7:30 p.m",
-        value: "2023-04-25 9:00:00",
-      },
-      {
-        label: "8:00 p.m",
-        value: "2023-04-25 10:00:00",
-      },
-      {
-        label: "8:30 p.m",
-        value: "2023-04-25 8:00:00",
-      },
-      {
-        label: "9:00 p.m",
-        value: "2023-04-25 9:00:00",
-      },
-      {
-        label: "9:30 p.m",
-        value: "2023-04-25 8:00:00",
-      },
-
-    ],
+    options: [],
   },
   {
-    name: "client",
+    name: "Customer",
     label: "Cliente",
     value: "",
     type: "text",
@@ -80,27 +50,10 @@ export const formConfig: IConfig[] = [
         },
       ],
     },
-    options: [
-      {
-        label: "Seleccione",
-        value: "",
-      },
-      {
-        label: "Cliente 1",
-        value: "Cliente 1",
-      },
-      {
-        label: "Cliente 2",
-        value: "Cliente 2",
-      },
-      {
-        label: "Cliente 3",
-        value: "Cliente 3",
-      },
-    ],
+    options: [],
   },
   {
-    name: "provider",
+    name: "Supplier",
     label: "Provedor",
     value: "",
     type: "text",
@@ -114,27 +67,10 @@ export const formConfig: IConfig[] = [
         },
       ],
     },
-    options: [
-      {
-        label: "Seleccione",
-        value: "",
-      },
-      {
-        label: "Provedor 1",
-        value: "Provedor 1",
-      },
-      {
-        label: "Provedor 2",
-        value: "Provedor 2",
-      },
-      {
-        label: "Provedor 3",
-        value: "Provedor 3",
-      },
-    ],
+    options: [],
   },
   {
-    name: "subClient",
+    name: "SubCustomer",
     label: "Sub-cliente",
     value: "",
     type: "text",
@@ -148,23 +84,22 @@ export const formConfig: IConfig[] = [
         },
       ],
     },
-    options: [
-      {
-        label: "Seleccione",
-        value: "",
-      },
-      {
-        label: "Sub-Cliente 1",
-        value: "Sub-Cliente 1",
-      },
-      {
-        label: "Sub-Cliente 2",
-        value: "Sub-Cliente 2",
-      },
-      {
-        label: "Sub-Cliente 3",
-        value: "Sub-Cliente 3",
-      },
-    ],
+    options: [],
+  },
+  {
+    name: "countChickens",
+    label: "Cantidad de pollos",
+    value: "",
+    type: "number",
+    fieldType: fieldTypeEnum.text,
+    placeholder: "Cantidad de pollos",
+    validation: {
+      type: "number",
+      settings: [
+        {
+          type: "required",
+        },
+      ],
+    },
   },
 ];

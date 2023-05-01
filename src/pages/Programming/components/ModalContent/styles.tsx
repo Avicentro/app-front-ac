@@ -5,9 +5,11 @@ export const ModalContentWrapper = styled.div`
   flex-direction: column;
   justify-content: space-between;
   .modal-label {
+    all: unset;
     font: 400 18px Poppins Regular;
     line-height: 32px;
     color: ${({ theme }) => theme.coolGray600};
+    margin-bottom: 40px;
   }
   .call-to-action-container {
     display: flex;

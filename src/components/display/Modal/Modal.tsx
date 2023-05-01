@@ -59,7 +59,9 @@ const Modal: FC<ModalProps> = ({
               className={`modal ${stateOfAnimation}`}
               onClick={(e) => e.stopPropagation()}
             >
-              <h2>{title}</h2>
+              <div className="modal-title">
+                <h2>{title}</h2>
+              </div>
               <div className="modal-content">{children}</div>
               <button className="modal-close" onClick={closeModal}>
                 <FontAwesomeIcon icon={faXmark} />

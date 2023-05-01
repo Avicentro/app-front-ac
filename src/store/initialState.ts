@@ -1,8 +1,7 @@
 const initialState = {
   loginData: {
-    data: {},
-    initialPath: "",
-    isAuthenticated: false,
+    user: "",
+    access_token: "",
   },
 };
 

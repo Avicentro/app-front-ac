@@ -19,16 +19,16 @@ export const Grid = styled.div`
 `;
 
 export const ChildrenContainer = styled.div`
-  padding-top: 120px;
-  padding-bottom: 52px;
+  padding: 54px 16px;
   background-color: ${({ theme }) => theme.coolGray100};
   grid-row: 2 / 3;
   grid-column: auto / span 12;
   display: grid;
   grid-template-columns: repeat(8, 1fr);
+  overflow: auto;
   @media ${MIN_WIDTH_QUERIES.TABLET.query} {
-    padding-top: 60px;
     grid-template-columns: repeat(10, 1fr);
+    padding: 48px 0;
   }
   @media ${MIN_WIDTH_QUERIES.DESKTOP.query} {
     grid-template-columns: repeat(12, 1fr);
@@ -37,6 +37,6 @@ export const ChildrenContainer = styled.div`
 `;
 
 export const Container = styled.div`
-  padding: 24px 36px;
+  padding: 24px 36px 36px;
   grid-column: 1 / -1;
 `;
