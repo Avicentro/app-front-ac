@@ -118,9 +118,8 @@ const CustomCalendar: FC<CustomCalendarProps> = () => {
         //   );
         // },
         slotEventOverlap: false,
-        drop: (e) => console.log("evento cuando suelta el drop", e),
+        // drop: (e) => console.log("evento cuando suelta el drop", e),
         viewDidMount: (e) => {
-          console.log("e", e);
           setDateInView(getDateFormatted(e.view.type, e.view.currentStart));
         },
         datesSet: (e) => {
