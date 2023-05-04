@@ -32,9 +32,14 @@ export const useAllCustomers = () => {
   });
 };
 
-export const useAllSchedules = (data: useAllSchedulesProps, date: string) => {
+export const useAllSchedules = (
+  data: useAllSchedulesProps,
+  date: string,
+  dependency?: string
+) => {
+  console.log("dependency", dependency);
   return useQuery({
-    queryKey: ["allSchedules"],
+    queryKey: ["allSchedules", dependency],
     queryFn: async () =>
       await ApiService.getData(data, `/schedule/all/${date}`),
     retry: false,

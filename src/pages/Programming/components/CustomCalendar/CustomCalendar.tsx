@@ -16,10 +16,15 @@ import EventContent from "./components/EventContent/EventContent";
 import { CustomCalendarWrapper } from "./styles";
 
 // helpers
+import { getRangeDatesByViewType } from "./helpers";
 import { useAllSchedules } from "../../../../hook/useSchedule";
 import { COMPOSED_ROUTES } from "../../../../constants/routes";
 import { getUserIsAdmin } from "../../../../helpers/getData/getUserIsAdmin";
 // Icons
+
+import { QueryClient } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 interface CustomCalendarProps {}
 
@@ -31,12 +36,21 @@ function renderEventContent(eventInfo: any) {
 }
 
 const CustomCalendar: FC<CustomCalendarProps> = () => {
-  const schedules = useAllSchedules({ sort: "code", order: "-1" }, "2023-06");
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  // const [schedules, setSchedules] = useState<any>({});
+  const [dateSelected, setDateSelected] = useState<string | null>(null);
+  const [dateInView, setDateInView] = useState<string>("");
+  const schedules = useAllSchedules(
+    { sort: "code", order: "-1" },
+    dateInView,
+    dateInView
+  );
+  const [currentDateComponent, setCurrentDateComponent] = useState<Date>(
+    new Date()
+  );
   const calendarRef = useRef<HTMLDivElement>(null);
   const userIsAdmin = getUserIsAdmin();
   const navigate = useNavigate();
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [dateSelected, setDateSelected] = useState<string | null>(null);
 
   const getEvents = useCallback(() => {
     return schedules?.data?.data?.map((schedule: any) => ({
@@ -47,19 +61,25 @@ const CustomCalendar: FC<CustomCalendarProps> = () => {
     }));
   }, [schedules.data]);
 
-  const headerToolbar = userIsAdmin
-    ? {
-        left: "prev,next today",
-        center: "title",
-        right: "dayGridMonth,timeGridWeek,timeGridDay",
-      }
-    : {
-        center: "title",
-        right: "timeGridDay",
-      };
+  const getHeaderToolbar = useCallback(() => {
+    return userIsAdmin
+      ? {
+          left: "prev,next today",
+          center: "title",
+          right: "dayGridMonth,timeGridDay",
+        }
+      : {
+          center: "title",
+          right: "timeGridDay",
+        };
+  }, [userIsAdmin]);
 
-  const getInitialViewByRole = () => {
+  const getInitialViewByRole = useCallback(() => {
     return userIsAdmin ? "dayGridMonth" : "timeGridDay";
+  }, [userIsAdmin]);
+
+  const getDateFormatted = (type: string, date: Date) => {
+    return getRangeDatesByViewType(type, date);
   };
 
   useEffect(() => {
@@ -68,11 +88,12 @@ const CustomCalendar: FC<CustomCalendarProps> = () => {
       const calendar = new Calendar(calendarEl, {
         plugins: [dayGridPlugin, interactionPlugin, timeGridPlugin, listPlugin],
         initialView: getInitialViewByRole(),
+        initialDate: currentDateComponent,
         events: getEvents() as EventInput[],
         locale: esLocale,
         firstDay: 0,
         selectable: true,
-        headerToolbar: headerToolbar,
+        headerToolbar: getHeaderToolbar(),
         eventClick: ({ event }) =>
           navigate(`${COMPOSED_ROUTES.SUMMARY_PROGRAMMING}/${event.id}`),
         displayEventEnd: true,
@@ -90,22 +111,31 @@ const CustomCalendar: FC<CustomCalendarProps> = () => {
           );
           return true;
         },
-        eventDrop: function (info) {
-          console.log(
-            "Evento " +
-              info.event.title +
-              " fue arrastrado desde " +
-              info.oldEvent.start +
-              " hasta " +
-              info.event.start
-          );
-        },
+        // eventDrop: function (info) {
+        //   console.log(
+        //     "Evento " +
+        //       info.event.title +
+        //       " fue arrastrado desde " +
+        //       info.oldEvent.start +
+        //       " hasta " +
+        //       info.event.start
+        //   );
+        // },
         slotEventOverlap: false,
         drop: (e) => console.log("evento cuando suelta el drop", e),
+        viewDidMount: (e) => {
+          console.log("e", e);
+          setDateInView(getDateFormatted(e.view.type, e.view.currentStart));
+        },
+        datesSet: (e) => {
+          const newDate = e.view.currentStart;
+          setCurrentDateComponent(newDate);
+          setDateInView(getDateFormatted(e.view.type, newDate));
+        },
       });
       calendar.render();
     }
-  }, [getEvents, navigate, getInitialViewByRole, headerToolbar]);
+  }, [getEvents, navigate, getInitialViewByRole, getHeaderToolbar]);
 
   return (
     <CustomCalendarWrapper ref={calendarRef}>
