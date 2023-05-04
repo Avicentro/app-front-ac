@@ -30,4 +30,20 @@ export const CustomCalendarWrapper = styled.div`
       border: 1px solid ${({ theme }) => theme.primary};
     }
   }
+  .fc-daygrid-event-harness {
+    background-color: ${({ theme }) => theme.primary};
+    border-radius: 8px;
+    a {
+      .fc-daygrid-event-dot {
+        border-color: ${({ theme }) => theme.white};
+      }
+      .fc-event-time {
+        color: ${({ theme }) => theme.white};
+      }
+      .fc-event-title {
+        color: ${({ theme }) => theme.white};
+        font: 400 13px Poppins Regular;
+      }
+    }
+  }
 `;

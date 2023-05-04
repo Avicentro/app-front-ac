@@ -80,10 +80,32 @@ const CustomCalendar: FC<CustomCalendarProps> = () => {
           setModalIsOpen(true);
           setDateSelected(info.dateStr);
         },
+        editable: true,
+        droppable: true,
+        eventOverlap: (stillEvent: any, movingEvent: any) => {
+          console.log(
+            "stillEvent",
+            stillEvent.start < movingEvent.end &&
+              stillEvent.end > movingEvent.start
+          );
+          return true;
+        },
+        eventDrop: function (info) {
+          console.log(
+            "Evento " +
+              info.event.title +
+              " fue arrastrado desde " +
+              info.oldEvent.start +
+              " hasta " +
+              info.event.start
+          );
+        },
+        slotEventOverlap: false,
+        drop: (e) => console.log("evento cuando suelta el drop", e),
       });
       calendar.render();
     }
-  }, [getEvents, navigate]);
+  }, [getEvents, navigate, getInitialViewByRole, headerToolbar]);
 
   return (
     <CustomCalendarWrapper ref={calendarRef}>
