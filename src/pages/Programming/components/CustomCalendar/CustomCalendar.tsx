@@ -22,10 +22,6 @@ import { COMPOSED_ROUTES } from "../../../../constants/routes";
 import { getUserIsAdmin } from "../../../../helpers/getData/getUserIsAdmin";
 // Icons
 
-import { QueryClient } from "@tanstack/react-query";
-
-const queryClient = new QueryClient();
-
 interface CustomCalendarProps {}
 
 const MODAL_TITLE = "Programación";
