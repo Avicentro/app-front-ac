@@ -10,6 +10,7 @@ export const formatDateCo = ({
       year: "numeric",
       month: "long",
       day: "numeric",
+      weekday: addHours ? "short" : undefined,
       hour: addHours ? "numeric" : undefined,
       minute: addHours ? "numeric" : undefined,
       second: addHours ? "numeric" : undefined,
