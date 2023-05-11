@@ -21,6 +21,10 @@ export const CalendarContainer = styled.div`
 `;
 
 export const CustomCalendarWrapper = styled.div`
+  .fc-header-toolbar {
+    display: flex;
+    flex-direction: column;
+  }
   .fc-event {
     background-color: ${({ theme }) => theme.primary};
     border: 1px solid ${({ theme }) => theme.primary};
@@ -67,5 +71,12 @@ export const CustomCalendarWrapper = styled.div`
         font: 400 13px Poppins Regular;
       }
     }
+  }
+  @media ${MIN_WIDTH_QUERIES.TABLET.query} {
+    .fc-header-toolbar {
+      flex-direction: row;
+    }
+  }
+  @media ${MIN_WIDTH_QUERIES.DESKTOP.query} {
   }
 `;

@@ -49,6 +49,8 @@ const SummarySchedule: FC<SummaryScheduleProps> = ({ data }) => {
     navigate(ROUTES.PROGRAMMING);
   };
 
+  console.log("data", scheduling);
+
   return (
     <SummaryScheduleWrapper>
       <BackButton />
@@ -72,25 +74,31 @@ const SummarySchedule: FC<SummaryScheduleProps> = ({ data }) => {
           <div className="schedule-info__text-container">
             <p className="title">Proveedor: </p>
             <p className="content">
-              {data ? data?.supplier : scheduling?.data?.supplier?.name}
+              {data
+                ? data?.supplier["name" as any]
+                : scheduling?.data?.supplier?.name}
             </p>
           </div>
           <div className="schedule-info__text-container">
             <p className="title">Cliente: </p>
             <p className="content">
-              {data ? data?.idCustomer : scheduling?.data?.idCustomer}
+              {data
+                ? data?.Customer["name" as any]
+                : scheduling?.data?.Customer.name}
             </p>
           </div>
           <div className="schedule-info__text-container">
             <p className="title">Sub-cliente: </p>
             <p className="content">
-              {data ? data?.idSubCustomer : scheduling?.data?.idSubCustomer}
+              {data
+                ? data?.SubCustomer["name" as any]
+                : scheduling?.data?.SubCustomer.name}
             </p>
           </div>
           <div className="schedule-info__text-container">
             <p className="title">Cantidad de pollos: </p>
             <p className="content">
-              {data ? data?.count : scheduling?.data?.count}
+              {data ? data?.countChickens : scheduling?.data?.countChickens}
             </p>
           </div>
           <div className="schedule-info__text-container">

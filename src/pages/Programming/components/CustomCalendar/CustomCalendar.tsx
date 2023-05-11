@@ -162,6 +162,7 @@ const CustomCalendar: FC<CustomCalendarProps> = () => {
         events: schedules as EventInput[],
         locale: esLocale,
         firstDay: 0,
+        height: "auto",
         selectable: true,
         headerToolbar: getHeaderToolbar(),
         eventClick: ({ event }) =>
@@ -171,6 +172,7 @@ const CustomCalendar: FC<CustomCalendarProps> = () => {
           setModalIsOpen(true);
           setDateSelected(info.dateStr);
         },
+        windowResize: () => true,
         editable: true,
         droppable: true,
         eventOverlap: (stillEvent: any, movingEvent: any) => {
@@ -211,7 +213,13 @@ const CustomCalendar: FC<CustomCalendarProps> = () => {
       });
       calendar.render();
     }
-  }, [navigate, getInitialViewByRole, getHeaderToolbar, schedules]);
+  }, [
+    navigate,
+    getInitialViewByRole,
+    getHeaderToolbar,
+    schedules,
+    schedulesDb?.data?.data,
+  ]);
 
   return (
     <CalendarContainer>
