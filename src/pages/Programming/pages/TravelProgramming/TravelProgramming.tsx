@@ -40,11 +40,19 @@ const TravelProgramming: FC<TravelProgrammingProps> = () => {
     date: dateSelected,
   });
   const { data: allCustomers } = useAllCustomers();
+
+  const getFormat = () => {
+    const daysOfWeek = ["LUN", "MAR", "MIE", "JUE", "VIE", "SAB", "DOM"];
+    const dayOfWeekIndex = new Date(dateSelected).getDay();
+    console.log(new Date("2023-05-02").getDay());
+    return `${dateSelected} ${daysOfWeek[dayOfWeekIndex]}`;
+  };
+
   const dataToMerge = [
     {
       name: "dateSelected",
       key: "value",
-      value: dateSelected,
+      value: getFormat(),
     },
     {
       name: "date",
