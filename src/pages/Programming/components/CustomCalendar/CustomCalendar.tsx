@@ -48,7 +48,11 @@ const CustomCalendar: FC<CustomCalendarProps> = () => {
   const [dateSelected, setDateSelected] = useState<string | null>(null);
   const [schedules, setSchedules] = useState([]);
   const [schedulesModificated, setSchedulesModificated] = useState([]);
-  const schedulesDb = useAllSchedules({ sort: "code", order: "-1" }, "2023");
+  const schedulesDb = useAllSchedules(
+    { sort: "code", order: "-1" },
+    "2023",
+    loginModificateProgramming
+  );
   const calendarRef = useRef<HTMLDivElement>(null);
   const userIsAdmin = getUserIsAdmin();
   const reProgrammingMutation = useReProgrammingMutation();

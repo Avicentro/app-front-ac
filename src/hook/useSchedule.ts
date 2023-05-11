@@ -35,7 +35,7 @@ export const useAllCustomers = () => {
 export const useAllSchedules = (
   data: useAllSchedulesProps,
   date: string,
-  dependency?: string
+  dependency?: any
 ) => {
   return useQuery({
     queryKey: ["allSchedules", dependency],
