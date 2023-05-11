@@ -1,6 +1,5 @@
 import { FC } from "react";
 import { Container } from "../../components/genericStyles";
-import { useAllSchedules } from "../../hook/useSchedule";
 
 // Components
 import Calendar from "./components/CustomCalendar/CustomCalendar";

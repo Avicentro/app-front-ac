@@ -1,5 +1,5 @@
 import { IConfig } from "../../../../../models";
-import { fieldTypeEnum } from "../../../../Login/fotmConfig/models";
+import { fieldTypeEnum } from "../../../../Login/formConfig/models";
 
 export const formConfig: IConfig[] = [
   {

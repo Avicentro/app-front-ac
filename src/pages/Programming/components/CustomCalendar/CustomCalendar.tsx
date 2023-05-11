@@ -10,13 +10,12 @@ import ModalContent from "../ModalContent/ModalContent";
 import { Calendar, EventInput } from "@fullcalendar/core";
 import interactionPlugin from "@fullcalendar/interaction";
 import Modal from "../../../../components/display/Modal/Modal";
-import EventContent from "./components/EventContent/EventContent";
 
 // Styles
 import { CustomCalendarWrapper } from "./styles";
 
 // helpers
-import { getRangeDatesByViewType } from "./helpers";
+import { getRangeDatesByViewType, getYear } from "./helpers";
 import { useAllSchedules } from "../../../../hook/useSchedule";
 import { COMPOSED_ROUTES } from "../../../../constants/routes";
 import { getUserIsAdmin } from "../../../../helpers/getData/getUserIsAdmin";
@@ -26,36 +25,26 @@ interface CustomCalendarProps {}
 
 const MODAL_TITLE = "Programación";
 
-function renderEventContent(eventInfo: any) {
-  console.log("eventInfo", eventInfo.event.title);
-  return <EventContent event={eventInfo.event} />;
-}
-
 const CustomCalendar: FC<CustomCalendarProps> = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  // const [schedules, setSchedules] = useState<any>({});
   const [dateSelected, setDateSelected] = useState<string | null>(null);
-  const [dateInView, setDateInView] = useState<string>("");
-  const schedules = useAllSchedules(
-    { sort: "code", order: "-1" },
-    dateInView,
-    dateInView
-  );
-  const [currentDateComponent, setCurrentDateComponent] = useState<Date>(
-    new Date()
-  );
+  const [schedules, setSchedules] = useState([]);
+  const [schedulesModificated, setSchedulesModificated] = useState([]);
+  const schedulesDb = useAllSchedules({ sort: "code", order: "-1" }, "2023-06");
   const calendarRef = useRef<HTMLDivElement>(null);
-  const userIsAdmin = getUserIsAdmin();
+  const userIsAdmin = !getUserIsAdmin();
   const navigate = useNavigate();
 
-  const getEvents = useCallback(() => {
-    return schedules?.data?.data?.map((schedule: any) => ({
+  useEffect(() => {
+    let localSchedules = schedulesDb?.data?.data || [];
+    localSchedules = localSchedules.map((schedule: any) => ({
       title: schedule.Customer,
       start: schedule.dateStart,
-      end: schedule.end,
+      end: schedule.dateEnd,
       id: schedule.code,
     }));
-  }, [schedules.data]);
+    setSchedules(localSchedules);
+  }, [schedulesDb?.data]);
 
   const getHeaderToolbar = useCallback(() => {
     return userIsAdmin
@@ -65,8 +54,9 @@ const CustomCalendar: FC<CustomCalendarProps> = () => {
           right: "dayGridMonth,timeGridDay",
         }
       : {
+          left: "prev,next today",
           center: "title",
-          right: "timeGridDay",
+          right: "timeGridDay, dayGridMonth",
         };
   }, [userIsAdmin]);
 
@@ -84,8 +74,8 @@ const CustomCalendar: FC<CustomCalendarProps> = () => {
       const calendar = new Calendar(calendarEl, {
         plugins: [dayGridPlugin, interactionPlugin, timeGridPlugin, listPlugin],
         initialView: getInitialViewByRole(),
-        initialDate: currentDateComponent,
-        events: getEvents() as EventInput[],
+        // initialDate: currentDateComponent,
+        events: schedules as EventInput[],
         locale: esLocale,
         firstDay: 0,
         selectable: true,
@@ -100,37 +90,32 @@ const CustomCalendar: FC<CustomCalendarProps> = () => {
         editable: true,
         droppable: true,
         eventOverlap: (stillEvent: any, movingEvent: any) => {
-          console.log(
-            "stillEvent",
+          if (
             stillEvent.start < movingEvent.end &&
-              stillEvent.end > movingEvent.start
-          );
+            stillEvent.end > movingEvent.start
+          ) {
+            return false;
+          }
           return true;
         },
-        // eventDrop: function (info) {
-        //   console.log(
-        //     "Evento " +
-        //       info.event.title +
-        //       " fue arrastrado desde " +
-        //       info.oldEvent.start +
-        //       " hasta " +
-        //       info.event.start
-        //   );
-        // },
+        eventDrop: (info: any) => {
+          const eventFromSchedule = schedulesDb?.data?.data.find(
+            (schedule: any) =>
+              schedule.code.toString() === info.event.id.toString()
+          );
+          setSchedulesModificated((prev: any) => {
+            if (eventFromSchedule) {
+              return [...prev, eventFromSchedule];
+            }
+            return prev;
+          });
+        },
         slotEventOverlap: false,
-        // drop: (e) => console.log("evento cuando suelta el drop", e),
-        viewDidMount: (e) => {
-          setDateInView(getDateFormatted(e.view.type, e.view.currentStart));
-        },
-        datesSet: (e) => {
-          const newDate = e.view.currentStart;
-          setCurrentDateComponent(newDate);
-          setDateInView(getDateFormatted(e.view.type, newDate));
-        },
+        drop: (e) => console.log("evento cuando suelta el drop", e),
       });
       calendar.render();
     }
-  }, [getEvents, navigate, getInitialViewByRole, getHeaderToolbar]);
+  }, [navigate, getInitialViewByRole, getHeaderToolbar, schedules]);
 
   return (
     <CustomCalendarWrapper ref={calendarRef}>

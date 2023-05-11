@@ -1,3 +1,8 @@
+export const getYear = (dateString: string): string => {
+  const date = new Date(dateString);
+  const yearMonth = date.toISOString().slice(0, 4);
+  return yearMonth;
+};
 export const getYearAndMonthByDate = (dateString: string): string => {
   const date = new Date(dateString);
   const yearMonth = date.toISOString().slice(0, 7);

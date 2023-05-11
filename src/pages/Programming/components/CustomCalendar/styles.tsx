@@ -3,6 +3,10 @@ import styled from "styled-components";
 export const CustomCalendarWrapper = styled.div`
   width: 920px;
   height: 736px;
+  .fc-event {
+    background-color: ${({ theme }) => theme.primary};
+    border: 1px solid ${({ theme }) => theme.primary};
+  }
   .fc-toolbar-title {
     font: 600 32px Poppins SemiBold;
   }

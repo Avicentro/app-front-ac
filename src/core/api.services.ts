@@ -15,6 +15,11 @@ const AuthLogin = async (payload: any) => {
   return data;
 };
 
+const signIn = async (payload: any) => {
+  const { data } = await API_CLIENT.post("/auth/login", payload);
+  return data;
+};
+
 const getData = async (payload: any, url: string) => {
   const { data } = await API_CLIENT.get(url, {
     params: payload,
@@ -29,8 +34,9 @@ const postData = async (payload: any, url: string) => {
 
 const ApiService = {
   AuthLogin,
-  getData,
   postData,
+  getData,
+  signIn,
 };
 
 export default ApiService;

@@ -3,7 +3,6 @@ import { FC, useEffect, useState } from "react";
 // Components
 import Button from "../../components/form/Button/Button";
 import DynamicForm from "../../components/form/DynamicForm/DynamicForm";
-import ToggleButton from "../../components/form/ToggleButton/ToggleButton";
 
 // Styles
 import { LoginWrapper } from "./styles";
@@ -13,7 +12,7 @@ import logoExample from "../../static/img/logo-example.png";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../constants/routes";
-import { formConfig } from "./fotmConfig/formConfig";
+import { formConfig } from "./formConfig/formConfig";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { createSchemaByConfig } from "../../components/form/DynamicForm/helpers/createSchemaByConfig";
 import { getDefaultValuesByConfig } from "../../components/form/DynamicForm/helpers/getDefaultValuesByConfig";
@@ -109,13 +108,6 @@ const Login: FC<LoginProps> = () => {
             setValue={setValue}
             control={control}
           />
-          {/* <div className="remember-user">
-            <p>Recordar usuario</p>
-            <ToggleButton
-              isActive={needRememberUser}
-              handleChange={(rememberUser) => setRememberUser(rememberUser)}
-            />
-          </div> */}
           <Button
             type="submit"
             mb={28}

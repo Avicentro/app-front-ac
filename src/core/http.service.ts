@@ -1,6 +1,12 @@
+const getAuthorization = (token: string | null) => {
+  if (token) {
+    return `Bearer ${token}`;
+  }
+  return "";
+};
 export const Headers = {
   headers: {
-    Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+    Authorization: getAuthorization(localStorage.getItem("access_token")),
     Accept: "application/json",
     "Content-Type": "application/json",
   },

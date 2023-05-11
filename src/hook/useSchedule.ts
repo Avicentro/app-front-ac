@@ -37,12 +37,21 @@ export const useAllSchedules = (
   date: string,
   dependency?: string
 ) => {
-  console.log("dependency", dependency);
   return useQuery({
     queryKey: ["allSchedules", dependency],
     queryFn: async () =>
       await ApiService.getData(data, `/schedule/all/${date}`),
     retry: false,
+    onError: () => {
+      console.log("ERERRRRRROS");
+      return {
+        data: {
+          data: [],
+          isSuccess: false,
+          isError: true,
+        },
+      };
+    },
   });
 };
 
