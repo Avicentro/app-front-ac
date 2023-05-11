@@ -83,7 +83,10 @@ const Login: FC<LoginProps> = () => {
     setLoading(true);
     try {
       const loginData = await loginMutation.mutateAsync(data);
-      saveUserInLocalStorage(loginData);
+      const now = new Date();
+      const tokenExpired = loginData.expiresIn.slice(0, 2);
+      now.setHours(now.getHours() + Number(tokenExpired));
+      saveUserInLocalStorage({ ...loginData, tokenExpired: now });
       saveUserInRedux(loginData);
       window.location.reload();
     } catch (error) {
