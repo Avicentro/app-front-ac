@@ -7,11 +7,8 @@ import { getDefaultValuesByConfig } from "../../components/form/DynamicForm/help
 
 // Styles
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import logoExample from "../../static/img/logo-example.png";
 
 // helpers
-import { ROUTES } from "../../constants/routes";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Button from "../../components/form/Button/Button";
 import { sizeButtonEnum } from "../../models";
