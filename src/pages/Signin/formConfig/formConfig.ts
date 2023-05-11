@@ -110,7 +110,7 @@ export const formConfig: IConfig[] = [
     fieldType: fieldTypeEnum.select,
     placeholder: "Rol",
     validation: {
-      type: "number",
+      type: "string",
       settings: [
         {
           type: "required",

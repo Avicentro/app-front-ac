@@ -27,6 +27,7 @@ const SignIn: FC<SignInProps> = () => {
     control,
     setValue,
     handleSubmit,
+    getValues,
     formState: { errors },
   } = useForm({
     defaultValues: getDefaultValuesByConfig(formConfig),
@@ -35,8 +36,9 @@ const SignIn: FC<SignInProps> = () => {
 
   const createUser = async (data: any) => {
     setLoading(true);
+    console.log("data", data);
     try {
-      await createUserMutation.mutateAsync(data);
+      await createUserMutation.mutateAsync({ ...data, user: data.email });
     } catch (error) {
       console.error(error);
     } finally {
@@ -60,6 +62,7 @@ const SignIn: FC<SignInProps> = () => {
             mb={28}
             sizeButton={sizeButtonEnum.extraBig}
             loading={loading}
+            extraProps={{ onClick: () => console.log(getValues()) }}
           >
             Crear cuenta {"->"}
           </Button>
