@@ -119,10 +119,6 @@ const Login: FC<LoginProps> = () => {
           >
             Iniciar sesión {"->"}
           </Button>
-          <p className="question">¿Aún no tienes cuenta?</p>
-          <a className="create-account" href="/">
-            Crear cuenta
-          </a>
         </form>
       </section>
     </LoginWrapper>
