@@ -101,8 +101,6 @@ const CustomCalendar: FC<CustomCalendarProps> = () => {
             supplier,
             Customer,
             SubCustomer,
-            idCustomer,
-            idSubCustomer,
             ...props
           } = schedule;
           console.log("schedule", schedule);
@@ -112,8 +110,8 @@ const CustomCalendar: FC<CustomCalendarProps> = () => {
             remarks: "",
             typeSchedule: type,
             supplier: supplier._id,
-            Customer: idCustomer,
-            SubCustomer: idSubCustomer,
+            Customer: Customer._id,
+            SubCustomer: SubCustomer._id,
           }; // tener en cuenta ese typeSchedule, debe ser el mismo cuando llega
         }
         return schedule;
@@ -134,11 +132,15 @@ const CustomCalendar: FC<CustomCalendarProps> = () => {
   const getFormConfigSchedules = (): formConfigType[] => {
     return schedulesModificated.map((schedule: scheduleType) => ({
       name: schedule.code.toString(),
-      label: `codigo: ${schedule.code} cliente: ${schedule.Customer}`,
+      label: `codigo: ${schedule.code} cliente: ${
+        schedule.Customer["name" as any]
+      }`,
       value: "",
       type: "text" as typeType,
       fieldType: fieldTypeEnum.select,
-      placeholder: `codigo: ${schedule.code} cliente: ${schedule.Customer}`,
+      placeholder: `codigo: ${schedule.code} cliente: ${
+        schedule.Customer["name" as any]
+      }`,
       validation: {
         type: "string" as typeValidationsType,
         settings: [
