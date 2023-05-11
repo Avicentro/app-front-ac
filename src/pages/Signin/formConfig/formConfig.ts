@@ -69,8 +69,8 @@ export const formConfig: IConfig[] = [
     name: "cell_phone",
     label: "Número telefónico",
     value: "",
-    type: "text",
-    fieldType: fieldTypeEnum.select,
+    type: "number",
+    fieldType: fieldTypeEnum.text,
     placeholder: "Número telefónico",
     validation: {
       type: "string",
@@ -107,7 +107,7 @@ export const formConfig: IConfig[] = [
     label: "Rol",
     value: "",
     type: "text",
-    fieldType: fieldTypeEnum.text,
+    fieldType: fieldTypeEnum.select,
     placeholder: "Rol",
     validation: {
       type: "number",
@@ -118,6 +118,10 @@ export const formConfig: IConfig[] = [
       ],
     },
     options: [
+      {
+        label: "Seleccione",
+        value: "",
+      },
       {
         label: "Administrador",
         value: "ADMIN",

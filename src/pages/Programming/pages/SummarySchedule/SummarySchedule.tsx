@@ -27,9 +27,12 @@ type dataSummaryType = {
   status: boolean;
   countChickens: number;
   code: number;
+  count?: number;
   nit: number;
   codeWorkingTime: number;
   __v: number;
+  idCustomer: any;
+  idSubCustomer: any;
 };
 
 interface SummaryScheduleProps {
@@ -69,25 +72,25 @@ const SummarySchedule: FC<SummaryScheduleProps> = ({ data }) => {
           <div className="schedule-info__text-container">
             <p className="title">Proveedor: </p>
             <p className="content">
-              {data ? data?.supplier : scheduling?.data?.supplier}
+              {data ? data?.supplier : scheduling?.data?.supplier?.name}
             </p>
           </div>
           <div className="schedule-info__text-container">
             <p className="title">Cliente: </p>
             <p className="content">
-              {data ? data?.Customer : scheduling?.data?.Customer}
+              {data ? data?.idCustomer : scheduling?.data?.idCustomer}
             </p>
           </div>
           <div className="schedule-info__text-container">
             <p className="title">Sub-cliente: </p>
             <p className="content">
-              {data ? data?.SubCustomer : scheduling?.data?.SubCustomer}
+              {data ? data?.idSubCustomer : scheduling?.data?.idSubCustomer}
             </p>
           </div>
           <div className="schedule-info__text-container">
             <p className="title">Cantidad de pollos: </p>
             <p className="content">
-              {data ? data?.countChickens : scheduling?.data?.countChickens}
+              {data ? data?.count : scheduling?.data?.count}
             </p>
           </div>
           <div className="schedule-info__text-container">

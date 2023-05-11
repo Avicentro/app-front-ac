@@ -7,11 +7,12 @@ export const configMenu: configMenuType[] = [
     route: ROUTES.PROGRAMMING,
     icon: "programming",
   },
-  // {
-  //   label: "Entrada",
-  //   route: ROUTES.PROGRAMMING,
-  //   icon: "enter",
-  // },
+  {
+    label: "Crear usuario",
+    route: ROUTES.SIGN_IN,
+    icon: "dataBase",
+    roles: ["ADMIN"],
+  },
   // {
   //   label: "Salida",
   //   route: ROUTES.PROGRAMMING,

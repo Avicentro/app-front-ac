@@ -43,7 +43,6 @@ export const useAllSchedules = (
       await ApiService.getData(data, `/schedule/all/${date}`),
     retry: false,
     onError: () => {
-      console.log("ERERRRRRROS");
       return {
         data: {
           data: [],
@@ -67,17 +66,45 @@ export const useSaveScheduleData = () => {
   });
 };
 
+export const useReProgrammingMutation = () => {
+  return useMutation(async (data) => {
+    const response = await ApiService.postData(
+      { data: data },
+      "/programming/programming"
+    );
+    return response.data;
+  });
+};
+
 export const useWorkingTime = () => {
   return useMutation(async (data) => {
     const response = await ApiService.postData(
       {
-        dateInit: "2023-06-06",
+        dateInit: "2023-05-11",
         dateInitHour: 19,
-        dateEnd: "2023-06-07",
+        dateEnd: "2023-05-12",
         dateEndHour: 7,
       },
       "/working-time/create-working-time"
     );
     return response.data.msg;
   });
+};
+
+export const useAllDriver = (data: any, url: any) => {
+  const response = useQuery({
+    queryKey: ["allDrivers"],
+    queryFn: async () => await ApiService.getData(data, url),
+    retry: false,
+    onError: () => {
+      return {
+        data: {
+          data: [],
+          isSuccess: false,
+          isError: true,
+        },
+      };
+    },
+  });
+  return response?.data?.data || [];
 };

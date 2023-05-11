@@ -14,9 +14,9 @@ export enum typeButtonEnum {
 }
 
 // All about dynamic form
-type typeValidationsType = "string" | "number" | "boolean" | "date";
+export type typeValidationsType = "string" | "number" | "boolean" | "date";
 
-type settingsValidationsStringType =
+export type settingsValidationsStringType =
   | "required"
   | "min"
   | "max"
@@ -116,3 +116,16 @@ export enum sizeButtonEnum {
   big = 48,
   extraBig = 72,
 }
+
+export type scheduleType = {
+  dateStart: string;
+  dateEnd: string;
+  supplier: string;
+  Customer: string;
+  SubCustomer: string;
+  countChickens: number;
+  remarks: string;
+  code: number;
+  driver: string;
+  typeSchedule: string;
+};

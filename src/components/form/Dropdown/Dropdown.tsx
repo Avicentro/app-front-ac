@@ -21,7 +21,7 @@ const Dropdown: FC<DropdownProps> = ({
 }) => {
   return (
     <DropdownWrapper>
-      <label htmlFor={name}>{label}</label>
+      <label htmlFor={name}>{label}:</label>
       <select
         name={name}
         id={name}

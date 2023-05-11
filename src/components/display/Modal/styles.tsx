@@ -39,6 +39,7 @@ export const ModalWrapper = styled.div`
     transition: top 0.2s ease-out;
     border-radius: 4px;
     overflow: auto;
+    max-height: 550px;
     &-title {
       text-align: center;
       font: 600 32px Poppins Semibold;
@@ -62,7 +63,7 @@ export const ModalWrapper = styled.div`
 
   .modal-close {
     all: unset;
-    position: absolute;
+    position: fixed;
     cursor: pointer;
     top: 0;
     right: 3%;

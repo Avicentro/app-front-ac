@@ -32,7 +32,6 @@ const DynamicForm: FC<DynamicFormProps> = ({
               return (
                 <ComponentSelector
                   handleChange={(e) => {
-                    console.log("ejecuta el gandle?", e);
                     setValue(name, e);
                   }}
                   mb={mb}

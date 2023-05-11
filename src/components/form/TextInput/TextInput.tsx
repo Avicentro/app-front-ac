@@ -39,7 +39,7 @@ const TextInput: FC<TextInputProps> = ({
   };
   return (
     <TextInputWrapper className="input-container" error={error} mb={mb}>
-      {label && <p className="label">{label}</p>}
+      {label && <p className="label">{label}:</p>}
       <input
         type={type}
         name={name}

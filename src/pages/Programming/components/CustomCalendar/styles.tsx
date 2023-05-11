@@ -1,8 +1,26 @@
 import styled from "styled-components";
+import { MIN_WIDTH_QUERIES } from "../../../../constants/constants";
+
+export const CalendarContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  .button-modify-container {
+    width: 100%;
+    margin-bottom: 24px;
+  }
+  @media ${MIN_WIDTH_QUERIES.TABLET.query} {
+    .button-modify-container {
+      > button {
+        width: 300px;
+        float: right;
+      }
+    }
+  }
+  @media ${MIN_WIDTH_QUERIES.DESKTOP.query} {
+  }
+`;
 
 export const CustomCalendarWrapper = styled.div`
-  width: 920px;
-  height: 736px;
   .fc-event {
     background-color: ${({ theme }) => theme.primary};
     border: 1px solid ${({ theme }) => theme.primary};

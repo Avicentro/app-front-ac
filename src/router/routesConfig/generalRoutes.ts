@@ -12,6 +12,7 @@ const TravelProgramming = lazy(
 const RestProgramming = lazy(
   () => import("../../pages/Programming/pages/RestProgramming/RestProgramming")
 );
+const SignIn = lazy(() => import("../../pages/SignIn/SignIn"));
 
 export const generalRoutes: IRoutes[] = [
   {
@@ -33,5 +34,9 @@ export const generalRoutes: IRoutes[] = [
   {
     path: `${COMPOSED_ROUTES.REST}/:dateSelected`,
     component: RestProgramming,
+  },
+  {
+    path: `${ROUTES.SIGN_IN}`,
+    component: SignIn,
   },
 ];

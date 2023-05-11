@@ -22,7 +22,7 @@ const ToggleButton: FC<ToggleButtonProps> = ({ isActive, handleChange }) => {
   const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setActive((prev) => {
-      handleChange(!prev);
+      handleChange && handleChange(!prev);
       return !prev;
     });
   };

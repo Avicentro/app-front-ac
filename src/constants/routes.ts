@@ -1,6 +1,7 @@
 export const ROUTES = {
   INDEX: "/",
   REST: "/descanso",
+  SIGN_IN: "/sign-in",
   NOT_FOUND: "*",
   LOGIN: "/login",
   TRAVEL: "/viaje",
