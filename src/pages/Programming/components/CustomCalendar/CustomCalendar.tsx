@@ -101,9 +101,9 @@ const CustomCalendar: FC<CustomCalendarProps> = () => {
             supplier,
             Customer,
             SubCustomer,
+            countChickens,
             ...props
           } = schedule;
-          console.log("schedule", schedule);
           return {
             ...props,
             driver: formData[schedule.code],
@@ -112,6 +112,7 @@ const CustomCalendar: FC<CustomCalendarProps> = () => {
             supplier: supplier._id,
             Customer: Customer._id,
             SubCustomer: SubCustomer._id,
+            count: countChickens,
           }; // tener en cuenta ese typeSchedule, debe ser el mismo cuando llega
         }
         return schedule;
