@@ -100,7 +100,7 @@ const Login: FC<LoginProps> = () => {
     <LoginWrapper>
       <section className="brand-container">
         <img src={logoExample} alt="logo-enterprise" width={92} height={92} />
-        <h1 className="name">Appname</h1>
+        <h1 className="name">Prometeo</h1>
       </section>
       <section className="form-container">
         <form onSubmit={handleSubmit(loginUser)}>
