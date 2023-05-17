@@ -35,7 +35,7 @@ const TextInput: FC<TextInputProps> = ({
   mb,
 }) => {
   const onChange = (e: any) => {
-    handleChange(e.target.value);
+    handleChange && handleChange(e.target.value);
   };
   return (
     <TextInputWrapper className="input-container" error={error} mb={mb}>

@@ -32,7 +32,13 @@ const postData = async (payload: any, url: string) => {
   return data;
 };
 
+const patchData = async (payload: any, url: string) => {
+  const { data } = await API_CLIENT.patch(url, payload);
+  return data;
+};
+
 const ApiService = {
+  patchData,
   AuthLogin,
   postData,
   getData,

@@ -12,7 +12,6 @@ export const getYearAndMonthByDate = (dateString: string): string => {
 export const getYearMonthAndDateByDate = (dateString: string): string => {
   const date = new Date(dateString);
   const yearMonthDay = date.toISOString().slice(0, 10);
-  console.log("date.toISOString()", date.toISOString());
   return yearMonthDay;
 };
 export const getYearMonthDateHourByDate = (dateString: string): string => {

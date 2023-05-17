@@ -7,6 +7,9 @@ export const CalendarContainer = styled.div`
   .button-modify-container {
     width: 100%;
     margin-bottom: 24px;
+    display: flex;
+    gap: 12px;
+    justify-content: right;
   }
   @media ${MIN_WIDTH_QUERIES.TABLET.query} {
     .button-modify-container {
@@ -26,8 +29,8 @@ export const CustomCalendarWrapper = styled.div`
     flex-direction: column;
   }
   .fc-event {
-    background-color: ${({ theme }) => theme.primary};
-    border: 1px solid ${({ theme }) => theme.primary};
+    background-color: ${({ theme }) => theme.secondary};
+    border: 1px solid ${({ theme }) => theme.secondary};
   }
   .fc-toolbar-title {
     font: 600 32px Poppins SemiBold;
@@ -57,8 +60,10 @@ export const CustomCalendarWrapper = styled.div`
     }
   }
   .fc-daygrid-event-harness {
-    background-color: ${({ theme }) => theme.primary};
+    background-color: ${({ theme }) => theme.secondary};
     border-radius: 8px;
+    margin-bottom: 4px;
+
     a {
       .fc-daygrid-event-dot {
         border-color: ${({ theme }) => theme.white};

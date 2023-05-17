@@ -14,4 +14,5 @@ export const REGEX_VALIDATION = {
   SHOULD_LETTERS_AND_SPACES: /^[a-zA-Z ]+$/,
   SHOULD_ONLY_NUMBERS: /^[0-9]+$/,
   SHOULD_ONLY_EMAIL: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+  SHOULD_LETTERS_NUMBERS_SPACES: /^[a-zA-Z0-9 ]$/,
 };

@@ -44,7 +44,6 @@ const TravelProgramming: FC<TravelProgrammingProps> = () => {
   const getFormat = () => {
     const daysOfWeek = ["LUN", "MAR", "MIE", "JUE", "VIE", "SAB", "DOM"];
     const dayOfWeekIndex = new Date(dateSelected).getDay();
-    console.log(new Date("2023-05-02").getDay());
     return `${dateSelected} ${daysOfWeek[dayOfWeekIndex]}`;
   };
 

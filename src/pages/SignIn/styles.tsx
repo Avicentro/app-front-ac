@@ -6,6 +6,7 @@ export const SignInWrapper = styled.div`
   padding: 32px;
   overflow: auto;
   grid-column: 1 / -1;
+
   .brand-container {
     display: none;
   }
@@ -32,6 +33,9 @@ export const SignInWrapper = styled.div`
   @media ${MIN_WIDTH_QUERIES.DESKTOP.query} {
     grid-template-columns: repeat(12, 1fr);
     align-self: center;
+    .back-button-container {
+      grid-column: 4 / 7;
+    }
     .form-container {
       grid-column: 1 / -1;
       display: flex;

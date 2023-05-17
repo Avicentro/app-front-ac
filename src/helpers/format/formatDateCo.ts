@@ -19,7 +19,8 @@ export const formatDateCo = ({
     const userTimezoneOffset = dateObject.getTimezoneOffset() * 60000;
     const dateToFormat = new Date(dateObject.getTime() + userTimezoneOffset);
     return new Intl.DateTimeFormat("es-Co", options).format(dateToFormat);
-  } catch {
+  } catch (error) {
+    console.error(error);
     return "Dato no válido";
   }
 };

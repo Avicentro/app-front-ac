@@ -21,7 +21,7 @@ const BackButton: FC<BackButtonProps> = () => {
   };
 
   return (
-    <BackButtonWrapper>
+    <BackButtonWrapper className="back-button-container">
       <Button
         typeButton={typeButtonEnum.stroke}
         extraProps={{ onClick: () => goBack() }}

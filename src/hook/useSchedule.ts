@@ -68,9 +68,9 @@ export const useSaveScheduleData = () => {
 
 export const useReProgrammingMutation = () => {
   return useMutation(async (data) => {
-    const response = await ApiService.postData(
+    const response = await ApiService.patchData(
       { data: data },
-      "/programming/programming"
+      "/programming/rescheduling"
     );
     return response.data;
   });
@@ -94,7 +94,7 @@ export const useWorkingTime = () => {
 export const useAllDriver = (data: any, url: any) => {
   const response = useQuery({
     queryKey: ["allDrivers"],
-    queryFn: async () => await ApiService.getData(data, url),
+    queryFn: async () => await ApiService.getData(data, "/customer/driver"),
     retry: false,
     onError: () => {
       return {
@@ -107,4 +107,28 @@ export const useAllDriver = (data: any, url: any) => {
     },
   });
   return response?.data?.data || [];
+};
+
+export const useAnyByUrl = (
+  data: any,
+  url: any,
+  enabled: boolean,
+  key: string
+) => {
+  const response = useQuery({
+    queryKey: ["key"],
+    queryFn: async () => await ApiService.getData(data, url),
+    retry: false,
+    onError: () => {
+      return {
+        data: {
+          data: [],
+          isSuccess: false,
+          isError: true,
+        },
+      };
+    },
+    enabled,
+  });
+  return response?.data || [];
 };

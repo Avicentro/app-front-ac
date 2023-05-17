@@ -4,7 +4,8 @@ export type typeType =
   | "number"
   | "email"
   | "checkbox"
-  | "radio";
+  | "radio"
+  | "date";
 
 // ENUMS
 export enum typeButtonEnum {
@@ -65,7 +66,7 @@ export type optionsType = {
 
 export type formConfigType = {
   name: string;
-  label: string;
+  label?: string;
   validation?: validationType;
   value: any;
   mb?: number;
@@ -85,10 +86,11 @@ export type defaultValuesType = {
 
 // TEXT INPUT
 export interface TextInputProps {
-  type: typeType;
-  name?: string;
-  value?: any;
-  placeholder: string | number;
+  type?: typeType;
+  name: string;
+  value: any;
+  placeholder?: string | number;
+  handleChange?: (s: any) => any;
   required?: boolean;
   disabled?: boolean;
   readOnly?: boolean;
@@ -101,7 +103,6 @@ export interface TextInputProps {
   autoComplete?: string;
   autoFocus?: boolean;
   form?: string;
-  handleChange: (s: any) => any;
   otherProps?: any;
   label?: string;
   error?: boolean;

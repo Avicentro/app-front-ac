@@ -1,4 +1,4 @@
-import { FC, useCallback, useEffect, useRef, useState } from "react";
+import { FC, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 // Components
@@ -7,7 +7,7 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import esLocale from "@fullcalendar/core/locales/es";
 import ModalContent from "../ModalContent/ModalContent";
-import { Calendar, EventInput } from "@fullcalendar/core";
+import { Calendar, EventInput, formatDate } from "@fullcalendar/core";
 import interactionPlugin from "@fullcalendar/interaction";
 import Modal from "../../../../components/display/Modal/Modal";
 
@@ -30,9 +30,11 @@ import {
   formConfigType,
   scheduleType,
   settingsValidationsStringType,
+  typeButtonEnum,
   typeType,
   typeValidationsType,
 } from "../../../../models";
+import { formatDateWithoutGmt } from "../../../../helpers/format/formatDateWithoutGmt";
 // Icons
 
 interface CustomCalendarProps {}
@@ -43,15 +45,16 @@ const MODAL_CONFIRM_TITLE = "Modificar programación";
 const CustomCalendar: FC<CustomCalendarProps> = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [modalConfirmIsOpen, setModalConfirmIsOpen] = useState(false);
-  const [loginModificateProgramming, setLoginModificateProgramming] =
+  const [loginModifiedProgramming, setLoginModifiedProgramming] =
     useState(false);
   const [dateSelected, setDateSelected] = useState<string | null>(null);
   const [schedules, setSchedules] = useState([]);
-  const [schedulesModificated, setSchedulesModificated] = useState([]);
+  const [schedulesModified, setSchedulesModified] = useState([]);
+  const [viewCalendar, setViewCalendar] = useState("");
   const schedulesDb = useAllSchedules(
     { sort: "code", order: "-1" },
     "2023",
-    loginModificateProgramming
+    loginModifiedProgramming
   );
   const calendarRef = useRef<HTMLDivElement>(null);
   const userIsAdmin = getUserIsAdmin();
@@ -61,12 +64,14 @@ const CustomCalendar: FC<CustomCalendarProps> = () => {
 
   useEffect(() => {
     let localSchedules = schedulesDb?.data?.data || [];
-    localSchedules = localSchedules.map((schedule: any) => ({
-      title: schedule.Customer?.name,
-      start: schedule.dateStart,
-      end: schedule.dateEnd,
-      id: schedule.code,
-    }));
+    localSchedules = localSchedules.map((schedule: any) => {
+      return {
+        title: schedule.Customer?.name,
+        start: schedule.dateStart,
+        end: schedule.dateEnd,
+        id: schedule.code,
+      };
+    });
     setSchedules(localSchedules);
   }, [schedulesDb?.data?.data]);
 
@@ -85,13 +90,23 @@ const CustomCalendar: FC<CustomCalendarProps> = () => {
   }, [userIsAdmin]);
 
   const getInitialViewByRole = useCallback(() => {
-    return userIsAdmin ? "dayGridMonth" : "timeGridDay";
+    let typeOfView;
+    if (userIsAdmin) {
+      typeOfView = "dayGridMonth";
+    } else {
+      typeOfView = "timeGridDay";
+    }
+    return typeOfView;
   }, [userIsAdmin]);
 
+  useEffect(() => {
+    setViewCalendar(getInitialViewByRole());
+  }, [getInitialViewByRole]);
+
   const saveReProgramming = async (formData: any) => {
-    setLoginModificateProgramming(true);
+    setLoginModifiedProgramming(true);
     try {
-      const schedulesWithDriver = schedulesModificated.map((schedule: any) => {
+      const schedulesWithDriver = schedulesModified.map((schedule: any) => {
         if (formData[schedule.code.toString()]) {
           const {
             __v,
@@ -106,21 +121,18 @@ const CustomCalendar: FC<CustomCalendarProps> = () => {
             Customer,
             SubCustomer,
             countChickens,
+            numberForm,
             ...props
           } = schedule;
           return {
             ...props,
-            driver: formData[schedule.code],
-            remarks: "",
-            typeSchedule: type,
-            supplier: supplier._id,
-            Customer: Customer._id,
-            SubCustomer: SubCustomer._id,
-            count: countChickens,
+            remarks: formData[schedule.code],
+            countChickens,
           }; // tener en cuenta ese typeSchedule, debe ser el mismo cuando llega
         }
         return schedule;
       });
+      console.log("schedulesWithDriver", schedulesWithDriver);
       const saveResponse = await reProgrammingMutation.mutateAsync(
         schedulesWithDriver as any
       );
@@ -128,24 +140,24 @@ const CustomCalendar: FC<CustomCalendarProps> = () => {
     } catch (error) {
       console.error(error);
     } finally {
-      setLoginModificateProgramming(false);
+      setLoginModifiedProgramming(false);
       setModalConfirmIsOpen(false);
-      setSchedulesModificated([]);
+      setSchedulesModified([]);
     }
   };
 
   const getFormConfigSchedules = (): formConfigType[] => {
-    return schedulesModificated.map((schedule: scheduleType) => ({
+    return schedulesModified.map((schedule: scheduleType) => ({
       name: schedule.code.toString(),
-      label: `codigo: ${schedule.code} cliente: ${
-        schedule.Customer["name" as any]
-      }`,
+      label: `Escriba aquí la razón del cambio de la programación: codigo: ${
+        schedule.code
+      } cliente: ${schedule.Customer["name" as any]}`,
       value: "",
       type: "text" as typeType,
-      fieldType: fieldTypeEnum.select,
-      placeholder: `codigo: ${schedule.code} cliente: ${
-        schedule.Customer["name" as any]
-      }`,
+      fieldType: fieldTypeEnum.text,
+      placeholder: `Escriba aquí la razón del cambio de la programación: codigo: ${
+        schedule.code
+      } cliente: ${schedule.Customer["name" as any]}`,
       validation: {
         type: "string" as typeValidationsType,
         settings: [
@@ -154,22 +166,32 @@ const CustomCalendar: FC<CustomCalendarProps> = () => {
           },
         ],
       },
-      options: [],
     }));
   };
+
+  const today = useMemo(() => new Date(), []);
+  const previousDay = useMemo(
+    () => new Date(today.getTime() - 24 * 60 * 60 * 1000),
+    [today]
+  ); // Restar un día
+  const nextDay = useMemo(
+    () => new Date(today.getTime() + 24 * 60 * 60 * 1000),
+    [today]
+  );
 
   useEffect(() => {
     const calendarEl = calendarRef.current;
     if (calendarEl) {
       const calendar = new Calendar(calendarEl, {
         plugins: [dayGridPlugin, interactionPlugin, timeGridPlugin, listPlugin],
-        initialView: getInitialViewByRole(),
+        initialView: viewCalendar,
         events: schedules as EventInput[],
         locale: esLocale,
         firstDay: 0,
         height: "auto",
         selectable: true,
         headerToolbar: getHeaderToolbar(),
+        timeZone: "local",
         eventClick: ({ event }) =>
           navigate(`${COMPOSED_ROUTES.SUMMARY_PROGRAMMING}/${event.id}`),
         displayEventEnd: true,
@@ -178,16 +200,13 @@ const CustomCalendar: FC<CustomCalendarProps> = () => {
           setDateSelected(info.dateStr);
         },
         windowResize: () => true,
-        editable: true,
+        editable: viewCalendar === "timeGridDay",
         droppable: true,
         eventOverlap: (stillEvent: any, movingEvent: any) => {
-          if (
-            stillEvent.start < movingEvent.end &&
-            stillEvent.end > movingEvent.start
-          ) {
-            return false;
-          }
-          return true;
+          return (
+            stillEvent.start > movingEvent.end &&
+            stillEvent.end < movingEvent.start
+          );
         },
         eventDrop: (info: any) => {
           const eventFromSchedule = schedulesDb?.data?.data.find(
@@ -200,7 +219,7 @@ const CustomCalendar: FC<CustomCalendarProps> = () => {
           eventFromSchedule["dateEnd"] = info.event.endStr
             .slice(0, 19)
             .replace("T", " ");
-          setSchedulesModificated((prev: any) => {
+          setSchedulesModified((prev: any) => {
             if (eventFromSchedule) {
               let scheduleCleaned = [...prev, eventFromSchedule];
               scheduleCleaned = Object.values(
@@ -214,7 +233,17 @@ const CustomCalendar: FC<CustomCalendarProps> = () => {
             return prev;
           });
         },
-        slotEventOverlap: false,
+
+        viewDidMount: (e) => {
+          setViewCalendar(e.view.type);
+        },
+        views: {
+          timeGrid: {
+            type: "timeGrid",
+            duration: { days: 2 },
+            buttonText: "Día",
+          },
+        },
       });
       calendar.render();
     }
@@ -224,14 +253,23 @@ const CustomCalendar: FC<CustomCalendarProps> = () => {
     getHeaderToolbar,
     schedules,
     schedulesDb?.data?.data,
+    viewCalendar,
+    previousDay,
+    nextDay,
   ]);
 
   return (
     <CalendarContainer>
-      {schedulesModificated.length > 0 && (
+      {schedulesModified.length > 0 && (
         <div className="button-modify-container">
           <Button extraProps={{ onClick: () => setModalConfirmIsOpen(true) }}>
             Modificar programación
+          </Button>
+          <Button
+            typeButton={typeButtonEnum.stroke}
+            extraProps={{ onClick: () => setSchedulesModified([]) }}
+          >
+            Cancelar modificación
           </Button>
         </div>
       )}
@@ -256,7 +294,7 @@ const CustomCalendar: FC<CustomCalendarProps> = () => {
         >
           <ModalConfirmContent
             handleClick={saveReProgramming}
-            loading={loginModificateProgramming}
+            loading={loginModifiedProgramming}
             formConfig={getFormConfigSchedules()}
           />
         </Modal>

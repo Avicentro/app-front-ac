@@ -1,18 +1,13 @@
 import styled from "styled-components";
 
-interface TextInputWrapperProps {
+export interface DatePickerWrapperProps {
   error?: boolean;
-  mb?: number;
 }
 
-export const TextInputWrapper = styled.div<TextInputWrapperProps>`
+export const DatePickerWrapper = styled.div<DatePickerWrapperProps>`
   display: flex;
   flex-direction: column;
   gap: 16px;
-  margin-bottom: ${({ mb }) => (mb ? `${mb}px` : 0)};
-  p {
-    all: unset;
-  }
   input {
     border: 1px solid
       ${({ theme, error }) => (error ? theme.red500 : theme.coolGray300)};

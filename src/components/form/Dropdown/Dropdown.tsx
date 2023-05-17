@@ -21,15 +21,17 @@ const Dropdown: FC<DropdownProps> = ({
 }) => {
   return (
     <DropdownWrapper>
-      <label htmlFor={name}>{label}:</label>
+      {label && <label htmlFor={name}>{label}:</label>}
       <select
         name={name}
         id={name}
         className="select"
-        onChange={(e) => handleChange(e.target.value)}
+        onChange={(e) => handleChange && handleChange(e.target.value)}
       >
         {options?.map(({ label: innerLabel, value: innerValue }) => (
-          <option value={innerValue}>{innerLabel}</option>
+          <option key={innerLabel} value={innerValue}>
+            {innerLabel}
+          </option>
         ))}
       </select>
     </DropdownWrapper>

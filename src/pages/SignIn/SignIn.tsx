@@ -15,6 +15,7 @@ import { sizeButtonEnum } from "../../models";
 import { useSignInMutation } from "../../hook/useSignIn";
 import { formConfig } from "./formConfig/formConfig";
 import { SignInWrapper } from "./styles";
+import BackButton from "../../components/display/BackButton/BackButton";
 
 interface SignInProps {}
 
@@ -36,7 +37,6 @@ const SignIn: FC<SignInProps> = () => {
 
   const createUser = async (data: any) => {
     setLoading(true);
-    console.log("data", data);
     try {
       await createUserMutation.mutateAsync({ ...data, user: data.email });
     } catch (error) {
@@ -48,6 +48,7 @@ const SignIn: FC<SignInProps> = () => {
 
   return (
     <SignInWrapper>
+      <BackButton />
       <section className="form-container">
         <form onSubmit={handleSubmit(createUser)}>
           <h3 className="title">Crear Nueva Cuenta</h3>
