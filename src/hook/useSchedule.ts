@@ -40,7 +40,7 @@ export const useAllSchedules = (
   return useQuery({
     queryKey: ["allSchedules", dependency],
     queryFn: async () =>
-      await ApiService.getData(data, `/schedule/all/${date}`),
+      await ApiService.getData(data, `/Programming/all/${date}`),
     retry: false,
     onError: () => {
       return {
@@ -80,9 +80,9 @@ export const useWorkingTime = () => {
   return useMutation(async (data) => {
     const response = await ApiService.postData(
       {
-        dateInit: "2023-05-11",
+        dateInit: "2023-05-17",
         dateInitHour: 19,
-        dateEnd: "2023-05-12",
+        dateEnd: "2023-05-18",
         dateEndHour: 7,
       },
       "/working-time/create-working-time"

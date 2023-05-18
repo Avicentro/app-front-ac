@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useCallback, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 // Components
@@ -24,6 +24,7 @@ import {
 } from "../../../../constants/form";
 import Button from "../../../../components/form/Button/Button";
 import EntryOrderForm from "./components/EntryOrderForm/EntryOrderForm";
+import { useUpdateProgrammingMutation } from "../../../../hook/useProgramming";
 
 type dataSummaryType = {
   dateStart: string;
@@ -57,8 +58,11 @@ const SummarySchedule: FC<SummaryScheduleProps> = ({ data }) => {
 
   const navigate = useNavigate();
   const { orderId = "" } = useParams();
-
   const { data: scheduling } = useScheduling(orderId, data);
+
+  const updateProgrammingMutation = useUpdateProgrammingMutation(
+    data ? data.code : scheduling?.data?.code
+  );
 
   const backToProgramming = () => {
     navigate(ROUTES.PROGRAMMING);
@@ -67,7 +71,7 @@ const SummarySchedule: FC<SummaryScheduleProps> = ({ data }) => {
   const changeValue = async (data: any) => {
     setLoading(true);
     try {
-      console.log("data", data);
+      await updateProgrammingMutation.mutateAsync(data);
     } catch (error) {
       console.error(error);
     } finally {
@@ -144,43 +148,50 @@ const SummarySchedule: FC<SummaryScheduleProps> = ({ data }) => {
     }[type];
   };
 
-  const getLabelDate = (key: string) => {
-    if (data) {
-      return formatDateCo({
-        date: data[key as keyof dataSummaryType],
-        addHours: true,
-      });
-    }
-    if (scheduling?.data) {
-      return formatDateCo({
-        date: scheduling?.data[key as keyof dataSummaryType],
-        addHours: true,
-      });
-    }
-  };
+  const getLabelDate = useCallback(
+    (key: string) => {
+      if (data && data[key as keyof dataSummaryType]) {
+        return formatDateCo({
+          date: data[key as keyof dataSummaryType],
+          addHours: true,
+        });
+      }
+      if (scheduling?.data && scheduling?.data[key as keyof dataSummaryType]) {
+        return formatDateCo({
+          date: scheduling?.data[key as keyof dataSummaryType],
+          addHours: true,
+        });
+      }
+    },
+    [data, scheduling?.data]
+  );
 
-  const getLabelString = (key: any) => {
-    if (data) {
-      return data[key as keyof dataSummaryType];
-    }
-    if (Array.isArray(key)) {
-      return scheduling?.data[key[0]][key[1]];
-    }
-    return scheduling?.data[key];
-  };
+  const getLabelString = useCallback(
+    (key: any) => {
+      const keyIsArray = Array.isArray(key);
+      if (data) {
+        if (keyIsArray) {
+          return data[key[0] as keyof dataSummaryType][key[1]];
+        }
+        return data[key as keyof dataSummaryType];
+      }
+      if (keyIsArray) {
+        return scheduling?.data[key[0]][key[1]];
+      }
+      return scheduling?.data[key];
+    },
+    [data, scheduling?.data]
+  );
 
-  const getLabelByKey = ({
-    key,
-    type = "string",
-  }: {
-    key: any;
-    type?: string;
-  }) => {
-    return {
-      date: getLabelDate(key),
-      string: getLabelString(key),
-    }[type];
-  };
+  const getLabelByKey = useCallback(
+    ({ key, type = "string" }: { key: any; type?: string }) => {
+      return {
+        date: getLabelDate(key),
+        string: getLabelString(key),
+      }[type];
+    },
+    [getLabelDate, getLabelString]
+  );
 
   const saveData = async (data: any) => {
     try {
@@ -239,13 +250,13 @@ const SummarySchedule: FC<SummaryScheduleProps> = ({ data }) => {
             <p className="title">Cliente: </p>
             <div className="content">
               <EditField
-                label={getLabelByKey({ key: ["Customer", "name"] })}
+                label={getLabelByKey({ key: ["customer", "name"] })}
                 handleChange={changeValue}
                 loading={loading}
                 shouldEdit
                 propsField={getConfigForField({
                   type: "select",
-                  value: getLabelByKey({ key: ["Customer", "name"] }),
+                  value: getLabelByKey({ key: ["customer", "name"] }),
                   name: "customer",
                 })}
                 url="/customer/all"
@@ -256,13 +267,13 @@ const SummarySchedule: FC<SummaryScheduleProps> = ({ data }) => {
             <p className="title">Sub-cliente: </p>
             <div className="content">
               <EditField
-                label={getLabelByKey({ key: ["SubCustomer", "name"] })}
+                label={getLabelByKey({ key: ["subCustomer", "name"] })}
                 handleChange={changeValue}
                 loading={loading}
                 shouldEdit
                 propsField={getConfigForField({
                   type: "select",
-                  value: getLabelByKey({ key: ["SubCustomer", "name"] }),
+                  value: getLabelByKey({ key: ["subCustomer", "name"] }),
                   name: "SubCustomer",
                 })}
                 url="/customer/all"
@@ -297,7 +308,7 @@ const SummarySchedule: FC<SummaryScheduleProps> = ({ data }) => {
           <img src={getLabelByKey({ key: "qr" })} alt="QR Code" />
         </div>
       </section>
-      <section className="buttons-container">
+      {/* <section className="buttons-container">
         {!showForm && (
           <Button
             typeButton={typeButtonEnum.fill}
@@ -306,7 +317,7 @@ const SummarySchedule: FC<SummaryScheduleProps> = ({ data }) => {
             Crear orden de entrada
           </Button>
         )}
-      </section>
+      </section> */}
       {showForm && (
         <section className="form-container">
           <EntryOrderForm handleSubmit={saveData} loading={formLoading} />

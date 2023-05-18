@@ -122,8 +122,8 @@ export type scheduleType = {
   dateStart: string;
   dateEnd: string;
   supplier: string;
-  Customer: string;
-  SubCustomer: string;
+  customer: string;
+  subCustomer: string;
   countChickens: number;
   remarks: string;
   code: number;

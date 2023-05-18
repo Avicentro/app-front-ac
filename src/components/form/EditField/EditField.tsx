@@ -38,6 +38,10 @@ const EditField: FC<EditFieldProps> = ({
   const { data } = useAnyByUrl({}, url, editing, propsField.name);
 
   useEffect(() => {
+    setText(label);
+  }, [label]);
+
+  useEffect(() => {
     if (editing && data) {
       setField((prev: any) => {
         const cloneField = { ...prev };
@@ -96,18 +100,26 @@ const EditField: FC<EditFieldProps> = ({
     <EditFieldWrapper>
       {editing ? (
         <div className="field-container">
-          <ComponentSelector {...field} handleChange={inputChange} />
-          {loading ? (
-            <span>loading</span>
-          ) : (
-            <div className="actions-container">
-              <button onClick={handleConfirm} data-item-type="accent-1">
-                <FontAwesomeIcon icon={faCheck} />
-              </button>
-              <button onClick={handleCancel} data-item-type="accent-2">
-                <FontAwesomeIcon icon={faClose} />
-              </button>
-            </div>
+          <ComponentSelector
+            {...field}
+            value={text}
+            handleChange={inputChange}
+          />
+          {text !== label && (
+            <>
+              {loading ? (
+                <span>loading</span>
+              ) : (
+                <div className="actions-container">
+                  <button onClick={handleConfirm} data-item-type="accent-1">
+                    <FontAwesomeIcon icon={faCheck} />
+                  </button>
+                  <button onClick={handleCancel} data-item-type="accent-2">
+                    <FontAwesomeIcon icon={faClose} />
+                  </button>
+                </div>
+              )}
+            </>
           )}
         </div>
       ) : (
@@ -116,7 +128,7 @@ const EditField: FC<EditFieldProps> = ({
           onMouseEnter={() => shouldEdit && handleMouseEnter()}
           onMouseLeave={() => shouldEdit && handleMouseLeave()}
         >
-          <label>{label}</label>
+          <label>{text}</label>
           <span
             className="pencil-icon-container"
             onClick={() => shouldEdit && handleLabelClick()}

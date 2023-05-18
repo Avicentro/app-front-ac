@@ -20,7 +20,6 @@ export const formatDateCo = ({
     const dateToFormat = new Date(dateObject.getTime() + userTimezoneOffset);
     return new Intl.DateTimeFormat("es-Co", options).format(dateToFormat);
   } catch (error) {
-    console.error(error);
     return "Dato no válido";
   }
 };

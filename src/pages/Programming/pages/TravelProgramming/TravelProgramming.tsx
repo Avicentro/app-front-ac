@@ -61,21 +61,21 @@ const TravelProgramming: FC<TravelProgrammingProps> = () => {
         : [{ label: "No existe la jornada laboral", value: "" }],
     },
     {
-      name: "Customer",
+      name: "customer",
       key: "options",
       value: allCustomers?.data
         ? getAllCustomers(allCustomers?.data)
         : [{ label: "No existen clientes", value: "" }],
     },
     {
-      name: "Supplier",
+      name: "supplier",
       key: "options",
       value: allCustomers?.data
         ? getAllCustomers(allCustomers?.data)
         : [{ label: "No existen Proveedores", value: "" }],
     },
     {
-      name: "SubCustomer",
+      name: "subCustomer",
       key: "options",
       value: allCustomers?.data
         ? getAllCustomers(allCustomers?.data)
@@ -140,9 +140,6 @@ const TravelProgramming: FC<TravelProgrammingProps> = () => {
               >
                 Guardar
               </Button>
-              {/* <button onClick={() => createWorkingTime.mutateAsync()}>
-                CREAR JORNADA
-              </button> */}
             </div>
           </form>
         </>

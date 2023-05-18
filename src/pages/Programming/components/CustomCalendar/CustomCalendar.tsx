@@ -66,7 +66,7 @@ const CustomCalendar: FC<CustomCalendarProps> = () => {
     let localSchedules = schedulesDb?.data?.data || [];
     localSchedules = localSchedules.map((schedule: any) => {
       return {
-        title: schedule.Customer?.name,
+        title: schedule.customer?.name,
         start: schedule.dateStart,
         end: schedule.dateEnd,
         id: schedule.code,
@@ -118,8 +118,8 @@ const CustomCalendar: FC<CustomCalendarProps> = () => {
             nit,
             codeWorkingTime,
             supplier,
-            Customer,
-            SubCustomer,
+            customer,
+            subCustomer,
             countChickens,
             numberForm,
             ...props
@@ -128,15 +128,11 @@ const CustomCalendar: FC<CustomCalendarProps> = () => {
             ...props,
             remarks: formData[schedule.code],
             countChickens,
-          }; // tener en cuenta ese typeSchedule, debe ser el mismo cuando llega
+          };
         }
         return schedule;
       });
-      console.log("schedulesWithDriver", schedulesWithDriver);
-      const saveResponse = await reProgrammingMutation.mutateAsync(
-        schedulesWithDriver as any
-      );
-      console.log("saveResponse", saveResponse);
+      await reProgrammingMutation.mutateAsync(schedulesWithDriver as any);
     } catch (error) {
       console.error(error);
     } finally {
@@ -149,15 +145,15 @@ const CustomCalendar: FC<CustomCalendarProps> = () => {
   const getFormConfigSchedules = (): formConfigType[] => {
     return schedulesModified.map((schedule: scheduleType) => ({
       name: schedule.code.toString(),
-      label: `Escriba aquí la razón del cambio de la programación: codigo: ${
+      label: `Escriba aquí la razón del cambio de la programación, codigo: ${
         schedule.code
-      } cliente: ${schedule.Customer["name" as any]}`,
+      } cliente: ${schedule.customer["name" as any]}`,
       value: "",
       type: "text" as typeType,
       fieldType: fieldTypeEnum.text,
-      placeholder: `Escriba aquí la razón del cambio de la programación: codigo: ${
+      placeholder: `Escriba aquí la razón del cambio de la programación:, codigo: ${
         schedule.code
-      } cliente: ${schedule.Customer["name" as any]}`,
+      } cliente: ${schedule.customer["name" as any]}`,
       validation: {
         type: "string" as typeValidationsType,
         settings: [
@@ -192,8 +188,9 @@ const CustomCalendar: FC<CustomCalendarProps> = () => {
         selectable: true,
         headerToolbar: getHeaderToolbar(),
         timeZone: "local",
-        eventClick: ({ event }) =>
-          navigate(`${COMPOSED_ROUTES.SUMMARY_PROGRAMMING}/${event.id}`),
+        eventClick: ({ event }) => {
+          navigate(`${COMPOSED_ROUTES.SUMMARY_PROGRAMMING}/${event.id}`);
+        },
         displayEventEnd: true,
         dateClick: function (info) {
           setModalIsOpen(true);

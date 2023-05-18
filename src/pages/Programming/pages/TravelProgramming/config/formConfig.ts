@@ -36,7 +36,7 @@ export const formConfig: IConfig[] = [
     options: [],
   },
   {
-    name: "Customer",
+    name: "customer",
     label: "Cliente",
     value: "",
     type: "text",
@@ -53,7 +53,7 @@ export const formConfig: IConfig[] = [
     options: [],
   },
   {
-    name: "Supplier",
+    name: "supplier",
     label: "Provedor",
     value: "",
     type: "text",
@@ -70,7 +70,7 @@ export const formConfig: IConfig[] = [
     options: [],
   },
   {
-    name: "SubCustomer",
+    name: "subCustomer",
     label: "Sub-cliente",
     value: "",
     type: "text",
