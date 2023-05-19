@@ -24,7 +24,11 @@ import {
 } from "../../../../constants/form";
 import Button from "../../../../components/form/Button/Button";
 import EntryOrderForm from "./components/EntryOrderForm/EntryOrderForm";
-import { useUpdateProgrammingMutation } from "../../../../hook/useProgramming";
+import {
+  useCreateOrderEntryMutation,
+  useUpdateProgrammingMutation,
+} from "../../../../hook/useProgramming";
+import EntryOrderTable from "./components/EntryOrderTable/EntryOrderTable";
 
 type dataSummaryType = {
   dateStart: string;
@@ -63,6 +67,7 @@ const SummarySchedule: FC<SummaryScheduleProps> = ({ data }) => {
   const updateProgrammingMutation = useUpdateProgrammingMutation(
     data ? data.code : scheduling?.data?.code
   );
+  const createOrderEntry = useCreateOrderEntryMutation();
 
   const backToProgramming = () => {
     navigate(ROUTES.PROGRAMMING);
@@ -171,14 +176,18 @@ const SummarySchedule: FC<SummaryScheduleProps> = ({ data }) => {
       const keyIsArray = Array.isArray(key);
       if (data) {
         if (keyIsArray) {
-          return data[key[0] as keyof dataSummaryType][key[1]];
+          return data[key[0] as keyof dataSummaryType]
+            ? data[key[0] as keyof dataSummaryType][key[1]]
+            : "-";
         }
-        return data[key as keyof dataSummaryType];
+        return data[key as keyof dataSummaryType] || "-";
       }
       if (keyIsArray) {
-        return scheduling?.data[key[0]][key[1]];
+        return scheduling?.data[key[0]]
+          ? scheduling?.data[key[0]][key[1]]
+          : "-";
       }
-      return scheduling?.data[key];
+      return scheduling?.data[key] || "-";
     },
     [data, scheduling?.data]
   );
@@ -193,12 +202,20 @@ const SummarySchedule: FC<SummaryScheduleProps> = ({ data }) => {
     [getLabelDate, getLabelString]
   );
 
-  const saveData = async (data: any) => {
+  const saveData = async (dataForm: any) => {
+    setFormLoading(true);
     try {
-      console.log("data", data);
+      const dataToSend = {
+        ...dataForm,
+        code: data ? data.code : scheduling?.data?.code,
+        startTime: data ? data.code : scheduling?.data?.dateStart,
+        endTime: data ? data.code : scheduling?.data?.dateEnd,
+      };
+      await createOrderEntry.mutateAsync(dataToSend);
     } catch (error) {
       console.error(error);
     } finally {
+      setFormLoading(false);
     }
   };
 
@@ -298,6 +315,40 @@ const SummarySchedule: FC<SummaryScheduleProps> = ({ data }) => {
             </div>
           </div>
           <div className="schedule-info__text-container">
+            <p className="title">Conductor: </p>
+            <div className="content">
+              <EditField
+                label={getLabelByKey({ key: ["driver", "name"] })}
+                handleChange={changeValue}
+                loading={loading}
+                shouldEdit
+                propsField={getConfigForField({
+                  type: "select",
+                  value: getLabelByKey({ key: ["driver", "name"] }),
+                  name: "driver",
+                })}
+                url="/customer/driver"
+              />
+            </div>
+          </div>
+          <div className="schedule-info__text-container">
+            <p className="title">Ciudad: </p>
+            <div className="content">
+              <EditField
+                label={getLabelByKey({ key: ["city", "name"] })}
+                handleChange={changeValue}
+                loading={loading}
+                shouldEdit
+                propsField={getConfigForField({
+                  type: "select",
+                  value: getLabelByKey({ key: ["city", "name"] }),
+                  name: "city",
+                })}
+                url="/city/city/ATL"
+              />
+            </div>
+          </div>
+          <div className="schedule-info__text-container">
             <p className="title">Fecha: </p>
             <div className="content">
               {getLabelByKey({ key: "dateStart", type: "date" })}
@@ -317,12 +368,13 @@ const SummarySchedule: FC<SummaryScheduleProps> = ({ data }) => {
             Crear orden de entrada
           </Button>
         )}
-      </section> */}
+      </section>
       {showForm && (
         <section className="form-container">
           <EntryOrderForm handleSubmit={saveData} loading={formLoading} />
         </section>
       )}
+      <EntryOrderTable /> */}
     </SummaryScheduleWrapper>
   );
 };

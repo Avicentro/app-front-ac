@@ -46,7 +46,6 @@ const EditField: FC<EditFieldProps> = ({
       setField((prev: any) => {
         const cloneField = { ...prev };
         if (cloneField.fieldType === "select") {
-          console.log("data", data);
           cloneField["options"] = [
             {
               label: "Seleccione",
@@ -54,7 +53,7 @@ const EditField: FC<EditFieldProps> = ({
             },
             ...data?.map((client: any) => ({
               label: client.name,
-              value: client._id,
+              value: propsField.name === "city" ? client.cityId : client._id,
             })),
           ];
           return cloneField;
@@ -74,7 +73,7 @@ const EditField: FC<EditFieldProps> = ({
 
   const handleConfirm = () => {
     if (text !== label) {
-      handleChange({ [field.name]: text });
+      handleChange({ [field.name]: propsField.name === "city" ? +text : text });
     }
     setEditing(false);
   };

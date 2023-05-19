@@ -60,8 +60,8 @@ export enum fieldTypeEnum {
 }
 
 export type optionsType = {
-  label: string;
-  value: string;
+  label: string | number;
+  value: any;
 };
 
 export type formConfigType = {

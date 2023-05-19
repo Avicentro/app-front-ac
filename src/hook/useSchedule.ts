@@ -18,7 +18,7 @@ export const useScheduling = (orderId: string, data: any) => {
   return useQuery({
     queryKey: ["scheduling"],
     queryFn: async () =>
-      await ApiService.getData({}, `/schedule/find/${orderId}`),
+      await ApiService.getData({}, `/programming/find/${orderId}`),
     retry: false,
     enabled: !data,
   });

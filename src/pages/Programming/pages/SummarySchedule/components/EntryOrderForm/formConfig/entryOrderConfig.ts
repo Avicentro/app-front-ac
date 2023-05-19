@@ -1,8 +1,8 @@
 import {
   FEEDBACK_MESSAGES,
   REGEX_VALIDATION,
-} from "../../../../../../constants/form";
-import { fieldTypeEnum, IConfig } from "../../../../../../models";
+} from "../../../../../../../constants/form";
+import { fieldTypeEnum, IConfig } from "../../../../../../../models";
 
 export const entryOrderConfig: IConfig[] = [
   {
@@ -159,10 +159,6 @@ export const entryOrderConfig: IConfig[] = [
       settings: [
         {
           type: "required",
-        },
-        {
-          type: "matches",
-          regex: REGEX_VALIDATION.SHOULD_LETTERS_NUMBERS_SPACES,
         },
       ],
     },

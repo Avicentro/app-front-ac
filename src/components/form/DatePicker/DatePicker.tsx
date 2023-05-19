@@ -21,7 +21,12 @@ const DatePicker: FC<DatePickerProps> = ({ label, handleChange, value }) => {
   return (
     <DatePickerWrapper>
       {label && <label htmlFor="date">{label}:</label>}
-      <input type="date" id="date" value={selectedDate} onChange={dateChange} />
+      <input
+        type="datetime-local"
+        id="date"
+        value={selectedDate}
+        onChange={dateChange}
+      />
     </DatePickerWrapper>
   );
 };

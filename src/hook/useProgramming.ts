@@ -13,3 +13,14 @@ export const useUpdateProgrammingMutation = (code: string) => {
     return response.data;
   });
 };
+
+// Post
+export const useCreateOrderEntryMutation = () => {
+  return useMutation(async (data) => {
+    const response = await ApiService.postData(
+      data,
+      `/order-entry/create-orden-entry`
+    );
+    return response.data;
+  });
+};
