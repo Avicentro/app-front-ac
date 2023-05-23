@@ -1,16 +1,11 @@
 import styled from "styled-components";
 
-export const EntryOrderTableWrapper = styled.div`
+export const MainDataWrapper = styled.table`
   body {
     font: 400 14px Poppins Regular;
   }
-  .table-container {
-    margin-bottom: 24px;
-  }
-  table {
-    border-collapse: collapse;
-    width: 100%;
-  }
+  border-collapse: collapse;
+  width: 100%;
   th,
   td {
     border: 1px solid black;

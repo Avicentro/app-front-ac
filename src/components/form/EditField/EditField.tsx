@@ -127,7 +127,7 @@ const EditField: FC<EditFieldProps> = ({
           onMouseEnter={() => shouldEdit && handleMouseEnter()}
           onMouseLeave={() => shouldEdit && handleMouseLeave()}
         >
-          <label>{text}</label>
+          <label>{!!text ? text : "-"}</label>
           <span
             className="pencil-icon-container"
             onClick={() => shouldEdit && handleLabelClick()}

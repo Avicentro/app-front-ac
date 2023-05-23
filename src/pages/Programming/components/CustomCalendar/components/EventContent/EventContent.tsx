@@ -13,7 +13,6 @@ interface EventContentProps {
 }
 
 function EventContent({ event }: { event: any }) {
-  console.log("event", event);
   return <EventContentWrapper>{event.title}</EventContentWrapper>;
 }
 

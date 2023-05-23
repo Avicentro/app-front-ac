@@ -63,7 +63,6 @@ const SignIn: FC<SignInProps> = () => {
             mb={28}
             sizeButton={sizeButtonEnum.extraBig}
             loading={loading}
-            extraProps={{ onClick: () => console.log(getValues()) }}
           >
             Crear cuenta {"->"}
           </Button>

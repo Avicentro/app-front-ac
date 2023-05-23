@@ -36,8 +36,13 @@ const patchData = async (payload: any, url: string) => {
   const { data } = await API_CLIENT.patch(url, payload);
   return data;
 };
+const deleteData = async (url: string) => {
+  const { data } = await API_CLIENT.delete(url);
+  return data;
+};
 
 const ApiService = {
+  deleteData,
   patchData,
   AuthLogin,
   postData,

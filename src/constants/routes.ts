@@ -7,6 +7,7 @@ export const ROUTES = {
   TRAVEL: "/viaje",
   PROGRAMMING: "/programacion",
   SUMMARY: "/resumen",
+  ORDER_ENTRY: "/orden-de-entrada",
 };
 
 export const COMPOSED_ROUTES = {

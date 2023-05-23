@@ -132,3 +132,11 @@ export const useAnyByUrl = (
   });
   return response?.data || [];
 };
+
+//DELETE
+export const useDeleteScheduleMutate = () => {
+  return useMutation(async (id) => {
+    const response = await ApiService.deleteData(`/schedule/delete/${id}`);
+    return response;
+  });
+};

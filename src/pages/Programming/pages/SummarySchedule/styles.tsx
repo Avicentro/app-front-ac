@@ -51,7 +51,7 @@ export const SummaryScheduleWrapper = styled.div`
     gap: 16px;
   }
   @media ${MIN_WIDTH_QUERIES.TABLET.query} {
-    grid-column: 3 / 10;
+    grid-column: 2 / 12;
     .schedule-info {
       flex-direction: row;
     }

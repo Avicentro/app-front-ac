@@ -10,7 +10,10 @@ import { SummaryScheduleWrapper } from "./styles";
 
 // helpers
 import { ROUTES } from "../../../../constants/routes";
-import { useScheduling } from "../../../../hook/useSchedule";
+import {
+  useDeleteScheduleMutate,
+  useScheduling,
+} from "../../../../hook/useSchedule";
 import { formatDateCo } from "../../../../helpers/format/formatDateCo";
 import {
   fieldTypeEnum,
@@ -28,7 +31,8 @@ import {
   useCreateOrderEntryMutation,
   useUpdateProgrammingMutation,
 } from "../../../../hook/useProgramming";
-import EntryOrderTable from "./components/EntryOrderTable/EntryOrderTable";
+
+import Modal from "../../../../components/display/Modal/Modal";
 
 type dataSummaryType = {
   dateStart: string;
@@ -49,29 +53,32 @@ type dataSummaryType = {
   __v: number;
   idCustomer: any;
   idSubCustomer: any;
+  orderEntryExist: boolean;
 };
 
 interface SummaryScheduleProps {
   data?: dataSummaryType;
 }
 
+const MODAL_CONFIRM_TITLE =
+  "¿Estas seguro que deseas eliminar la programación?";
+
 const SummarySchedule: FC<SummaryScheduleProps> = ({ data }) => {
   const [loading, setLoading] = useState(false);
+  const [loadingDelete, setLoadingDelete] = useState(false);
   const [formLoading, setFormLoading] = useState(false);
   const [showForm, setShowForm] = useState(false);
+  const [modalConfirmDelete, setModalConfirmDelete] = useState(false);
 
   const navigate = useNavigate();
   const { orderId = "" } = useParams();
-  const { data: scheduling } = useScheduling(orderId, data);
+  const { data: scheduling, refetch } = useScheduling(orderId, data);
+  const useDeleteSchedule = useDeleteScheduleMutate();
 
   const updateProgrammingMutation = useUpdateProgrammingMutation(
     data ? data.code : scheduling?.data?.code
   );
   const createOrderEntry = useCreateOrderEntryMutation();
-
-  const backToProgramming = () => {
-    navigate(ROUTES.PROGRAMMING);
-  };
 
   const changeValue = async (data: any) => {
     setLoading(true);
@@ -216,6 +223,61 @@ const SummarySchedule: FC<SummaryScheduleProps> = ({ data }) => {
       console.error(error);
     } finally {
       setFormLoading(false);
+      refetch();
+    }
+  };
+
+  const goToOrderEntry = (id: string) => {
+    return navigate(`${ROUTES.ORDER_ENTRY}/${id}`);
+  };
+
+  const getButtonIfOrderEntryCreated = () => {
+    if (data) {
+      if (data?.orderEntryExist) {
+        return (
+          <Button
+            typeButton={typeButtonEnum.fill}
+            extraProps={{ onClick: () => goToOrderEntry(data.code.toString()) }}
+          >
+            Ir a la orden de entrada
+          </Button>
+        );
+      }
+    }
+    if (scheduling?.data?.orderEntryExist) {
+      return (
+        <Button
+          typeButton={typeButtonEnum.fill}
+          extraProps={{
+            onClick: () => goToOrderEntry(scheduling?.data?.code),
+          }}
+        >
+          Ir a la orden de entrada
+        </Button>
+      );
+    }
+    if (!showForm) {
+      return (
+        <Button
+          typeButton={typeButtonEnum.stroke}
+          extraProps={{ onClick: () => setShowForm(true) }}
+        >
+          Crear orden de entrada
+        </Button>
+      );
+    }
+  };
+
+  const deleteSchedule = async () => {
+    const codeToDelete = data ? data.code : scheduling?.data?.code;
+    setLoadingDelete(true);
+    try {
+      await useDeleteSchedule.mutateAsync(codeToDelete);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoadingDelete(false);
+      navigate(ROUTES.PROGRAMMING);
     }
   };
 
@@ -359,22 +421,35 @@ const SummarySchedule: FC<SummaryScheduleProps> = ({ data }) => {
           <img src={getLabelByKey({ key: "qr" })} alt="QR Code" />
         </div>
       </section>
-      {/* <section className="buttons-container">
-        {!showForm && (
-          <Button
-            typeButton={typeButtonEnum.fill}
-            extraProps={{ onClick: () => setShowForm(true) }}
-          >
-            Crear orden de entrada
-          </Button>
-        )}
+      <section className="buttons-container">
+        {getButtonIfOrderEntryCreated()}
+        <Button
+          typeButton={typeButtonEnum.stroke}
+          extraProps={{ onClick: () => setModalConfirmDelete(true) }}
+        >
+          Cancelar Programación
+        </Button>
       </section>
+      <Modal
+        open={modalConfirmDelete}
+        title={MODAL_CONFIRM_TITLE}
+        handleClose={() => {
+          setModalConfirmDelete(false);
+        }}
+        closeOutSideClick={true}
+      >
+        <Button
+          typeButton={typeButtonEnum.fill}
+          extraProps={{ onClick: () => deleteSchedule() }}
+        >
+          Cancelar
+        </Button>
+      </Modal>
       {showForm && (
         <section className="form-container">
           <EntryOrderForm handleSubmit={saveData} loading={formLoading} />
         </section>
       )}
-      <EntryOrderTable /> */}
     </SummaryScheduleWrapper>
   );
 };
