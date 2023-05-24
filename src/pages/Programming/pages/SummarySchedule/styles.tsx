@@ -49,6 +49,7 @@ export const SummaryScheduleWrapper = styled.div`
   .buttons-container {
     display: flex;
     gap: 16px;
+    margin-bottom: 32px;
   }
   @media ${MIN_WIDTH_QUERIES.TABLET.query} {
     grid-column: 2 / 12;
