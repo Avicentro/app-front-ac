@@ -28,7 +28,6 @@ const SignIn: FC<SignInProps> = () => {
     control,
     setValue,
     handleSubmit,
-    getValues,
     formState: { errors },
   } = useForm({
     defaultValues: getDefaultValuesByConfig(formConfig),

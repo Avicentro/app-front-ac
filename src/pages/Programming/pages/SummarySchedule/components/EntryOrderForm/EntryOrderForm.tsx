@@ -16,7 +16,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import Dropdown from "../../../../../../components/form/Dropdown/Dropdown";
 import { createArrayOfNumbersForSelect } from "../../../../../../helpers/createData/createArrayOfNumbersForSelect";
 import { weighingConfig } from "./formConfig/weighingConfig";
-import ComponentSelector from "../../../../../../components/form/DynamicForm/components/ComponentSelector/ComponentSelector";
 import TextInput from "../../../../../../components/form/TextInput/TextInput";
 
 interface EntryOrderFormProps {

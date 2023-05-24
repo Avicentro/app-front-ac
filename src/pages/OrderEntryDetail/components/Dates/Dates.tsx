@@ -1,7 +1,6 @@
 import { FC } from "react";
 import { formatDateCo } from "../../../../helpers/format/formatDateCo";
-import { Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
-import { theme } from "../../../../static/styles/theme";
+import { Text, View } from "@react-pdf/renderer";
 
 // Components
 
@@ -17,107 +16,8 @@ interface DatesProps {
 }
 
 const Dates: FC<DatesProps> = ({ orderEntry }) => {
-  const styles = StyleSheet.create({
-    body: {},
-    table: {
-      width: "100%",
-      borderWidth: 1,
-      borderColor: "black",
-      marginBottom: 10,
-    },
-    tableRow: {
-      flexDirection: "row",
-    },
-    tableCol: {
-      flex: 1,
-      borderWidth: 1,
-      borderColor: "black",
-      padding: 5,
-    },
-    tableCell: {
-      fontSize: 12,
-    },
-    titleCell: {
-      color: theme.white,
-      backgroundColor: theme.primaryDarkMode,
-    },
-  });
   return (
     <DatesWrapper>
-      {/* <tbody>
-        <tr>
-          <td colSpan={1} className="title">
-            <div className="description-container ">
-              <span className="description">Hora de iniciación</span>
-            </div>
-          </td>
-          <td colSpan={7}>
-            <div className="description-container">
-              <span className="description">
-                {formatDateCo({
-                  date: orderEntry?.dataOrdenEntry?.dateTimesOrderEntry
-                    ?.startTime,
-                  addHours: true,
-                })}
-              </span>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td colSpan={1} className="title">
-            <div className="description-container ">
-              <span className="description">Hora programada</span>
-            </div>
-          </td>
-          <td colSpan={7}>
-            <div className="description-container">
-              <span className="description">
-                {formatDateCo({
-                  date: orderEntry?.dataOrdenEntry?.dateTimesOrderEntry
-                    ?.programmingTime,
-                  addHours: true,
-                })}
-              </span>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td colSpan={1} className="title">
-            <div className="description-container ">
-              <span className="description">Hora de llegada</span>
-            </div>
-          </td>
-          <td colSpan={7}>
-            <div className="description-container">
-              <span className="description">
-                {formatDateCo({
-                  date: orderEntry?.dataOrdenEntry?.dateTimesOrderEntry
-                    ?.arrivalTime,
-                  addHours: true,
-                })}
-              </span>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td colSpan={1} className="title">
-            <div className="description-container ">
-              <span className="description">Hora de finalización</span>
-            </div>
-          </td>
-          <td colSpan={7}>
-            <div className="description-container">
-              <span className="description">
-                {formatDateCo({
-                  date: orderEntry?.dataOrdenEntry?.dateTimesOrderEntry
-                    ?.endTime,
-                  addHours: true,
-                })}
-              </span>
-            </div>
-          </td>
-        </tr>
-      </tbody> */}
       <View style={pdfStyles.table}>
         {/* Row 1 */}
         <View style={pdfStyles.tableRow}>

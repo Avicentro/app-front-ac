@@ -8,7 +8,7 @@ import { TextInputWrapper } from "./styles";
 // helpers
 
 // Model
-import { TextInputProps, typeType } from "../../../models";
+import { TextInputProps } from "../../../models";
 
 const TextInput: FC<TextInputProps> = ({
   type = "text",

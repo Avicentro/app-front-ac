@@ -5,7 +5,6 @@ import { Document, Page, PDFViewer } from "@react-pdf/renderer";
 import Dates from "./components/Dates/Dates";
 import MainData from "./components/MainData/MainData";
 import Remissions from "./components/Remissions/Remissions";
-import ExportButton from "./components/ExportPdfButton/ExportPdfButton";
 import ChickensDetails from "./components/ChickensDetails/ChickensDetails";
 import BackButton from "../../components/display/BackButton/BackButton";
 
@@ -57,14 +56,8 @@ const OrderEntryDetail: FC<OrderEntryDetailProps> = () => {
               </Document>
             </PDFViewer>
           </div>
-          {/* <div className="chickensDetails">
-            <ChickensDetails orderEntry={data} />
-          </div> */}
-          <div className="remissions"></div>
-          <div className="dates"></div>
         </div>
       )}
-      <ExportButton />
     </OrderEntryDetailWrapper>
   );
 };

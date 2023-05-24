@@ -28,7 +28,7 @@ interface LoginProps {}
 
 const Login: FC<LoginProps> = () => {
   const [loading, setLoading] = useState(false);
-  const [needRememberUser, setNeedRememberUser] = useState(true);
+  const [needRememberUser] = useState(true);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -51,10 +51,6 @@ const Login: FC<LoginProps> = () => {
       return navigate(ROUTES.PROGRAMMING);
     }
   }, [navigate, dispatch]);
-
-  const setRememberUser = (isActive: boolean) => {
-    setNeedRememberUser(isActive);
-  };
 
   const decodedToken = (token: string) => {
     const [, payloadEncoded] = token.split(".");

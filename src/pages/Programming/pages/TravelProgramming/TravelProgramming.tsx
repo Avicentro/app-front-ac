@@ -20,12 +20,11 @@ import { getAvailableSchedulesList } from "./helpers/getAvailableSchedulesList";
 
 // Hooks
 import { useForm } from "react-hook-form";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useAllCustomers, useWorkingTime } from "../../../../hook/useSchedule";
+import { useAllCustomers } from "../../../../hook/useSchedule";
 import { useSaveScheduleData } from "../../../../hook/useSchedule";
 import { useAvailableSchedules } from "../../../../hook/useSchedule";
-import { ROUTES } from "../../../../constants/routes";
 
 interface TravelProgrammingProps {}
 
@@ -36,12 +35,10 @@ const TravelProgramming: FC<TravelProgrammingProps> = () => {
 
   const { dateSelected = "none" } = useParams();
   const saveScheduleData = useSaveScheduleData();
-  const createWorkingTime = useWorkingTime();
   const { data: availableSchedules } = useAvailableSchedules({
     date: dateSelected,
   });
   const { data: allCustomers } = useAllCustomers();
-  const navigate = useNavigate();
 
   const getFormat = () => {
     const daysOfWeek = ["LUN", "MAR", "MIE", "JUE", "VIE", "SAB", "DOM"];

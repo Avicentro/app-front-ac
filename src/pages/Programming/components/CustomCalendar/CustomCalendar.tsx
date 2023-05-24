@@ -7,7 +7,7 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import esLocale from "@fullcalendar/core/locales/es";
 import ModalContent from "../ModalContent/ModalContent";
-import { Calendar, EventInput, formatDate } from "@fullcalendar/core";
+import { Calendar, EventInput } from "@fullcalendar/core";
 import interactionPlugin from "@fullcalendar/interaction";
 import Modal from "../../../../components/display/Modal/Modal";
 
@@ -15,11 +15,9 @@ import Modal from "../../../../components/display/Modal/Modal";
 import { CalendarContainer, CustomCalendarWrapper } from "./styles";
 
 // helpers
-import { getRangeDatesByViewType } from "./helpers";
 import {
   useAllSchedules,
   useReProgrammingMutation,
-  useWorkingTime,
 } from "../../../../hook/useSchedule";
 import { COMPOSED_ROUTES } from "../../../../constants/routes";
 import { getUserIsAdmin } from "../../../../helpers/getData/getUserIsAdmin";
@@ -34,7 +32,6 @@ import {
   typeType,
   typeValidationsType,
 } from "../../../../models";
-import { formatDateWithoutGmt } from "../../../../helpers/format/formatDateWithoutGmt";
 // Icons
 
 interface CustomCalendarProps {}
@@ -59,7 +56,6 @@ const CustomCalendar: FC<CustomCalendarProps> = () => {
   const calendarRef = useRef<HTMLDivElement>(null);
   const userIsAdmin = getUserIsAdmin();
   const reProgrammingMutation = useReProgrammingMutation();
-  const workingTime = useWorkingTime();
   const navigate = useNavigate();
 
   useEffect(() => {

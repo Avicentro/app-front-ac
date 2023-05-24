@@ -1,6 +1,5 @@
 import { FC, ReactNode, useEffect, useState } from "react";
 import { ChildrenContainer } from "../components/genericStyles";
-import Footer from "./components/Footer/Footer";
 import Header from "./components/Header/Header";
 import SideMenu from "./components/SideMenu/SideMenu";
 import { LayoutWrapper } from "./styles";

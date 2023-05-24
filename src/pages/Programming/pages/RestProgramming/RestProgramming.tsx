@@ -19,7 +19,6 @@ interface RestProgrammingProps {}
 const RestProgramming: FC<RestProgrammingProps> = () => {
   const {
     control,
-    handleSubmit,
     setValue,
     formState: { errors },
   } = useForm({

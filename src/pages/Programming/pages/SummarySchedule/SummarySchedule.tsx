@@ -441,6 +441,7 @@ const SummarySchedule: FC<SummaryScheduleProps> = ({ data }) => {
         <Button
           typeButton={typeButtonEnum.fill}
           extraProps={{ onClick: () => deleteSchedule() }}
+          loading={loadingDelete}
         >
           Cancelar
         </Button>
