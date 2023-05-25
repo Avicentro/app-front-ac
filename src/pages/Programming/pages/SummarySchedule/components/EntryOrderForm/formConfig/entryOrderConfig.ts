@@ -112,27 +112,6 @@ export const entryOrderConfig: IConfig[] = [
     },
   },
   {
-    name: "goodChickens",
-    label: "Pollos en pie",
-    value: "",
-    type: "number",
-    fieldType: fieldTypeEnum.text,
-    placeholder: "Pollos en pie",
-    validation: {
-      type: "string",
-      settings: [
-        {
-          type: "required",
-        },
-        {
-          type: "matches",
-          message: FEEDBACK_MESSAGES.ONLY_NUMBERS,
-          regex: REGEX_VALIDATION.SHOULD_ONLY_NUMBERS,
-        },
-      ],
-    },
-  },
-  {
     name: "hookStart",
     label: "Gancho inicial",
     value: "",
