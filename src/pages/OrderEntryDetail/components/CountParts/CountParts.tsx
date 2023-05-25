@@ -17,11 +17,11 @@ interface CountPartsProps {
 const CountParts: FC<CountPartsProps> = ({ chickenComponents }) => {
   return (
     <CountPartsWrapper>
-      <View style={pdfStyles.table}>
+      <View style={pdfStyles.table} wrap={false}>
         <View style={pdfStyles.tableRow}>
           <View style={pdfStyles.tableCol}>
             <Text style={[pdfStyles.tableCell, pdfStyles.titleCell]}>
-              Corazón
+              Corazones
             </Text>
           </View>
           <View style={pdfStyles.tableCol}>
@@ -31,7 +31,7 @@ const CountParts: FC<CountPartsProps> = ({ chickenComponents }) => {
         <View style={pdfStyles.tableRow}>
           <View style={pdfStyles.tableCol}>
             <Text style={[pdfStyles.tableCell, pdfStyles.titleCell]}>
-              Hígado
+              Hígados
             </Text>
           </View>
           <View style={pdfStyles.tableCol}>
@@ -53,53 +53,7 @@ const CountParts: FC<CountPartsProps> = ({ chickenComponents }) => {
         <View style={pdfStyles.tableRow}>
           <View style={pdfStyles.tableCol}>
             <Text style={[pdfStyles.tableCell, pdfStyles.titleCell]}>
-              Intestino grueso
-            </Text>
-          </View>
-          <View style={pdfStyles.tableCol}>
-            <Text style={[pdfStyles.tableCell]}>
-              {chickenComponents.largeIntestine}
-            </Text>
-          </View>
-        </View>
-        <View style={pdfStyles.tableRow}>
-          <View style={pdfStyles.tableCol}>
-            <Text style={[pdfStyles.tableCell, pdfStyles.titleCell]}>
-              intestino delgado
-            </Text>
-          </View>
-          <View style={pdfStyles.tableCol}>
-            <Text style={[pdfStyles.tableCell]}>
-              {chickenComponents.smallIntestine}
-            </Text>
-          </View>
-        </View>
-        <View style={pdfStyles.tableRow}>
-          <View style={pdfStyles.tableCol}>
-            <Text style={[pdfStyles.tableCell, pdfStyles.titleCell]}>
-              Riñones
-            </Text>
-          </View>
-          <View style={pdfStyles.tableCol}>
-            <Text style={[pdfStyles.tableCell]}>
-              {chickenComponents.kidneys}
-            </Text>
-          </View>
-        </View>
-        <View style={pdfStyles.tableRow}>
-          <View style={pdfStyles.tableCol}>
-            <Text style={[pdfStyles.tableCell, pdfStyles.titleCell]}>
-              Pulmones
-            </Text>
-          </View>
-          <View style={pdfStyles.tableCol}>
-            <Text style={[pdfStyles.tableCell]}>{chickenComponents.lungs}</Text>
-          </View>
-        </View>
-        <View style={pdfStyles.tableRow}>
-          <View style={pdfStyles.tableCol}>
-            <Text style={[pdfStyles.tableCell, pdfStyles.titleCell]}>
-              cabeza
+              cabezas
             </Text>
           </View>
           <View style={pdfStyles.tableCol}>
@@ -108,44 +62,8 @@ const CountParts: FC<CountPartsProps> = ({ chickenComponents }) => {
         </View>
         <View style={pdfStyles.tableRow}>
           <View style={pdfStyles.tableCol}>
-            <Text style={[pdfStyles.tableCell, pdfStyles.titleCell]}>Pico</Text>
-          </View>
-          <View style={pdfStyles.tableCol}>
-            <Text style={[pdfStyles.tableCell]}>{chickenComponents.peak}</Text>
-          </View>
-        </View>
-        <View style={pdfStyles.tableRow}>
-          <View style={pdfStyles.tableCol}>
-            <Text style={[pdfStyles.tableCell, pdfStyles.titleCell]}>Ojos</Text>
-          </View>
-          <View style={pdfStyles.tableCol}>
-            <Text style={[pdfStyles.tableCell]}>{chickenComponents.eyes}</Text>
-          </View>
-        </View>
-        <View style={pdfStyles.tableRow}>
-          <View style={pdfStyles.tableCol}>
             <Text style={[pdfStyles.tableCell, pdfStyles.titleCell]}>
-              Cresta
-            </Text>
-          </View>
-          <View style={pdfStyles.tableCol}>
-            <Text style={[pdfStyles.tableCell]}>{chickenComponents.ridge}</Text>
-          </View>
-        </View>
-        <View style={pdfStyles.tableRow}>
-          <View style={pdfStyles.tableCol}>
-            <Text style={[pdfStyles.tableCell, pdfStyles.titleCell]}>
-              Barbilla
-            </Text>
-          </View>
-          <View style={pdfStyles.tableCol}>
-            <Text style={[pdfStyles.tableCell]}>{chickenComponents.chins}</Text>
-          </View>
-        </View>
-        <View style={pdfStyles.tableRow}>
-          <View style={pdfStyles.tableCol}>
-            <Text style={[pdfStyles.tableCell, pdfStyles.titleCell]}>
-              Cuello
+              Cuellos
             </Text>
           </View>
           <View style={pdfStyles.tableCol}>
@@ -155,55 +73,13 @@ const CountParts: FC<CountPartsProps> = ({ chickenComponents }) => {
         <View style={pdfStyles.tableRow}>
           <View style={pdfStyles.tableCol}>
             <Text style={[pdfStyles.tableCell, pdfStyles.titleCell]}>
-              Espalda
-            </Text>
-          </View>
-          <View style={pdfStyles.tableCol}>
-            <Text style={[pdfStyles.tableCell]}>{chickenComponents.back}</Text>
-          </View>
-        </View>
-        <View style={pdfStyles.tableRow}>
-          <View style={pdfStyles.tableCol}>
-            <Text style={[pdfStyles.tableCell, pdfStyles.titleCell]}>
-              Pecho
+              Pechugas
             </Text>
           </View>
           <View style={pdfStyles.tableCol}>
             <Text style={[pdfStyles.tableCell]}>
               {chickenComponents.breast}
             </Text>
-          </View>
-        </View>
-        <View style={pdfStyles.tableRow}>
-          <View style={pdfStyles.tableCol}>
-            <Text style={[pdfStyles.tableCell, pdfStyles.titleCell]}>
-              abdomen
-            </Text>
-          </View>
-          <View style={pdfStyles.tableCol}>
-            <Text style={[pdfStyles.tableCell]}>
-              {chickenComponents.abdomen}
-            </Text>
-          </View>
-        </View>
-        <View style={pdfStyles.tableRow}>
-          <View style={pdfStyles.tableCol}>
-            <Text style={[pdfStyles.tableCell, pdfStyles.titleCell]}>
-              Alcantarilla
-            </Text>
-          </View>
-          <View style={pdfStyles.tableCol}>
-            <Text style={[pdfStyles.tableCell]}>{chickenComponents.sewer}</Text>
-          </View>
-        </View>
-        <View style={pdfStyles.tableRow}>
-          <View style={pdfStyles.tableCol}>
-            <Text style={[pdfStyles.tableCell, pdfStyles.titleCell]}>
-              Cadera
-            </Text>
-          </View>
-          <View style={pdfStyles.tableCol}>
-            <Text style={[pdfStyles.tableCell]}>{chickenComponents.anca}</Text>
           </View>
         </View>
         <View style={pdfStyles.tableRow}>
@@ -234,16 +110,6 @@ const CountParts: FC<CountPartsProps> = ({ chickenComponents }) => {
           </View>
           <View style={pdfStyles.tableCol}>
             <Text style={[pdfStyles.tableCell]}>{chickenComponents.legs}</Text>
-          </View>
-        </View>
-        <View style={pdfStyles.tableRow}>
-          <View style={pdfStyles.tableCol}>
-            <Text style={[pdfStyles.tableCell, pdfStyles.titleCell]}>
-              Dedos
-            </Text>
-          </View>
-          <View style={pdfStyles.tableCol}>
-            <Text style={[pdfStyles.tableCell]}>{chickenComponents.toes}</Text>
           </View>
         </View>
       </View>

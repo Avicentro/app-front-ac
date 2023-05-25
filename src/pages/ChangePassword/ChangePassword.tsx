@@ -2,11 +2,12 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { FC, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Button from "../../components/form/Button/Button";
 import DynamicForm from "../../components/form/DynamicForm/DynamicForm";
 import { createSchemaByConfig } from "../../components/form/DynamicForm/helpers/createSchemaByConfig";
 import { getDefaultValuesByConfig } from "../../components/form/DynamicForm/helpers/getDefaultValuesByConfig";
+import { ROUTES } from "../../constants/routes";
 import { useChangePasswordMutation } from "../../hook/useLogin";
 import { sizeButtonEnum } from "../../models";
 import { showToast } from "../../store/toast/actions";
@@ -25,6 +26,7 @@ interface ChangePasswordProps {}
 const ChangePassword: FC<ChangePasswordProps> = () => {
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { token = "" } = useParams();
 
   const useForgotPassword = useChangePasswordMutation(token);
@@ -75,7 +77,9 @@ const ChangePassword: FC<ChangePasswordProps> = () => {
             Enviar {"->"}
           </Button>
         </form>
-        <span className="back-to-login">Volver a login</span>
+        <span className="back-to-login" onClick={() => navigate(ROUTES.LOGIN)}>
+          Volver a login
+        </span>
       </section>
     </ChangePasswordWrapper>
   );

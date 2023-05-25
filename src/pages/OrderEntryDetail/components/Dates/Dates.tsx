@@ -18,7 +18,7 @@ interface DatesProps {
 const Dates: FC<DatesProps> = ({ orderEntry }) => {
   return (
     <DatesWrapper>
-      <View style={pdfStyles.table}>
+      <View style={pdfStyles.table} wrap={false}>
         {/* Row 1 */}
         <View style={pdfStyles.tableRow}>
           <View style={[pdfStyles.tableCol, pdfStyles.titleCell]}>

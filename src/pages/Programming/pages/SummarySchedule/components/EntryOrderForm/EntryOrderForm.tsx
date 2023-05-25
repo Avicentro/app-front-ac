@@ -63,11 +63,6 @@ const EntryOrderForm: FC<EntryOrderFormProps> = ({
   useEffect(() => {
     const countChickensSent = watch("countChickensSent");
     const numberCalculate = Math.ceil(countChickensSent / 8 / 8);
-    console.log(" Math.ceil(countChickensSent)", Math.ceil(countChickensSent));
-    console.log(
-      "  Math.ceil(countChickensSent) / 8 / 8",
-      Math.ceil(countChickensSent / 8 / 8)
-    );
     setNumberOfWeighing(numberCalculate);
   }, [watch("countChickensSent")]);
 

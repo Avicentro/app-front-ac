@@ -89,27 +89,7 @@ export const entryOrderConfig: IConfig[] = [
       ],
     },
   },
-  {
-    name: "goodChickens",
-    label: "Pollos en pie",
-    value: "",
-    type: "number",
-    fieldType: fieldTypeEnum.text,
-    placeholder: "Pollos en pie",
-    validation: {
-      type: "string",
-      settings: [
-        {
-          type: "required",
-        },
-        {
-          type: "matches",
-          message: FEEDBACK_MESSAGES.ONLY_NUMBERS,
-          regex: REGEX_VALIDATION.SHOULD_ONLY_NUMBERS,
-        },
-      ],
-    },
-  },
+
   {
     name: "drownedChickens",
     label: "Pollos ahogados",
@@ -132,12 +112,12 @@ export const entryOrderConfig: IConfig[] = [
     },
   },
   {
-    name: "hookStart",
-    label: "Gancho inicial",
+    name: "goodChickens",
+    label: "Pollos en pie",
     value: "",
     type: "number",
     fieldType: fieldTypeEnum.text,
-    placeholder: "Gancho inicial",
+    placeholder: "Pollos en pie",
     validation: {
       type: "string",
       settings: [
@@ -153,12 +133,12 @@ export const entryOrderConfig: IConfig[] = [
     },
   },
   {
-    name: "operatorEndHook",
-    label: "Ganchos vacíos",
-    value: 0,
+    name: "hookStart",
+    label: "Gancho inicial",
+    value: "",
     type: "number",
     fieldType: fieldTypeEnum.text,
-    placeholder: "Ganchos vacíos",
+    placeholder: "Gancho inicial",
     validation: {
       type: "string",
       settings: [

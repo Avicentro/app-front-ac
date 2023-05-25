@@ -14,6 +14,7 @@ import { OrderEntryDetailWrapper } from "./styles";
 import { useOrderEntry } from "../../hook/useOrderEntry";
 import { formatOrderEntryData } from "./helpers/formatOrderEntryData";
 import CountParts from "./components/CountParts/CountParts";
+import { formatDateCo } from "../../helpers/format/formatDateCo";
 // helpers
 
 interface OrderEntryDetailProps {}
@@ -43,7 +44,12 @@ const OrderEntryDetail: FC<OrderEntryDetailProps> = () => {
         <div className="tables-container" id="entry-order-table">
           <div className="main">
             <PDFViewer style={pdfViewer.pdf}>
-              <Document>
+              <Document
+                title={`Orden de entrada ${formatDateCo({
+                  date: new Date().toISOString(),
+                  addHours: true,
+                })}`}
+              >
                 <Page size="A4" style={pdfViewer.page}>
                   <MainData orderEntry={orderEntryData} />
                   <Remissions orderEntry={orderEntryData} />

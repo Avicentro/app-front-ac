@@ -23,12 +23,11 @@ const ChickensDetails: FC<ChickensDetailsProps> = ({ orderEntry }) => {
   const klPataMushroom = orderEntry?.dataVeterinary?.klPataMushroom;
   const klFoot = orderEntry?.dataVeterinary?.klFoot;
   const sum = orderEntry?.dataVeterinary?.sum;
-  const typeBInternal = orderEntry?.dataVeterinary?.typeBInternal;
   const typeAChickens = orderEntry?.dataVeterinary?.typeAChickens;
 
   return (
     <ChickensDetailsWrapper>
-      <View>
+      <View wrap={false}>
         <View style={pdfStyles.tableRow}>
           <View style={[pdfStyles.tableCol, pdfStyles.titleCell]}>
             <Text style={[pdfStyles.tableCell, pdfStyles.titleCell]}></Text>
@@ -85,7 +84,7 @@ const ChickensDetails: FC<ChickensDetailsProps> = ({ orderEntry }) => {
           <View style={pdfStyles.tableRow}>
             <View style={pdfStyles.tableCol}>
               <Text style={[pdfStyles.tableCell, pdfStyles.titleCell]}>
-                Tipo B externo
+                Pollo Tipo B
               </Text>
             </View>
             {Object.keys(typeBExternal).map((key) => (
@@ -141,18 +140,6 @@ const ChickensDetails: FC<ChickensDetailsProps> = ({ orderEntry }) => {
             {Object.keys(sum).map((key) => (
               <View style={pdfStyles.tableCol}>
                 <Text style={pdfStyles.tableCell}>{sum[key]}</Text>
-              </View>
-            ))}
-          </View>
-          <View style={pdfStyles.tableRow}>
-            <View style={pdfStyles.tableCol}>
-              <Text style={[pdfStyles.tableCell, pdfStyles.titleCell]}>
-                Tipo B interno
-              </Text>
-            </View>
-            {Object.keys(typeBInternal).map((key) => (
-              <View style={pdfStyles.tableCol}>
-                <Text style={pdfStyles.tableCell}>{typeBInternal[key]}</Text>
               </View>
             ))}
           </View>
