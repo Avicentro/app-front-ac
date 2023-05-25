@@ -21,14 +21,14 @@ const MainData: FC<MainDataProps> = ({ orderEntry }) => {
       </View>
       <View style={pdfStyles.tableRow}>
         <View style={pdfStyles.tableCol}>
-          <View>
+          <View style={[pdfStyles.tableCol, pdfStyles.titleCell]}>
             <Text style={[pdfStyles.tableCell, pdfStyles.titleCell]}>
               Cliente
             </Text>
           </View>
         </View>
         <View style={pdfStyles.tableCol}>
-          <View>
+          <View style={[pdfStyles.tableCol, pdfStyles.titleCell]}>
             <Text style={pdfStyles.tableCell}>
               {orderEntry?.programming?.customer?.name}
             </Text>
@@ -37,28 +37,28 @@ const MainData: FC<MainDataProps> = ({ orderEntry }) => {
       </View>
       <View style={pdfStyles.tableRow}>
         <View style={pdfStyles.tableCol}>
-          <View>
+          <View style={[pdfStyles.tableCol, pdfStyles.titleCell]}>
             <Text style={[pdfStyles.tableCell, pdfStyles.titleCell]}>
               Proveedor
             </Text>
           </View>
         </View>
         <View style={pdfStyles.tableCol}>
-          <View>
+          <View style={[pdfStyles.tableCol, pdfStyles.titleCell]}>
             <Text style={pdfStyles.tableCell}>
               {orderEntry?.programming?.supplier?.name}
             </Text>
           </View>
         </View>
         <View style={pdfStyles.tableCol}>
-          <View>
+          <View style={[pdfStyles.tableCol, pdfStyles.titleCell]}>
             <Text style={[pdfStyles.tableCell, pdfStyles.titleCell]}>
               Conductor
             </Text>
           </View>
         </View>
         <View style={pdfStyles.tableCol}>
-          <View>
+          <View style={[pdfStyles.tableCol, pdfStyles.titleCell]}>
             <Text style={pdfStyles.tableCell}>
               {orderEntry?.programming?.driver?.name}
             </Text>
@@ -67,56 +67,56 @@ const MainData: FC<MainDataProps> = ({ orderEntry }) => {
       </View>
       <View style={pdfStyles.tableRow}>
         <View style={pdfStyles.tableCol}>
-          <View>
+          <View style={[pdfStyles.tableCol, pdfStyles.titleCell]}>
             <Text style={[pdfStyles.tableCell, pdfStyles.titleCell]}>
               Granja
             </Text>
           </View>
         </View>
         <View style={pdfStyles.tableCol}>
-          <View>
+          <View style={[pdfStyles.tableCol, pdfStyles.titleCell]}>
             <Text style={pdfStyles.tableCell}>GRANJA</Text>
           </View>
         </View>
       </View>
       <View style={pdfStyles.tableRow}>
         <View style={pdfStyles.tableCol}>
-          <View>
+          <View style={[pdfStyles.tableCol, pdfStyles.titleCell]}>
             <Text style={[pdfStyles.tableCell, pdfStyles.titleCell]}>
               Ganchos
             </Text>
           </View>
         </View>
         <View style={pdfStyles.tableCol}>
-          <View>
+          <View style={[pdfStyles.tableCol, pdfStyles.titleCell]}>
             <Text style={pdfStyles.tableCell}>
               {orderEntry?.dataOrdenEntry?.hooksDetail?.hooks}
             </Text>
           </View>
         </View>
         <View style={pdfStyles.tableCol}>
-          <View>
+          <View style={[pdfStyles.tableCol, pdfStyles.titleCell]}>
             <Text style={[pdfStyles.tableCell, pdfStyles.titleCell]}>
               Inicial
             </Text>
           </View>
         </View>
         <View style={pdfStyles.tableCol}>
-          <View>
+          <View style={[pdfStyles.tableCol, pdfStyles.titleCell]}>
             <Text style={pdfStyles.tableCell}>
               {orderEntry?.dataOrdenEntry?.hooksDetail?.hookStart}
             </Text>
           </View>
         </View>
         <View style={pdfStyles.tableCol}>
-          <View>
+          <View style={[pdfStyles.tableCol, pdfStyles.titleCell]}>
             <Text style={[pdfStyles.tableCell, pdfStyles.titleCell]}>
               Final
             </Text>
           </View>
         </View>
         <View style={pdfStyles.tableCol}>
-          <View>
+          <View style={[pdfStyles.tableCol, pdfStyles.titleCell]}>
             <Text style={pdfStyles.tableCell}>
               {orderEntry?.dataOrdenEntry?.hooksDetail?.hookEnd}
             </Text>
@@ -125,42 +125,42 @@ const MainData: FC<MainDataProps> = ({ orderEntry }) => {
       </View>
       <View style={pdfStyles.tableRow}>
         <View style={pdfStyles.tableCol}>
-          <View>
+          <View style={[pdfStyles.tableCol, pdfStyles.titleCell]}>
             <Text style={[pdfStyles.tableCell, pdfStyles.titleCell]}>
               Vacios
             </Text>
           </View>
         </View>
         <View style={pdfStyles.tableCol}>
-          <View>
+          <View style={[pdfStyles.tableCol, pdfStyles.titleCell]}>
             <Text style={pdfStyles.tableCell}>
               {orderEntry?.dataOrdenEntry?.hooksDetail?.hookEmpty}
             </Text>
           </View>
         </View>
         <View style={pdfStyles.tableCol}>
-          <View>
+          <View style={[pdfStyles.tableCol, pdfStyles.titleCell]}>
             <Text style={[pdfStyles.tableCell, pdfStyles.titleCell]}>
               N° Vueltas
             </Text>
           </View>
         </View>
         <View style={pdfStyles.tableCol}>
-          <View>
+          <View style={[pdfStyles.tableCol, pdfStyles.titleCell]}>
             <Text style={pdfStyles.tableCell}>
               {orderEntry?.dataOrdenEntry?.hooksDetail?.turns}
             </Text>
           </View>
         </View>
         <View style={pdfStyles.tableCol}>
-          <View>
+          <View style={[pdfStyles.tableCol, pdfStyles.titleCell]}>
             <Text style={[pdfStyles.tableCell, pdfStyles.titleCell]}>
               En linea
             </Text>
           </View>
         </View>
         <View style={pdfStyles.tableCol}>
-          <View>
+          <View style={[pdfStyles.tableCol, pdfStyles.titleCell]}>
             <Text style={pdfStyles.tableCell}>
               {orderEntry?.dataOrdenEntry?.hooksDetail?.hooks}
             </Text>
@@ -169,12 +169,12 @@ const MainData: FC<MainDataProps> = ({ orderEntry }) => {
       </View>
       <View style={pdfStyles.tableRow}>
         <View style={[pdfStyles.tableCol, pdfStyles.titleCell]}>
-          <View>
+          <View style={[pdfStyles.tableCol, pdfStyles.titleCell]}>
             <Text style={[pdfStyles.tableCell]}>Fecha</Text>
           </View>
         </View>
         <View style={pdfStyles.tableCol}>
-          <View>
+          <View style={[pdfStyles.tableCol, pdfStyles.titleCell]}>
             <Text style={pdfStyles.tableCell}>
               {formatDateCo({
                 date: orderEntry?.dataOrdenEntry?.dateTimesOrderEntry
