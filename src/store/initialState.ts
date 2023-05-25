@@ -3,6 +3,11 @@ const initialState = {
     user: "",
     access_token: "",
   },
+  toastData: {
+    message: "",
+    status: "",
+    show: false,
+  },
 };
 
 export default initialState;

@@ -1,4 +1,4 @@
-import { FC, Fragment, useState } from "react";
+import { FC, Fragment, useEffect, useState } from "react";
 
 // Components
 import Button from "../../../../../../components/form/Button/Button";
@@ -17,10 +17,12 @@ import Dropdown from "../../../../../../components/form/Dropdown/Dropdown";
 import { createArrayOfNumbersForSelect } from "../../../../../../helpers/createData/createArrayOfNumbersForSelect";
 import { weighingConfig } from "./formConfig/weighingConfig";
 import TextInput from "../../../../../../components/form/TextInput/TextInput";
+import { mergeNumberOfBaskets } from "./helpers/mergeNumberOfBaskets";
 
 interface EntryOrderFormProps {
   handleSubmit: (s: any) => void;
   loading: boolean;
+  countChickens: number;
 }
 
 type weighingFormType = {
@@ -29,15 +31,13 @@ type weighingFormType = {
   neto: any;
 };
 
-const EntryOrderForm: FC<EntryOrderFormProps> = ({ handleSubmit, loading }) => {
-  const [numberOfWeighing, setNumberOfWeighing] = useState(1);
-  const [weighingForm, setWeighingForm] = useState<weighingFormType[]>([
-    {
-      bruto: 0,
-      destare: 0,
-      neto: 0,
-    },
-  ]);
+const EntryOrderForm: FC<EntryOrderFormProps> = ({
+  handleSubmit,
+  loading,
+  countChickens,
+}) => {
+  const [numberOfWeighing, setNumberOfWeighing] = useState(0);
+  const [weighingForm, setWeighingForm] = useState<weighingFormType[]>([]);
   const {
     control,
     setValue,
@@ -45,9 +45,23 @@ const EntryOrderForm: FC<EntryOrderFormProps> = ({ handleSubmit, loading }) => {
     getValues,
     formState: { errors },
   } = useForm({
-    defaultValues: getDefaultValuesByConfig(entryOrderConfig),
+    defaultValues: getDefaultValuesByConfig(
+      mergeNumberOfBaskets({ formConfig: entryOrderConfig, countChickens })
+    ),
     resolver: yupResolver(createSchemaByConfig(entryOrderConfig)),
   });
+
+  useEffect(() => {
+    const numberOfWeighingList = [];
+    for (let i = 0; i <= numberOfWeighing; i++) {
+      numberOfWeighingList.push({ bruto: "", destare: 58, neto: "" });
+    }
+    setWeighingForm(numberOfWeighingList);
+  }, [numberOfWeighing]);
+
+  useEffect(() => {
+    setNumberOfWeighing(Math.ceil(countChickens / 8 / 8));
+  }, [countChickens]);
 
   const getWeighingFieldsByNumberSelected = () => {
     return createArrayOfNumbersForSelect(numberOfWeighing);
@@ -62,7 +76,7 @@ const EntryOrderForm: FC<EntryOrderFormProps> = ({ handleSubmit, loading }) => {
   };
 
   const changeNumberOfWeighing = (number: number) => {
-    const newWeigh = { bruto: "", destare: "", neto: "" };
+    const newWeigh = { bruto: "", destare: 58, neto: "" };
     setWeighingForm((prevState: any) => {
       const newList = [];
       for (let i = 0; i < number; i++) {
@@ -94,7 +108,7 @@ const EntryOrderForm: FC<EntryOrderFormProps> = ({ handleSubmit, loading }) => {
           <Dropdown
             label="Seleccione el número de pesajes"
             name="numberOfWeighing"
-            value={1}
+            value={numberOfWeighing}
             handleChange={changeNumberOfWeighing}
             options={createArrayOfNumbersForSelect(50)}
           />
@@ -107,11 +121,20 @@ const EntryOrderForm: FC<EntryOrderFormProps> = ({ handleSubmit, loading }) => {
                   {...field}
                   label={`${field.label} ${value}`}
                   value={
+                    weighingForm[index] &&
                     weighingForm[index][field.name as keyof weighingFormType]
                   }
-                  handleChange={(value) =>
-                    handleInputChange(index, field.name, value)
-                  }
+                  handleChange={(value) => {
+                    if (field.name === "bruto") {
+                      handleInputChange(index, field.name, value);
+                      return handleInputChange(
+                        index,
+                        "neto",
+                        value - weighingForm[index]["destare"]
+                      );
+                    }
+                    return handleInputChange(index, field.name, value);
+                  }}
                 />
               </Fragment>
             ))}

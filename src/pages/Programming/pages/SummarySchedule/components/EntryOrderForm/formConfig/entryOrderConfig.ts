@@ -7,13 +7,13 @@ import { fieldTypeEnum, IConfig } from "../../../../../../../models";
 export const entryOrderConfig: IConfig[] = [
   {
     name: "chickensBasket",
-    label: "Pollos en canasta",
-    value: "",
+    label: "Pollos por Huacal",
+    value: 8,
     type: "number",
     fieldType: fieldTypeEnum.text,
-    placeholder: "Pollos en canasta",
+    placeholder: "Pollos por Huacal",
     validation: {
-      type: "string",
+      type: "number",
       settings: [
         {
           type: "required",
@@ -28,11 +28,11 @@ export const entryOrderConfig: IConfig[] = [
   },
   {
     name: "basket",
-    label: "Canasta",
+    label: "Número de huacales",
     value: "",
     type: "number",
     fieldType: fieldTypeEnum.text,
-    placeholder: "Canasta",
+    placeholder: "Número de huacales",
     validation: {
       type: "string",
       settings: [
@@ -49,11 +49,11 @@ export const entryOrderConfig: IConfig[] = [
   },
   {
     name: "goodChickens",
-    label: "Pollos sanos",
+    label: "Pollos en pie",
     value: "",
     type: "number",
     fieldType: fieldTypeEnum.text,
-    placeholder: "Pollos sanos",
+    placeholder: "Pollos en pie",
     validation: {
       type: "string",
       settings: [

@@ -33,4 +33,14 @@ export const theme = {
   coolGray600: "#4E4B66",
   coolGray700: "#262338",
   coolGray800: "#14142A",
+
+  // Green
+  green100: "#EAF9DE",
+  green200: "#CBFFAE",
+  green300: "#A6F787",
+  green400: "#A0A3BD",
+  green500: "#18BB0C",
+  green600: "#008A00",
+  green700: "#067306",
+  green800: "#07540A",
 };

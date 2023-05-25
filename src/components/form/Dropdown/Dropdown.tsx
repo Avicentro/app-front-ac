@@ -27,6 +27,7 @@ const Dropdown: FC<DropdownProps> = ({
         id={name}
         className="select"
         onChange={(e) => handleChange && handleChange(e.target.value)}
+        value={value}
       >
         {options?.map(({ label: innerLabel, value: innerValue }) => (
           <option key={innerLabel} value={innerValue}>

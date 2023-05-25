@@ -6,8 +6,8 @@ import { theme } from "./static/styles/theme";
 import { Provider } from "react-redux";
 import store from "./store/store";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import Toast from "./components/feedback/Toast";
 
 const queryClient = new QueryClient();
 
@@ -17,6 +17,7 @@ function App() {
       <Provider store={store}>
         <ThemeProvider theme={theme}>
           <Router />
+          <Toast />
         </ThemeProvider>
       </Provider>
       <ReactQueryDevtools initialIsOpen={false} />

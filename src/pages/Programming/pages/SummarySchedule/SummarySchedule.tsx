@@ -33,6 +33,8 @@ import {
 } from "../../../../hook/useProgramming";
 
 import Modal from "../../../../components/display/Modal/Modal";
+import { useDispatch } from "react-redux";
+import { showToast } from "../../../../store/toast/actions";
 
 type dataSummaryType = {
   dateStart: string;
@@ -71,6 +73,7 @@ const SummarySchedule: FC<SummaryScheduleProps> = ({ data }) => {
   const [modalConfirmDelete, setModalConfirmDelete] = useState(false);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { orderId = "" } = useParams();
   const { data: scheduling, refetch } = useScheduling(orderId, data);
   const useDeleteSchedule = useDeleteScheduleMutate();
@@ -214,13 +217,22 @@ const SummarySchedule: FC<SummaryScheduleProps> = ({ data }) => {
     try {
       const dataToSend = {
         ...dataForm,
-        code: data ? data.code : scheduling?.data?.code,
+        code: data ? +data.code : +scheduling?.data?.code,
         startTime: data ? data.code : scheduling?.data?.dateStart,
         endTime: data ? data.code : scheduling?.data?.dateEnd,
       };
       await createOrderEntry.mutateAsync(dataToSend);
-    } catch (error) {
-      console.error(error);
+      dispatch(
+        showToast("La orden de entrada Se ha creado correctamente", "success")
+      );
+    } catch (error: any) {
+      console.log("error?.data?.message", error?.response?.data?.message);
+      dispatch(
+        showToast(
+          JSON.stringify(error?.response?.data?.message) as any,
+          "error"
+        )
+      );
     } finally {
       setFormLoading(false);
       refetch();
@@ -283,7 +295,15 @@ const SummarySchedule: FC<SummaryScheduleProps> = ({ data }) => {
 
   return (
     <SummaryScheduleWrapper>
-      <BackButton />
+      <div className="header-container">
+        <BackButton />
+        <Button
+          typeButton={typeButtonEnum.fill}
+          extraProps={{ onClick: () => setModalConfirmDelete(true) }}
+        >
+          Cancelar Programación
+        </Button>
+      </div>
       <div className="title">
         <h1>Resumen programación</h1>
       </div>
@@ -423,12 +443,6 @@ const SummarySchedule: FC<SummaryScheduleProps> = ({ data }) => {
       </section>
       <section className="buttons-container">
         {getButtonIfOrderEntryCreated()}
-        <Button
-          typeButton={typeButtonEnum.stroke}
-          extraProps={{ onClick: () => setModalConfirmDelete(true) }}
-        >
-          Cancelar Programación
-        </Button>
       </section>
       <Modal
         open={modalConfirmDelete}
@@ -448,7 +462,13 @@ const SummarySchedule: FC<SummaryScheduleProps> = ({ data }) => {
       </Modal>
       {showForm && (
         <section className="form-container">
-          <EntryOrderForm handleSubmit={saveData} loading={formLoading} />
+          <EntryOrderForm
+            handleSubmit={saveData}
+            loading={formLoading}
+            countChickens={
+              data ? data.countChickens : scheduling?.data?.countChickens
+            }
+          />
         </section>
       )}
     </SummaryScheduleWrapper>

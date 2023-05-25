@@ -12,6 +12,7 @@ export const SummaryScheduleWrapper = styled.div`
       font: 700 40px Poppins Bold;
     }
   }
+
   .schedule-info {
     display: flex;
     gap: 80px;
@@ -53,6 +54,13 @@ export const SummaryScheduleWrapper = styled.div`
   }
   @media ${MIN_WIDTH_QUERIES.TABLET.query} {
     grid-column: 2 / 12;
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      button {
+        width: 200px;
+      }
+    }
     .schedule-info {
       flex-direction: row;
     }

@@ -132,7 +132,7 @@ const EditField: FC<EditFieldProps> = ({
             className="pencil-icon-container"
             onClick={() => shouldEdit && handleLabelClick()}
           >
-            {isHovered && <FontAwesomeIcon icon={faPencil} />}
+            {shouldEdit && <FontAwesomeIcon icon={faPencil} />}
           </span>
         </div>
       )}

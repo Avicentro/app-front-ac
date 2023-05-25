@@ -32,6 +32,11 @@ export const EditFieldWrapper = styled.div`
       }
     }
   }
+  .icon-container {
+    label {
+      margin-right: 8px;
+    }
+  }
   .pencil-icon-container {
     cursor: pointer;
   }
