@@ -43,6 +43,7 @@ const EntryOrderForm: FC<EntryOrderFormProps> = ({
     setValue,
     handleSubmit: innerHandleSubmit,
     getValues,
+    watch,
     formState: { errors },
   } = useForm({
     defaultValues: getDefaultValuesByConfig(
@@ -60,8 +61,15 @@ const EntryOrderForm: FC<EntryOrderFormProps> = ({
   }, [numberOfWeighing]);
 
   useEffect(() => {
-    setNumberOfWeighing(Math.ceil(countChickens / 8 / 8));
-  }, [countChickens]);
+    const countChickensSent = watch("countChickensSent");
+    const numberCalculate = Math.ceil(countChickensSent / 8 / 8);
+    console.log(" Math.ceil(countChickensSent)", Math.ceil(countChickensSent));
+    console.log(
+      "  Math.ceil(countChickensSent) / 8 / 8",
+      Math.ceil(countChickensSent / 8 / 8)
+    );
+    setNumberOfWeighing(numberCalculate);
+  }, [watch("countChickensSent")]);
 
   const getWeighingFieldsByNumberSelected = () => {
     return createArrayOfNumbersForSelect(numberOfWeighing);
@@ -91,7 +99,11 @@ const EntryOrderForm: FC<EntryOrderFormProps> = ({
   };
 
   const onSubmit = (data: any) => {
-    handleSubmit({ ...getValues(), weighingsList: weighingForm });
+    handleSubmit({
+      ...getValues(),
+      countChickensProgramming: countChickens,
+      weighingsList: weighingForm,
+    });
   };
 
   return (

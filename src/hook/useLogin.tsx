@@ -7,3 +7,20 @@ export const useLoginMutation = () => {
     return response.data.msg;
   });
 };
+
+export const useForgotPasswordMutation = () => {
+  return useMutation(async (data) => {
+    const response = await ApiService.postData(data, "/auth/forgot-password");
+    return response;
+  });
+};
+
+export const useChangePasswordMutation = (token: string) => {
+  return useMutation(async (data) => {
+    const response = await ApiService.postData(
+      data,
+      `/auth/new-password/${token}`
+    );
+    return response;
+  });
+};

@@ -8,6 +8,8 @@ export const ROUTES = {
   PROGRAMMING: "/programacion",
   SUMMARY: "/resumen",
   ORDER_ENTRY: "/orden-de-entrada",
+  FORGOT_PASSWORD: "/olvido-su-contrasena",
+  CHANGE_PASSWORD: "/cambio-de-contrasena",
 };
 
 export const COMPOSED_ROUTES = {

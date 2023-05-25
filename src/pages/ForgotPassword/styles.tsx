@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { MIN_WIDTH_QUERIES } from "../../constants/constants";
 
-export const LoginWrapper = styled.div`
+export const ForgotPasswordWrapper = styled.div`
   display: grid;
   height: 100vh;
   padding: 32px;
@@ -23,7 +23,7 @@ export const LoginWrapper = styled.div`
       }
     }
   }
-  .forgot-password {
+  .back-to-login {
     cursor: pointer;
     color: ${({ theme }) => theme.primary};
     &:hover {

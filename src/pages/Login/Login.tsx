@@ -6,7 +6,6 @@ import DynamicForm from "../../components/form/DynamicForm/DynamicForm";
 
 // Styles
 import { LoginWrapper } from "./styles";
-import logoExample from "../../static/img/logo-example.png";
 
 // helpers
 import { useForm } from "react-hook-form";
@@ -23,6 +22,7 @@ import { updateLoginData } from "../../store/loginData/actions";
 import { sizeButtonEnum } from "../../models";
 import { useLoginMutation } from "../../hook/useLogin";
 import { loginDataType } from "./models";
+import { showToast } from "../../store/toast/actions";
 
 interface LoginProps {}
 
@@ -85,7 +85,8 @@ const Login: FC<LoginProps> = () => {
       saveUserInLocalStorage({ ...loginData, tokenExpired: now });
       saveUserInRedux(loginData);
       window.location.reload();
-    } catch (error) {
+    } catch (error: any) {
+      dispatch(showToast(error?.response?.data?.message, "error"));
       console.error(error);
     } finally {
       setLoading(false);
@@ -95,7 +96,6 @@ const Login: FC<LoginProps> = () => {
   return (
     <LoginWrapper>
       <section className="brand-container">
-        <img src={logoExample} alt="logo-enterprise" width={92} height={92} />
         <h1 className="name">Prometeo</h1>
       </section>
       <section className="form-container">
@@ -116,6 +116,12 @@ const Login: FC<LoginProps> = () => {
             Iniciar sesión {"->"}
           </Button>
         </form>
+        <span
+          className="forgot-password"
+          onClick={() => navigate(ROUTES.FORGOT_PASSWORD)}
+        >
+          Olvide mi contraseña
+        </span>
       </section>
     </LoginWrapper>
   );

@@ -87,6 +87,7 @@ const SummarySchedule: FC<SummaryScheduleProps> = ({ data }) => {
     setLoading(true);
     try {
       await updateProgrammingMutation.mutateAsync(data);
+      refetch();
     } catch (error) {
       console.error(error);
     } finally {
@@ -186,6 +187,7 @@ const SummarySchedule: FC<SummaryScheduleProps> = ({ data }) => {
       const keyIsArray = Array.isArray(key);
       if (data) {
         if (keyIsArray) {
+          console.log(data[key[0] as keyof dataSummaryType]);
           return data[key[0] as keyof dataSummaryType]
             ? data[key[0] as keyof dataSummaryType][key[1]]
             : "-";
@@ -242,6 +244,9 @@ const SummarySchedule: FC<SummaryScheduleProps> = ({ data }) => {
   const goToOrderEntry = (id: string) => {
     return navigate(`${ROUTES.ORDER_ENTRY}/${id}`);
   };
+
+  const getIfOrderEntryExist = () =>
+    data ? data?.orderEntryExist : scheduling?.data?.orderEntryExist;
 
   const getButtonIfOrderEntryCreated = () => {
     if (data) {
@@ -335,7 +340,7 @@ const SummarySchedule: FC<SummaryScheduleProps> = ({ data }) => {
                 label={getLabelByKey({ key: ["supplier", "name"] })}
                 handleChange={changeValue}
                 loading={loading}
-                shouldEdit
+                shouldEdit={!getIfOrderEntryExist()}
                 propsField={getConfigForField({
                   type: "select",
                   value: getLabelByKey({ key: ["supplier", "name"] }),
@@ -352,7 +357,7 @@ const SummarySchedule: FC<SummaryScheduleProps> = ({ data }) => {
                 label={getLabelByKey({ key: ["customer", "name"] })}
                 handleChange={changeValue}
                 loading={loading}
-                shouldEdit
+                shouldEdit={!getIfOrderEntryExist()}
                 propsField={getConfigForField({
                   type: "select",
                   value: getLabelByKey({ key: ["customer", "name"] }),
@@ -369,7 +374,7 @@ const SummarySchedule: FC<SummaryScheduleProps> = ({ data }) => {
                 label={getLabelByKey({ key: ["subCustomer", "name"] })}
                 handleChange={changeValue}
                 loading={loading}
-                shouldEdit
+                shouldEdit={!getIfOrderEntryExist()}
                 propsField={getConfigForField({
                   type: "select",
                   value: getLabelByKey({ key: ["subCustomer", "name"] }),
@@ -386,7 +391,7 @@ const SummarySchedule: FC<SummaryScheduleProps> = ({ data }) => {
                 label={getLabelByKey({ key: "countChickens" })}
                 handleChange={changeValue}
                 loading={loading}
-                shouldEdit
+                shouldEdit={!getIfOrderEntryExist()}
                 propsField={getConfigForField({
                   type: "number",
                   value: getLabelByKey({ key: "countChickens" }),
@@ -403,7 +408,7 @@ const SummarySchedule: FC<SummaryScheduleProps> = ({ data }) => {
                 label={getLabelByKey({ key: ["driver", "name"] })}
                 handleChange={changeValue}
                 loading={loading}
-                shouldEdit
+                shouldEdit={!getIfOrderEntryExist()}
                 propsField={getConfigForField({
                   type: "select",
                   value: getLabelByKey({ key: ["driver", "name"] }),
@@ -420,7 +425,7 @@ const SummarySchedule: FC<SummaryScheduleProps> = ({ data }) => {
                 label={getLabelByKey({ key: ["city", "name"] })}
                 handleChange={changeValue}
                 loading={loading}
-                shouldEdit
+                shouldEdit={!getIfOrderEntryExist()}
                 propsField={getConfigForField({
                   type: "select",
                   value: getLabelByKey({ key: ["city", "name"] }),

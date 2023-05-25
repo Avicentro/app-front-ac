@@ -9,7 +9,7 @@ export const ToastWrapper = styled.div<ToastWrapperProps>`
   position: fixed;
   background-color: ${({ theme, status }) =>
     status === "success" ? theme.green500 : theme.red500};
-  bottom: -100px;
+  bottom: -150px;
   right: 10px;
   transform: translateX(-50%);
   color: #fff;
@@ -33,7 +33,7 @@ export const ToastWrapper = styled.div<ToastWrapperProps>`
   }
   @keyframes toastSlideIn {
     0% {
-      bottom: -100px;
+      bottom: -150px;
     }
     100% {
       bottom: 20px;
@@ -44,6 +44,6 @@ export const ToastWrapper = styled.div<ToastWrapperProps>`
       bottom: 20px;
     }
     100% {
-      bottom: -100px;
+      bottom: -150px;
     }
 `;

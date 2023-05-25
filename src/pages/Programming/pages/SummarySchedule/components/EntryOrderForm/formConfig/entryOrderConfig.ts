@@ -6,6 +6,48 @@ import { fieldTypeEnum, IConfig } from "../../../../../../../models";
 
 export const entryOrderConfig: IConfig[] = [
   {
+    name: "countChickensRemissioned",
+    label: "Cantidad de pollos remisionados",
+    value: "",
+    type: "number",
+    fieldType: fieldTypeEnum.text,
+    placeholder: "Cantidad de pollos remisionados",
+    validation: {
+      type: "number",
+      settings: [
+        {
+          type: "required",
+        },
+        {
+          type: "matches",
+          message: FEEDBACK_MESSAGES.ONLY_NUMBERS,
+          regex: REGEX_VALIDATION.SHOULD_ONLY_NUMBERS,
+        },
+      ],
+    },
+  },
+  {
+    name: "countChickensSent",
+    label: "Cantidad de pollos enviados",
+    value: 0,
+    type: "number",
+    fieldType: fieldTypeEnum.text,
+    placeholder: "Cantidad de pollos enviados",
+    validation: {
+      type: "number",
+      settings: [
+        {
+          type: "required",
+        },
+        {
+          type: "matches",
+          message: FEEDBACK_MESSAGES.ONLY_NUMBERS,
+          regex: REGEX_VALIDATION.SHOULD_ONLY_NUMBERS,
+        },
+      ],
+    },
+  },
+  {
     name: "chickensBasket",
     label: "Pollos por Huacal",
     value: 8,
@@ -113,7 +155,7 @@ export const entryOrderConfig: IConfig[] = [
   {
     name: "operatorEndHook",
     label: "Ganchos vacíos",
-    value: "",
+    value: 0,
     type: "number",
     fieldType: fieldTypeEnum.text,
     placeholder: "Ganchos vacíos",

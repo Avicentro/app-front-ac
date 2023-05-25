@@ -15,6 +15,7 @@ export const SummaryScheduleWrapper = styled.div`
 
   .schedule-info {
     display: flex;
+    justify-content: center;
     gap: 80px;
     flex-direction: column;
     margin-bottom: 80px;

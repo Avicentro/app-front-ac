@@ -6,6 +6,8 @@ import AuthSheet from "../../layout/components/AuthSheet/AuthSheet";
 
 // Components
 import Layout from "../../layout/Layout";
+import ChangePassword from "../../pages/ChangePassword/ChangePassword";
+import ForgotPassword from "../../pages/ForgotPassword/ForgotPassword";
 import Login from "../../pages/Login/Login";
 
 // Config
@@ -30,6 +32,14 @@ const Router: FC = () => {
             />
           ))}
           <Route path={ROUTES.LOGIN} element={<Login />} />
+          <Route
+            path={`${ROUTES.FORGOT_PASSWORD}`}
+            element={<ForgotPassword />}
+          />
+          <Route
+            path={`${ROUTES.CHANGE_PASSWORD}/:token`}
+            element={<ChangePassword />}
+          />
         </Routes>
       </Suspense>
     </BrowserRouter>
