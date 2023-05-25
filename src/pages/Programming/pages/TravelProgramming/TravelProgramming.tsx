@@ -20,11 +20,12 @@ import { getAvailableSchedulesList } from "./helpers/getAvailableSchedulesList";
 
 // Hooks
 import { useForm } from "react-hook-form";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useAllCustomers } from "../../../../hook/useSchedule";
 import { useSaveScheduleData } from "../../../../hook/useSchedule";
 import { useAvailableSchedules } from "../../../../hook/useSchedule";
+import { ROUTES } from "../../../../constants/routes";
 
 interface TravelProgrammingProps {}
 
@@ -34,6 +35,7 @@ const TravelProgramming: FC<TravelProgrammingProps> = () => {
   const [responseData, setResponseData] = useState(undefined);
 
   const { dateSelected = "none" } = useParams();
+  const navigate = useNavigate();
   const saveScheduleData = useSaveScheduleData();
   const { data: availableSchedules } = useAvailableSchedules({
     date: dateSelected,
@@ -104,6 +106,7 @@ const TravelProgramming: FC<TravelProgrammingProps> = () => {
       const responseData = await saveScheduleData.mutateAsync(rest);
       setResponseData(responseData);
       setIsDataSave(true);
+      navigate(ROUTES.PROGRAMMING);
     } catch (error) {
       console.error(error);
     } finally {
