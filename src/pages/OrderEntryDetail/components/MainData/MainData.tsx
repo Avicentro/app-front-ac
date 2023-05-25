@@ -16,6 +16,7 @@ const MainData: FC<MainDataProps> = ({ orderEntry }) => {
         <View style={[pdfStyles.tableCol, pdfStyles.tableHeader]}>
           <Text style={[pdfStyles.tableCell, pdfStyles.titleCell]}>
             Planilla para sesaje de pollo en Pie No.
+            {orderEntry?.programming.numberForm}
           </Text>
         </View>
       </View>
