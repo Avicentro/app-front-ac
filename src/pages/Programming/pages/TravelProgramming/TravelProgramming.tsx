@@ -25,7 +25,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useAllCustomers } from "../../../../hook/useSchedule";
 import { useSaveScheduleData } from "../../../../hook/useSchedule";
 import { useAvailableSchedules } from "../../../../hook/useSchedule";
-import { ROUTES } from "../../../../constants/routes";
+import { COMPOSED_ROUTES, ROUTES } from "../../../../constants/routes";
+import { showToast } from "../../../../store/toast/actions";
+import { useDispatch } from "react-redux";
 
 interface TravelProgrammingProps {}
 
@@ -33,6 +35,7 @@ const TravelProgramming: FC<TravelProgrammingProps> = () => {
   const [loading, setLoading] = useState(false);
   const [isDataSave, setIsDataSave] = useState(false);
   const [responseData, setResponseData] = useState(undefined);
+  const dispatch = useDispatch();
 
   const { dateSelected = "none" } = useParams();
   const navigate = useNavigate();
@@ -106,8 +109,10 @@ const TravelProgramming: FC<TravelProgrammingProps> = () => {
       const responseData = await saveScheduleData.mutateAsync(rest);
       setResponseData(responseData);
       setIsDataSave(true);
-      navigate(ROUTES.PROGRAMMING);
-    } catch (error) {
+      console.log("responseData", responseData);
+      navigate(`${COMPOSED_ROUTES.SUMMARY_PROGRAMMING}/${responseData.code}`);
+    } catch (error: any) {
+      dispatch(showToast(error?.response?.data?.message, "error"));
       console.error(error);
     } finally {
       setLoading(false);
@@ -116,36 +121,32 @@ const TravelProgramming: FC<TravelProgrammingProps> = () => {
 
   return (
     <TravelProgrammingWrapper>
-      {isDataSave ? (
-        <SummarySchedule data={responseData}></SummarySchedule>
-      ) : (
-        <>
-          <BackButton />
-          <div className="title-schedule-form">
-            <h1>Nueva programación</h1>
+      <>
+        <BackButton />
+        <div className="title-schedule-form">
+          <h1>Nueva programación</h1>
+        </div>
+        <form onSubmit={handleSubmit(saveProgramming)}>
+          <DynamicForm
+            formConfig={mergeData({
+              formConfig,
+              dataToMerge,
+            })}
+            errors={errors}
+            setValue={setValue}
+            control={control}
+          />
+          <div className="buttons-container">
+            <Button
+              typeButton={typeButtonEnum.fill}
+              type="submit"
+              loading={loading}
+            >
+              Guardar
+            </Button>
           </div>
-          <form onSubmit={handleSubmit(saveProgramming)}>
-            <DynamicForm
-              formConfig={mergeData({
-                formConfig,
-                dataToMerge,
-              })}
-              errors={errors}
-              setValue={setValue}
-              control={control}
-            />
-            <div className="buttons-container">
-              <Button
-                typeButton={typeButtonEnum.fill}
-                type="submit"
-                loading={loading}
-              >
-                Guardar
-              </Button>
-            </div>
-          </form>
-        </>
-      )}
+        </form>
+      </>
     </TravelProgrammingWrapper>
   );
 };

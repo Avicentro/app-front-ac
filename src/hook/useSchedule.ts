@@ -14,13 +14,12 @@ export const useAvailableSchedules = (data: any) => {
   });
 };
 
-export const useScheduling = (orderId: string, data: any) => {
+export const useScheduling = (orderId: string) => {
   return useQuery({
     queryKey: ["scheduling"],
     queryFn: async () =>
       await ApiService.getData({}, `/programming/find/${orderId}`),
     retry: false,
-    enabled: !data,
   });
 };
 

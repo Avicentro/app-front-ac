@@ -58,14 +58,12 @@ type dataSummaryType = {
   orderEntryExist: boolean;
 };
 
-interface SummaryScheduleProps {
-  data?: dataSummaryType;
-}
+interface SummaryScheduleProps {}
 
 const MODAL_CONFIRM_TITLE =
   "¿Estas seguro que deseas eliminar la programación?";
 
-const SummarySchedule: FC<SummaryScheduleProps> = ({ data }) => {
+const SummarySchedule: FC<SummaryScheduleProps> = () => {
   const [loading, setLoading] = useState(false);
   const [loadingDelete, setLoadingDelete] = useState(false);
   const [formLoading, setFormLoading] = useState(false);
@@ -75,11 +73,11 @@ const SummarySchedule: FC<SummaryScheduleProps> = ({ data }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { orderId = "" } = useParams();
-  const { data: scheduling, refetch } = useScheduling(orderId, data);
+  const { data: scheduling, refetch } = useScheduling(orderId);
   const useDeleteSchedule = useDeleteScheduleMutate();
 
   const updateProgrammingMutation = useUpdateProgrammingMutation(
-    data ? data.code : scheduling?.data?.code
+    scheduling?.data?.code
   );
   const createOrderEntry = useCreateOrderEntryMutation();
 
@@ -166,12 +164,6 @@ const SummarySchedule: FC<SummaryScheduleProps> = ({ data }) => {
 
   const getLabelDate = useCallback(
     (key: string) => {
-      if (data && data[key as keyof dataSummaryType]) {
-        return formatDateCo({
-          date: data[key as keyof dataSummaryType],
-          addHours: true,
-        });
-      }
       if (scheduling?.data && scheduling?.data[key as keyof dataSummaryType]) {
         return formatDateCo({
           date: scheduling?.data[key as keyof dataSummaryType],
@@ -179,21 +171,12 @@ const SummarySchedule: FC<SummaryScheduleProps> = ({ data }) => {
         });
       }
     },
-    [data, scheduling?.data]
+    [scheduling?.data]
   );
 
   const getLabelString = useCallback(
     (key: any) => {
       const keyIsArray = Array.isArray(key);
-      if (data) {
-        if (keyIsArray) {
-          console.log(data[key[0] as keyof dataSummaryType]);
-          return data[key[0] as keyof dataSummaryType]
-            ? data[key[0] as keyof dataSummaryType][key[1]]
-            : "-";
-        }
-        return data[key as keyof dataSummaryType] || "-";
-      }
       if (keyIsArray) {
         return scheduling?.data[key[0]]
           ? scheduling?.data[key[0]][key[1]]
@@ -201,7 +184,7 @@ const SummarySchedule: FC<SummaryScheduleProps> = ({ data }) => {
       }
       return scheduling?.data[key] || "-";
     },
-    [data, scheduling?.data]
+    [scheduling?.data]
   );
 
   const getLabelByKey = useCallback(
@@ -219,16 +202,18 @@ const SummarySchedule: FC<SummaryScheduleProps> = ({ data }) => {
     try {
       const dataToSend = {
         ...dataForm,
-        code: data ? +data.code : +scheduling?.data?.code,
-        startTime: data ? data.code : scheduling?.data?.dateStart,
-        endTime: data ? data.code : scheduling?.data?.dateEnd,
+        code: +scheduling?.data?.code,
+        startTime: scheduling?.data?.dateStart,
+        endTime: scheduling?.data?.dateEnd,
       };
       await createOrderEntry.mutateAsync(dataToSend);
       dispatch(
-        showToast("La orden de entrada Se ha creado correctamente", "success")
+        showToast(
+          "La orden de entrada se ha creado correctamente, presiona 'Ir a la orden de entrada'",
+          "success"
+        )
       );
     } catch (error: any) {
-      console.log("error?.data?.message", error?.response?.data?.message);
       dispatch(
         showToast(
           JSON.stringify(error?.response?.data?.message) as any,
@@ -245,22 +230,9 @@ const SummarySchedule: FC<SummaryScheduleProps> = ({ data }) => {
     return navigate(`${ROUTES.ORDER_ENTRY}/${id}`);
   };
 
-  const getIfOrderEntryExist = () =>
-    data ? data?.orderEntryExist : scheduling?.data?.orderEntryExist;
+  const getIfOrderEntryExist = () => scheduling?.data?.orderEntryExist;
 
   const getButtonIfOrderEntryCreated = () => {
-    if (data) {
-      if (data?.orderEntryExist) {
-        return (
-          <Button
-            typeButton={typeButtonEnum.fill}
-            extraProps={{ onClick: () => goToOrderEntry(data.code.toString()) }}
-          >
-            Ir a la orden de entrada
-          </Button>
-        );
-      }
-    }
     if (scheduling?.data?.orderEntryExist) {
       return (
         <Button
@@ -286,7 +258,7 @@ const SummarySchedule: FC<SummaryScheduleProps> = ({ data }) => {
   };
 
   const deleteSchedule = async () => {
-    const codeToDelete = data ? data.code : scheduling?.data?.code;
+    const codeToDelete = scheduling?.data?.code;
     setLoadingDelete(true);
     try {
       await useDeleteSchedule.mutateAsync(codeToDelete);
@@ -470,9 +442,7 @@ const SummarySchedule: FC<SummaryScheduleProps> = ({ data }) => {
           <EntryOrderForm
             handleSubmit={saveData}
             loading={formLoading}
-            countChickens={
-              data ? data.countChickens : scheduling?.data?.countChickens
-            }
+            countChickens={scheduling?.data?.countChickens}
           />
         </section>
       )}
