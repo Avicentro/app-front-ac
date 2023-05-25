@@ -44,12 +44,7 @@ const OrderEntryDetail: FC<OrderEntryDetailProps> = () => {
         <div className="tables-container" id="entry-order-table">
           <div className="main">
             <PDFViewer style={pdfViewer.pdf}>
-              <Document
-                title={`Orden de entrada ${formatDateCo({
-                  date: new Date().toISOString(),
-                  addHours: true,
-                })}`}
-              >
+              <Document title={`Orden de entrada `}>
                 <Page size="A4" style={pdfViewer.page}>
                   <MainData orderEntry={orderEntryData} />
                   <Remissions orderEntry={orderEntryData} />

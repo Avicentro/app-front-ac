@@ -76,7 +76,9 @@ const MainData: FC<MainDataProps> = ({ orderEntry }) => {
         </View>
         <View style={pdfStyles.tableCol}>
           <View>
-            <Text style={pdfStyles.tableCell}>GRANJA</Text>
+            <Text style={pdfStyles.tableCell}>
+              {orderEntry?.programming?.supplier?.name}
+            </Text>
           </View>
         </View>
       </View>
