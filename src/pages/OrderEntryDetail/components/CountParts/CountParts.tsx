@@ -41,18 +41,6 @@ const CountParts: FC<CountPartsProps> = ({ chickenComponents }) => {
         <View style={pdfStyles.tableRow}>
           <View style={pdfStyles.tableCol}>
             <Text style={[pdfStyles.tableCell, pdfStyles.titleCell]}>
-              Páncreas
-            </Text>
-          </View>
-          <View style={pdfStyles.tableCol}>
-            <Text style={[pdfStyles.tableCell]}>
-              {chickenComponents.pancreas}
-            </Text>
-          </View>
-        </View>
-        <View style={pdfStyles.tableRow}>
-          <View style={pdfStyles.tableCol}>
-            <Text style={[pdfStyles.tableCell, pdfStyles.titleCell]}>
               Mollejas
             </Text>
           </View>
@@ -83,42 +71,6 @@ const CountParts: FC<CountPartsProps> = ({ chickenComponents }) => {
           <View style={pdfStyles.tableCol}>
             <Text style={[pdfStyles.tableCell]}>
               {chickenComponents.smallIntestine}
-            </Text>
-          </View>
-        </View>
-        <View style={pdfStyles.tableRow}>
-          <View style={pdfStyles.tableCol}>
-            <Text style={[pdfStyles.tableCell, pdfStyles.titleCell]}>
-              Estómago
-            </Text>
-          </View>
-          <View style={pdfStyles.tableCol}>
-            <Text style={[pdfStyles.tableCell]}>
-              {chickenComponents.stomach}
-            </Text>
-          </View>
-        </View>
-        <View style={pdfStyles.tableRow}>
-          <View style={pdfStyles.tableCol}>
-            <Text style={[pdfStyles.tableCell, pdfStyles.titleCell]}>
-              Garganta
-            </Text>
-          </View>
-          <View style={pdfStyles.tableCol}>
-            <Text style={[pdfStyles.tableCell]}>
-              {chickenComponents.throat}
-            </Text>
-          </View>
-        </View>
-        <View style={pdfStyles.tableRow}>
-          <View style={pdfStyles.tableCol}>
-            <Text style={[pdfStyles.tableCell, pdfStyles.titleCell]}>
-              riñones
-            </Text>
-          </View>
-          <View style={pdfStyles.tableCol}>
-            <Text style={[pdfStyles.tableCell]}>
-              {chickenComponents.kidneys}
             </Text>
           </View>
         </View>

@@ -10,7 +10,7 @@ export const ToastWrapper = styled.div<ToastWrapperProps>`
   background-color: ${({ theme, status }) =>
     status === "success" ? theme.green500 : theme.red500};
   bottom: -150px;
-  right: 10px;
+  right: 3%;
   transform: translateX(-50%);
   color: #fff;
   padding: 10px 20px;
