@@ -18,12 +18,12 @@ const ChickensDetails: FC<ChickensDetailsProps> = ({ orderEntry }) => {
   const totalChickensRemisionados =
     orderEntry?.dataVeterinary?.totalChickensRemisionados;
   const drownedChickens = orderEntry?.dataVeterinary?.drownedChickens;
-  const typeBExternal = orderEntry?.dataVeterinary?.typeBExternal;
   const confiscatedChickens = orderEntry?.dataVeterinary?.confiscatedChickens;
   const klPataMushroom = orderEntry?.dataVeterinary?.klPataMushroom;
   const klFoot = orderEntry?.dataVeterinary?.klFoot;
   const sum = orderEntry?.dataVeterinary?.sum;
   const typeAChickens = orderEntry?.dataVeterinary?.typeAChickens;
+  const typeBChickens = orderEntry?.dataVeterinary?.typeBChickens;
 
   return (
     <ChickensDetailsWrapper>
@@ -87,9 +87,9 @@ const ChickensDetails: FC<ChickensDetailsProps> = ({ orderEntry }) => {
                 Pollo Tipo B
               </Text>
             </View>
-            {Object.keys(typeBExternal).map((key) => (
+            {Object.keys(typeBChickens).map((key) => (
               <View style={pdfStyles.tableCol}>
-                <Text style={pdfStyles.tableCell}>{typeBExternal[key]}</Text>
+                <Text style={pdfStyles.tableCell}>{typeBChickens[key]}</Text>
               </View>
             ))}
           </View>
