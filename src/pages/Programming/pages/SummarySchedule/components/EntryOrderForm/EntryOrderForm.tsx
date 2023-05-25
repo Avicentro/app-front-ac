@@ -97,6 +97,7 @@ const EntryOrderForm: FC<EntryOrderFormProps> = ({
     handleSubmit({
       ...getValues(),
       countChickensProgramming: countChickens,
+      operatorEndHook: 0,
       weighingsList: weighingForm,
     });
   };
