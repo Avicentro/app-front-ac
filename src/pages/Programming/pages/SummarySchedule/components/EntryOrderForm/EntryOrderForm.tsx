@@ -53,7 +53,7 @@ const EntryOrderForm: FC<EntryOrderFormProps> = ({
 
   useEffect(() => {
     const numberOfWeighingList = [];
-    for (let i = 0; i <= numberOfWeighing; i++) {
+    for (let i = 0; i < numberOfWeighing; i++) {
       numberOfWeighingList.push({ bruto: "", destare: 58, neto: "" });
     }
     setWeighingForm(numberOfWeighingList);
@@ -70,7 +70,7 @@ const EntryOrderForm: FC<EntryOrderFormProps> = ({
   const handleInputChange = (index: number, field: string, value: any) => {
     setWeighingForm((prevValues: any) => {
       const updatedValues = [...prevValues];
-      updatedValues[index][field] = value;
+      updatedValues[index][field] = +value;
       return updatedValues;
     });
   };
@@ -130,7 +130,7 @@ const EntryOrderForm: FC<EntryOrderFormProps> = ({
                       return handleInputChange(
                         index,
                         "neto",
-                        value - weighingForm[index]["destare"]
+                        +(value - weighingForm[index]["destare"])
                       );
                     }
                     return handleInputChange(index, field.name, value);

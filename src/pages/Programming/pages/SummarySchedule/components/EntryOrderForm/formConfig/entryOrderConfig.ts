@@ -112,11 +112,11 @@ export const entryOrderConfig: IConfig[] = [
   },
   {
     name: "operatorEndHook",
-    label: "Gancho final",
+    label: "Ganchos vacíos",
     value: "",
     type: "number",
     fieldType: fieldTypeEnum.text,
-    placeholder: "Gancho final",
+    placeholder: "Ganchos vacíos",
     validation: {
       type: "string",
       settings: [

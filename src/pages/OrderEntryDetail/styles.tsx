@@ -48,7 +48,7 @@ export const pdfStyles = StyleSheet.create({
     textAlign: "center",
   },
   titleCell: {
-    color: theme.white,
-    backgroundColor: theme.primaryDarkMode,
+    color: theme.coolGray800,
+    backgroundColor: theme.coolGray300,
   },
 });

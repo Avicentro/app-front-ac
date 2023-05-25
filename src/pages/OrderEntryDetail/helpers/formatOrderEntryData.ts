@@ -7,9 +7,23 @@ export const formatOrderEntryData = (data: any) => {
         const chickenDetail = dataCopy?.dataVeterinary[keyGroup][keyData];
         dataCopy.dataVeterinary[keyGroup][keyData] = isNaN(chickenDetail)
           ? chickenDetail
-          : Number(chickenDetail).toFixed(3);
+          : Number(chickenDetail).toFixed(0);
       });
     }
+  });
+  dataCopy?.WeighingsList.forEach((weighing: any, index: number) => {
+    dataCopy.WeighingsList[index] = {
+      ...dataCopy.WeighingsList[index],
+      basketWeightWeighing: Number(
+        dataCopy.WeighingsList[index].basketWeightWeighing
+      ).toFixed(2),
+      grossWeightWeighing: Number(
+        dataCopy.WeighingsList[index].grossWeightWeighing
+      ).toFixed(2),
+      netWeightWeighing: Number(
+        dataCopy.WeighingsList[index].netWeightWeighing
+      ).toFixed(2),
+    };
   });
   return dataCopy;
 };

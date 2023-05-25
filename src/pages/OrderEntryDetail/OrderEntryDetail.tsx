@@ -46,8 +46,8 @@ const OrderEntryDetail: FC<OrderEntryDetailProps> = () => {
               <Document>
                 <Page size="A4" style={pdfViewer.page}>
                   <MainData orderEntry={orderEntryData} />
-                  <ChickensDetails orderEntry={orderEntryData} />
                   <Remissions orderEntry={orderEntryData} />
+                  <ChickensDetails orderEntry={orderEntryData} />
                   <Dates orderEntry={orderEntryData} />
                   <CountParts
                     chickenComponents={orderEntryData["chickenComponents"][0]}

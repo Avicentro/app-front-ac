@@ -11,7 +11,7 @@ interface MainDataProps {
 
 const MainData: FC<MainDataProps> = ({ orderEntry }) => {
   return (
-    <View>
+    <View style={pdfStyles.table}>
       <View style={pdfStyles.tableRow}>
         <View style={[pdfStyles.tableCol, pdfStyles.tableHeader]}>
           <Text style={[pdfStyles.tableCell, pdfStyles.titleCell]}>
@@ -76,16 +76,6 @@ const MainData: FC<MainDataProps> = ({ orderEntry }) => {
         <View style={pdfStyles.tableCol}>
           <View>
             <Text style={pdfStyles.tableCell}>GRANJA</Text>
-          </View>
-        </View>
-        <View style={pdfStyles.tableCol}>
-          <View>
-            <Text style={[pdfStyles.tableCell, pdfStyles.titleCell]}>Lote</Text>
-          </View>
-        </View>
-        <View style={pdfStyles.tableCol}>
-          <View>
-            <Text style={pdfStyles.tableCell}>LOTE</Text>
           </View>
         </View>
       </View>
@@ -171,7 +161,9 @@ const MainData: FC<MainDataProps> = ({ orderEntry }) => {
         </View>
         <View style={pdfStyles.tableCol}>
           <View>
-            <Text style={pdfStyles.tableCell}>EN LINEA</Text>
+            <Text style={pdfStyles.tableCell}>
+              {orderEntry?.dataOrdenEntry?.hooksDetail?.hooks}
+            </Text>
           </View>
         </View>
       </View>
@@ -204,7 +196,9 @@ const MainData: FC<MainDataProps> = ({ orderEntry }) => {
           <Text style={[pdfStyles.tableCell]}>Localidad</Text>
         </View>
         <View style={[pdfStyles.tableCol]}>
-          <Text style={pdfStyles.tableCell}>LOCALIDAD</Text>
+          <Text style={pdfStyles.tableCell}>
+            {orderEntry?.programming?.city?.name}
+          </Text>
         </View>
       </View>
       <View style={pdfStyles.tableRow}>
