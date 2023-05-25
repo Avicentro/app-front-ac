@@ -132,28 +132,7 @@ export const entryOrderConfig: IConfig[] = [
       ],
     },
   },
-  {
-    name: "operatorEndHook",
-    label: "Ganchos vacíos",
-    value: 0,
-    type: "number",
-    fieldType: fieldTypeEnum.text,
-    placeholder: "Ganchos vacíos",
-    disabled: true,
-    validation: {
-      type: "string",
-      settings: [
-        {
-          type: "required",
-        },
-        {
-          type: "matches",
-          message: FEEDBACK_MESSAGES.ONLY_NUMBERS,
-          regex: REGEX_VALIDATION.SHOULD_ONLY_NUMBERS,
-        },
-      ],
-    },
-  },
+
   {
     name: "arrivalTime",
     label: "Hora de llegada",
