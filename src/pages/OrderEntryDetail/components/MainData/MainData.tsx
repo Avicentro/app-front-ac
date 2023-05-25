@@ -190,7 +190,9 @@ const MainData: FC<MainDataProps> = ({ orderEntry }) => {
         </View>
         <View style={pdfStyles.tableCol}>
           <View>
-            <Text style={pdfStyles.tableCell}>PLACA</Text>
+            <Text style={pdfStyles.tableCell}>
+              {orderEntry?.programming?.driver?.plaque}
+            </Text>
           </View>
         </View>
         <View style={[pdfStyles.tableCol, pdfStyles.titleCell]}>
