@@ -11,7 +11,7 @@ import { pdfStyles } from "../../styles";
 // helpers
 
 interface CountPartsProps {
-  chickenComponents: any;
+  chickenComponents?: any;
 }
 
 const CountParts: FC<CountPartsProps> = ({ chickenComponents }) => {
@@ -78,7 +78,7 @@ const CountParts: FC<CountPartsProps> = ({ chickenComponents }) => {
           </View>
           <View style={pdfStyles.tableCol}>
             <Text style={[pdfStyles.tableCell]}>
-              {chickenComponents.breast}
+              {chickenComponents.abdomen}
             </Text>
           </View>
         </View>

@@ -18,6 +18,7 @@ import { createArrayOfNumbersForSelect } from "../../../../../../helpers/createD
 import { weighingConfig } from "./formConfig/weighingConfig";
 import TextInput from "../../../../../../components/form/TextInput/TextInput";
 import { mergeNumberOfBaskets } from "./helpers/mergeNumberOfBaskets";
+import { typeButtonEnum } from "../../../../../../models";
 
 interface EntryOrderFormProps {
   handleSubmit: (s: any) => void;
@@ -26,9 +27,7 @@ interface EntryOrderFormProps {
 }
 
 type weighingFormType = {
-  bruto: any;
-  destare: any;
-  neto: any;
+  grossWeight: any;
 };
 
 const EntryOrderForm: FC<EntryOrderFormProps> = ({
@@ -55,7 +54,7 @@ const EntryOrderForm: FC<EntryOrderFormProps> = ({
   useEffect(() => {
     const numberOfWeighingList = [];
     for (let i = 0; i < numberOfWeighing; i++) {
-      numberOfWeighingList.push({ bruto: "", destare: 58, neto: "" });
+      numberOfWeighingList.push({ grossWeight: "" });
     }
     setWeighingForm(numberOfWeighingList);
   }, [numberOfWeighing]);
@@ -79,7 +78,7 @@ const EntryOrderForm: FC<EntryOrderFormProps> = ({
   };
 
   const changeNumberOfWeighing = (number: number) => {
-    const newWeigh = { bruto: "", destare: 58, neto: "" };
+    const newWeigh = { grossWeight: "" };
     setWeighingForm((prevState: any) => {
       const newList = [];
       for (let i = 0; i < number; i++) {
@@ -93,12 +92,33 @@ const EntryOrderForm: FC<EntryOrderFormProps> = ({
     setNumberOfWeighing(number);
   };
 
-  const onSubmit = (data: any) => {
+  const onSubmit = () => {
     handleSubmit({
       ...getValues(),
       countChickensProgramming: countChickens,
       operatorEndHook: 0,
-      weighingsList: weighingForm,
+      weighingsList: weighingForm.map(({ grossWeight }) => ({
+        grossWeight: grossWeight.toString(),
+      })),
+    });
+  };
+
+  const getExternalValue = () => {
+    return 0;
+  };
+
+  const setBrutoByExternalValue = ({
+    index,
+    fieldName,
+  }: {
+    index: number;
+    fieldName: string;
+  }) => {
+    const externalValue = getExternalValue();
+    setWeighingForm((prevValues: any) => {
+      const updatedValues = [...prevValues];
+      updatedValues[index][fieldName] = externalValue;
+      return updatedValues;
     });
   };
 
@@ -123,6 +143,20 @@ const EntryOrderForm: FC<EntryOrderFormProps> = ({
         </div>
         {getWeighingFieldsByNumberSelected().map(({ label, value }, index) => (
           <Fragment key={`${value}_${index}`}>
+            <div className="button-add-container">
+              <Button
+                typeButton={typeButtonEnum.stroke}
+                extraProps={{
+                  onClick: () =>
+                    setBrutoByExternalValue({
+                      index,
+                      fieldName: "grossWeight",
+                    }),
+                }}
+              >
+                Añadir valor externo
+              </Button>
+            </div>
             {weighingConfig.map((field, indexWeighing) => (
               <Fragment key={`${field.name}_${indexWeighing}`}>
                 <TextInput
@@ -133,14 +167,6 @@ const EntryOrderForm: FC<EntryOrderFormProps> = ({
                     weighingForm[index][field.name as keyof weighingFormType]
                   }
                   handleChange={(value) => {
-                    if (field.name === "bruto") {
-                      handleInputChange(index, field.name, value);
-                      return handleInputChange(
-                        index,
-                        "neto",
-                        +(value - weighingForm[index]["destare"])
-                      );
-                    }
                     return handleInputChange(index, field.name, value);
                   }}
                 />

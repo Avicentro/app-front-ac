@@ -14,7 +14,7 @@ import { OrderEntryDetailWrapper } from "./styles";
 import { useOrderEntry } from "../../hook/useOrderEntry";
 import { formatOrderEntryData } from "./helpers/formatOrderEntryData";
 import CountParts from "./components/CountParts/CountParts";
-import { formatDateCo } from "../../helpers/format/formatDateCo";
+import FullScreenLoaderContainer from "../../components/feedback/FullScreenLoaderContainer/FullScreenLoaderContainer";
 // helpers
 
 interface OrderEntryDetailProps {}
@@ -22,11 +22,11 @@ interface OrderEntryDetailProps {}
 const OrderEntryDetail: FC<OrderEntryDetailProps> = () => {
   const { orderEntryId } = useParams();
   const [orderEntryData, setOrderEntryData] = useState(undefined);
-  const { data } = useOrderEntry(orderEntryId);
+  const { data, isLoading } = useOrderEntry(orderEntryId);
 
   useEffect(() => {
-    if (data) {
-      setOrderEntryData(formatOrderEntryData(data));
+    if (data?.data) {
+      setOrderEntryData(formatOrderEntryData(data?.data));
     }
   }, [data]);
 
@@ -40,24 +40,32 @@ const OrderEntryDetail: FC<OrderEntryDetailProps> = () => {
   return (
     <OrderEntryDetailWrapper>
       <BackButton />
-      {!!orderEntryData && (
-        <div className="tables-container" id="entry-order-table">
-          <div className="main">
-            <PDFViewer style={pdfViewer.pdf}>
-              <Document title={`Orden de entrada `}>
-                <Page size="A4" style={pdfViewer.page}>
-                  <MainData orderEntry={orderEntryData} />
-                  <Remissions orderEntry={orderEntryData} />
-                  <ChickensDetails orderEntry={orderEntryData} />
-                  <Dates orderEntry={orderEntryData} />
-                  <CountParts
-                    chickenComponents={orderEntryData["chickenComponents"][0]}
-                  />
-                </Page>
-              </Document>
-            </PDFViewer>
-          </div>
-        </div>
+      {isLoading ? (
+        <FullScreenLoaderContainer />
+      ) : (
+        <>
+          {!!orderEntryData && (
+            <div className="tables-container" id="entry-order-table">
+              <div className="main">
+                <PDFViewer style={pdfViewer.pdf}>
+                  <Document title={`Orden de entrada `}>
+                    <Page size="A4" style={pdfViewer.page}>
+                      <MainData orderEntry={orderEntryData} />
+                      <Remissions orderEntry={orderEntryData} />
+                      <ChickensDetails orderEntry={orderEntryData} />
+                      <Dates orderEntry={orderEntryData} />
+                      <CountParts
+                        chickenComponents={
+                          orderEntryData["chickenComponents"][0]
+                        }
+                      />
+                    </Page>
+                  </Document>
+                </PDFViewer>
+              </div>
+            </div>
+          )}
+        </>
       )}
     </OrderEntryDetailWrapper>
   );

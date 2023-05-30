@@ -85,6 +85,13 @@ const TravelProgramming: FC<TravelProgrammingProps> = () => {
         ? getAllCustomers(allCustomers?.data)
         : [{ label: "No existen Sub clientes", value: "" }],
     },
+    {
+      name: "farm",
+      key: "options",
+      value: allCustomers?.data
+        ? getAllCustomers(allCustomers?.data)
+        : [{ label: "No existen granjas", value: "" }],
+    },
   ];
 
   const {
@@ -109,7 +116,6 @@ const TravelProgramming: FC<TravelProgrammingProps> = () => {
       const responseData = await saveScheduleData.mutateAsync(rest);
       setResponseData(responseData);
       setIsDataSave(true);
-      console.log("responseData", responseData);
       navigate(`${COMPOSED_ROUTES.SUMMARY_PROGRAMMING}/${responseData.code}`);
     } catch (error: any) {
       dispatch(showToast(error?.response?.data?.message, "error"));

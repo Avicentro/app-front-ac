@@ -22,6 +22,7 @@ export const ToastWrapper = styled.div<ToastWrapperProps>`
   p {
     color: #fff;
   }
+  z-index: 999;
   .modal-close {
     all: unset;
     position: fixed;

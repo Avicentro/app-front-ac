@@ -32,6 +32,8 @@ import {
   typeType,
   typeValidationsType,
 } from "../../../../models";
+import { showToast } from "../../../../store/toast/actions";
+import { useDispatch } from "react-redux";
 // Icons
 
 interface CustomCalendarProps {}
@@ -57,12 +59,13 @@ const CustomCalendar: FC<CustomCalendarProps> = () => {
   const userIsAdmin = getUserIsAdmin();
   const reProgrammingMutation = useReProgrammingMutation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     let localSchedules = schedulesDb?.data?.data || [];
     localSchedules = localSchedules.map((schedule: any) => {
       return {
-        title: schedule.customer?.name,
+        title: schedule.customer?.name || "Sin Cliente",
         start: schedule.dateStart,
         end: schedule.dateEnd,
         id: schedule.code,
@@ -129,8 +132,17 @@ const CustomCalendar: FC<CustomCalendarProps> = () => {
         return schedule;
       });
       await reProgrammingMutation.mutateAsync(schedulesWithDriver as any);
+      dispatch(
+        showToast("Se ha modificado la programación correctamente", "success")
+      );
     } catch (error) {
       console.error(error);
+      dispatch(
+        showToast(
+          "Hubo algún problema al intentar modificar la programación",
+          "error"
+        )
+      );
     } finally {
       setLoginModifiedProgramming(false);
       setModalConfirmIsOpen(false);
@@ -139,26 +151,39 @@ const CustomCalendar: FC<CustomCalendarProps> = () => {
   };
 
   const getFormConfigSchedules = (): formConfigType[] => {
-    return schedulesModified.map((schedule: scheduleType) => ({
-      name: schedule.code.toString(),
-      label: `Escriba aquí la razón del cambio de la programación, codigo: ${
-        schedule.code
-      } cliente: ${schedule.customer["name" as any]}`,
-      value: "",
-      type: "text" as typeType,
-      fieldType: fieldTypeEnum.text,
-      placeholder: `Escriba aquí la razón del cambio de la programación:, codigo: ${
-        schedule.code
-      } cliente: ${schedule.customer["name" as any]}`,
-      validation: {
-        type: "string" as typeValidationsType,
-        settings: [
-          {
-            type: "required" as settingsValidationsStringType,
+    try {
+      return schedulesModified.map((schedule: scheduleType) => {
+        return {
+          name: schedule.code.toString(),
+          label: `Escriba aquí la razón del cambio de la programación, codigo: ${
+            schedule.code
+          } cliente: ${schedule.customer["name" as any]}`,
+          value: "",
+          type: "text" as typeType,
+          fieldType: fieldTypeEnum.text,
+          placeholder: `Escriba aquí la razón del cambio de la programación:, codigo: ${
+            schedule.code
+          } cliente: ${schedule.customer["name" as any]}`,
+          validation: {
+            type: "string" as typeValidationsType,
+            settings: [
+              {
+                type: "required" as settingsValidationsStringType,
+              },
+            ],
           },
-        ],
-      },
-    }));
+        };
+      });
+    } catch (error) {
+      dispatch(
+        showToast(
+          "Para mover de fecha la programacion es necesario que cuente con un cliente asignado",
+          "success"
+        )
+      );
+      setModalConfirmIsOpen(false);
+      return [];
+    }
   };
 
   const today = useMemo(() => new Date(), []);

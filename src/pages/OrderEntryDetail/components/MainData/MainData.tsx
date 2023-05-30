@@ -37,11 +37,9 @@ const MainData: FC<MainDataProps> = ({ orderEntry }) => {
         </View>
       </View>
       <View style={pdfStyles.tableRow}>
-        <View style={pdfStyles.tableCol}>
-          <View>
-            <Text style={[pdfStyles.tableCell, pdfStyles.titleCell]}>
-              Proveedor
-            </Text>
+        <View style={[pdfStyles.titleCell, pdfStyles.tableCol]}>
+          <View style={[pdfStyles.tableCell]}>
+            <Text>Proveedor</Text>
           </View>
         </View>
         <View style={pdfStyles.tableCol}>
@@ -51,11 +49,9 @@ const MainData: FC<MainDataProps> = ({ orderEntry }) => {
             </Text>
           </View>
         </View>
-        <View style={pdfStyles.tableCol}>
-          <View>
-            <Text style={[pdfStyles.tableCell, pdfStyles.titleCell]}>
-              Conductor
-            </Text>
+        <View style={[pdfStyles.titleCell, pdfStyles.tableCol]}>
+          <View style={[pdfStyles.tableCell]}>
+            <Text>Proveedor</Text>
           </View>
         </View>
         <View style={pdfStyles.tableCol}>

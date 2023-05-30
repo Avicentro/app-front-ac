@@ -1,6 +1,7 @@
 import { FC } from "react";
 import { sizeButtonEnum, typeButtonEnum } from "../../../models";
 import { theme } from "../../../static/styles/theme";
+import Spinner from "../../feedback/Spinner/Spinner";
 import { ButtonProps } from "./model";
 
 // Components
@@ -29,7 +30,7 @@ const Button: FC<ButtonProps> = ({
       {...extraProps}
       sizeButton={sizeButton}
     >
-      {loading ? <>Cargando...</> : <>{children}</>}
+      {loading ? <Spinner /> : <>{children}</>}
     </ButtonWrapper>
   );
 };

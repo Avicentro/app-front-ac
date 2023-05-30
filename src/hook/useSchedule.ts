@@ -15,12 +15,15 @@ export const useAvailableSchedules = (data: any) => {
 };
 
 export const useScheduling = (orderId: string) => {
-  return useQuery({
+  const response = useQuery({
     queryKey: ["scheduling"],
     queryFn: async () =>
       await ApiService.getData({}, `/programming/find/${orderId}`),
     retry: false,
   });
+  const isLoading = response.isLoading;
+  const refetch = response.refetch;
+  return { data: response?.data?.data, isLoading, refetch };
 };
 
 export const useAllCustomers = () => {
@@ -129,7 +132,8 @@ export const useAnyByUrl = (
     },
     enabled,
   });
-  return response?.data || [];
+  const isLoading = response.isLoading;
+  return { isLoading, data: response };
 };
 
 //DELETE

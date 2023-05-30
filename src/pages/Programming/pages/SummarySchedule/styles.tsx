@@ -22,11 +22,13 @@ export const SummaryScheduleWrapper = styled.div`
     &__text {
       display: flex;
       flex-direction: column;
+      gap: 20px;
       &-container {
         display: flex;
         gap: 16px;
-        align-items: center;
+        align-items: left;
         white-space: nowrap;
+        flex-direction: column;
         p {
           all: unset;
         }
@@ -71,5 +73,13 @@ export const SummaryScheduleWrapper = styled.div`
     }
   }
   @media ${MIN_WIDTH_QUERIES.DESKTOP.query} {
+    .schedule-info {
+      &__text {
+        &-container {
+          flex-direction: row;
+          align-items: center;
+        }
+      }
+    }
   }
 `;

@@ -12,6 +12,7 @@ import { useAnyByUrl } from "../../../hook/useSchedule";
 
 // Models
 import { EditFieldWrapper } from "./styles";
+import Spinner from "../../feedback/Spinner/Spinner";
 
 interface EditFieldProps {
   label: string;
@@ -32,17 +33,22 @@ const EditField: FC<EditFieldProps> = ({
 }) => {
   const [editing, setEditing] = useState(false);
   const [text, setText] = useState(label);
-  const [isHovered, setIsHovered] = useState(false);
   const [field, setField] = useState(propsField);
 
-  const { data } = useAnyByUrl({}, url, editing, propsField.name);
+  const { data, isLoading }: { data: any; isLoading: boolean } = useAnyByUrl(
+    {},
+    url,
+    editing,
+    propsField.name
+  );
+  const dataResponse = data?.data?.data;
 
   useEffect(() => {
     setText(label);
   }, [label]);
 
   useEffect(() => {
-    if (editing && data) {
+    if (editing && dataResponse && !isLoading) {
       setField((prev: any) => {
         const cloneField = { ...prev };
         if (cloneField.fieldType === "select") {
@@ -51,7 +57,7 @@ const EditField: FC<EditFieldProps> = ({
               label: "Seleccione",
               value: "",
             },
-            ...data?.map((client: any) => ({
+            ...dataResponse?.map((client: any) => ({
               label: client.name,
               value: propsField.name === "city" ? client.cityId : client._id,
             })),
@@ -61,7 +67,7 @@ const EditField: FC<EditFieldProps> = ({
         return prev;
       });
     }
-  }, [data, editing, propsField.name]);
+  }, [dataResponse, editing, propsField.name, isLoading]);
 
   const handleLabelClick = () => {
     setEditing(true);
@@ -83,31 +89,23 @@ const EditField: FC<EditFieldProps> = ({
     setText(label);
   };
 
-  const handleMouseEnter = () => {
-    if (!editing) {
-      setIsHovered(true);
-    }
-  };
-
-  const handleMouseLeave = () => {
-    if (!editing) {
-      setIsHovered(false);
-    }
-  };
-
   return (
     <EditFieldWrapper>
       {editing ? (
         <div className="field-container">
-          <ComponentSelector
-            {...field}
-            value={text}
-            handleChange={inputChange}
-          />
+          {isLoading || loading ? (
+            <Spinner />
+          ) : (
+            <ComponentSelector
+              {...field}
+              value={text}
+              handleChange={inputChange}
+            />
+          )}
           {text !== label && (
             <>
               {loading ? (
-                <span>loading</span>
+                <Spinner />
               ) : (
                 <div className="actions-container">
                   <button onClick={handleConfirm} data-item-type="accent-1">
@@ -122,11 +120,7 @@ const EditField: FC<EditFieldProps> = ({
           )}
         </div>
       ) : (
-        <div
-          className="icon-container"
-          onMouseEnter={() => shouldEdit && handleMouseEnter()}
-          onMouseLeave={() => shouldEdit && handleMouseLeave()}
-        >
+        <div className="icon-container">
           <label>{!!text ? text : "-"}</label>
           <span
             className="pencil-icon-container"

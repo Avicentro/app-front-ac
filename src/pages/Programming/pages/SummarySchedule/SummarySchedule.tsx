@@ -1,4 +1,4 @@
-import { FC, useCallback, useState } from "react";
+import { FC, useCallback, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 // Components
@@ -35,6 +35,7 @@ import {
 import Modal from "../../../../components/display/Modal/Modal";
 import { useDispatch } from "react-redux";
 import { showToast } from "../../../../store/toast/actions";
+import FullScreenLoaderContainer from "../../../../components/feedback/FullScreenLoaderContainer/FullScreenLoaderContainer";
 
 type dataSummaryType = {
   dateStart: string;
@@ -73,12 +74,10 @@ const SummarySchedule: FC<SummaryScheduleProps> = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { orderId = "" } = useParams();
-  const { data: scheduling, refetch } = useScheduling(orderId);
+  const { data, refetch, isLoading } = useScheduling(orderId);
   const useDeleteSchedule = useDeleteScheduleMutate();
 
-  const updateProgrammingMutation = useUpdateProgrammingMutation(
-    scheduling?.data?.code
-  );
+  const updateProgrammingMutation = useUpdateProgrammingMutation(data?.code);
   const createOrderEntry = useCreateOrderEntryMutation();
 
   const changeValue = async (data: any) => {
@@ -164,27 +163,25 @@ const SummarySchedule: FC<SummaryScheduleProps> = () => {
 
   const getLabelDate = useCallback(
     (key: string) => {
-      if (scheduling?.data && scheduling?.data[key as keyof dataSummaryType]) {
+      if (data && data[key as keyof dataSummaryType]) {
         return formatDateCo({
-          date: scheduling?.data[key as keyof dataSummaryType],
+          date: data[key as keyof dataSummaryType],
           addHours: true,
         });
       }
     },
-    [scheduling?.data]
+    [data]
   );
 
   const getLabelString = useCallback(
     (key: any) => {
       const keyIsArray = Array.isArray(key);
       if (keyIsArray) {
-        return scheduling?.data[key[0]]
-          ? scheduling?.data[key[0]][key[1]]
-          : "-";
+        return data[key[0]] ? data[key[0]][key[1]] : "-";
       }
-      return scheduling?.data[key] || "-";
+      return data[key] || "-";
     },
-    [scheduling?.data]
+    [data]
   );
 
   const getLabelByKey = useCallback(
@@ -202,9 +199,9 @@ const SummarySchedule: FC<SummaryScheduleProps> = () => {
     try {
       const dataToSend = {
         ...dataForm,
-        code: +scheduling?.data?.code,
-        startTime: scheduling?.data?.dateStart,
-        endTime: scheduling?.data?.dateEnd,
+        code: +data?.code,
+        startTime: data?.dateStart,
+        endTime: data?.dateEnd,
       };
       await createOrderEntry.mutateAsync(dataToSend);
       dispatch(
@@ -213,6 +210,7 @@ const SummarySchedule: FC<SummaryScheduleProps> = () => {
           "success"
         )
       );
+      setShowForm(false);
     } catch (error: any) {
       dispatch(
         showToast(
@@ -230,15 +228,15 @@ const SummarySchedule: FC<SummaryScheduleProps> = () => {
     return navigate(`${ROUTES.ORDER_ENTRY}/${id}`);
   };
 
-  const getIfOrderEntryExist = () => scheduling?.data?.orderEntryExist;
+  const getIfOrderEntryExist = () => data?.orderEntryExist;
 
   const getButtonIfOrderEntryCreated = () => {
-    if (scheduling?.data?.orderEntryExist) {
+    if (data?.orderEntryExist) {
       return (
         <Button
           typeButton={typeButtonEnum.fill}
           extraProps={{
-            onClick: () => goToOrderEntry(scheduling?.data?.code),
+            onClick: () => goToOrderEntry(data?.code),
           }}
         >
           Ir a la orden de entrada
@@ -258,7 +256,7 @@ const SummarySchedule: FC<SummaryScheduleProps> = () => {
   };
 
   const deleteSchedule = async () => {
-    const codeToDelete = scheduling?.data?.code;
+    const codeToDelete = data?.code;
     setLoadingDelete(true);
     try {
       await useDeleteSchedule.mutateAsync(codeToDelete);
@@ -284,143 +282,166 @@ const SummarySchedule: FC<SummaryScheduleProps> = () => {
       <div className="title">
         <h1>Resumen programación</h1>
       </div>
-      <section className="schedule-info">
-        <div className="schedule-info__text">
-          <div className="schedule-info__text-container">
-            <p className="title">Orden: </p>
-            <div className="content">
-              <EditField
-                label={getLabelByKey({ key: "code" })}
-                handleChange={changeValue}
-                loading={loading}
-                propsField={getConfigForField({
-                  type: "text",
-                  value: getLabelByKey({ key: "code" }),
-                  name: "supplier",
-                })}
-              />
+      {isLoading ? (
+        <FullScreenLoaderContainer />
+      ) : (
+        <>
+          <section className="schedule-info">
+            <div className="schedule-info__text">
+              <div className="schedule-info__text-container">
+                <p className="title">Orden: </p>
+                <div className="content">
+                  <EditField
+                    label={getLabelByKey({ key: "code" })}
+                    handleChange={changeValue}
+                    loading={loading}
+                    propsField={getConfigForField({
+                      type: "text",
+                      value: getLabelByKey({ key: "code" }),
+                      name: "supplier",
+                    })}
+                  />
+                </div>
+              </div>
+              <div className="schedule-info__text-container">
+                <p className="title">Nit: </p>
+                <div className="content">{getLabelByKey({ key: "nit" })}</div>
+              </div>
+              <div className="schedule-info__text-container">
+                <p className="title">Proveedor: </p>
+                <div className="content">
+                  <EditField
+                    label={getLabelByKey({ key: ["supplier", "name"] })}
+                    handleChange={changeValue}
+                    loading={loading}
+                    shouldEdit={!getIfOrderEntryExist()}
+                    propsField={getConfigForField({
+                      type: "select",
+                      value: getLabelByKey({ key: ["supplier", "name"] }),
+                      name: "supplier",
+                    })}
+                    url="/customer/all"
+                  />
+                </div>
+              </div>
+              <div className="schedule-info__text-container">
+                <p className="title">Cliente: </p>
+                <div className="content">
+                  <EditField
+                    label={getLabelByKey({ key: ["customer", "name"] })}
+                    handleChange={changeValue}
+                    loading={loading}
+                    shouldEdit={!getIfOrderEntryExist()}
+                    propsField={getConfigForField({
+                      type: "select",
+                      value: getLabelByKey({ key: ["customer", "name"] }),
+                      name: "customer",
+                    })}
+                    url="/customer/all"
+                  />
+                </div>
+              </div>
+              <div className="schedule-info__text-container">
+                <p className="title">Sub-cliente: </p>
+                <div className="content">
+                  <EditField
+                    label={getLabelByKey({ key: ["subCustomer", "name"] })}
+                    handleChange={changeValue}
+                    loading={loading}
+                    shouldEdit={!getIfOrderEntryExist()}
+                    propsField={getConfigForField({
+                      type: "select",
+                      value: getLabelByKey({ key: ["subCustomer", "name"] }),
+                      name: "SubCustomer",
+                    })}
+                    url="/customer/all"
+                  />
+                </div>
+              </div>
+              <div className="schedule-info__text-container">
+                <p className="title">Cantidad de pollos: </p>
+                <div className="content">
+                  <EditField
+                    label={getLabelByKey({ key: "countChickens" })}
+                    handleChange={changeValue}
+                    loading={loading}
+                    shouldEdit={!getIfOrderEntryExist()}
+                    propsField={getConfigForField({
+                      type: "number",
+                      value: getLabelByKey({ key: "countChickens" }),
+                      name: "countChickens",
+                    })}
+                    url="/customer/all"
+                  />
+                </div>
+              </div>
+              <div className="schedule-info__text-container">
+                <p className="title">Conductor: </p>
+                <div className="content">
+                  <EditField
+                    label={getLabelByKey({ key: ["driver", "name"] })}
+                    handleChange={changeValue}
+                    loading={loading}
+                    shouldEdit={!getIfOrderEntryExist()}
+                    propsField={getConfigForField({
+                      type: "select",
+                      value: getLabelByKey({ key: ["driver", "name"] }),
+                      name: "driver",
+                    })}
+                    url="/customer/driver"
+                  />
+                </div>
+              </div>
+              <div className="schedule-info__text-container">
+                <p className="title">Ciudad: </p>
+                <div className="content">
+                  <EditField
+                    label={getLabelByKey({ key: ["city", "name"] })}
+                    handleChange={changeValue}
+                    loading={loading}
+                    shouldEdit={!getIfOrderEntryExist()}
+                    propsField={getConfigForField({
+                      type: "select",
+                      value: getLabelByKey({ key: ["city", "name"] }),
+                      name: "city",
+                    })}
+                    url="/city/city/ATL"
+                  />
+                </div>
+              </div>
+              <div className="schedule-info__text-container">
+                <p className="title">Granja: </p>
+                <div className="content">
+                  <EditField
+                    label={getLabelByKey({ key: ["farm", "name"] })}
+                    handleChange={changeValue}
+                    loading={loading}
+                    shouldEdit={!getIfOrderEntryExist()}
+                    propsField={getConfigForField({
+                      type: "select",
+                      value: getLabelByKey({ key: ["farm", "name"] }),
+                      name: "farm",
+                    })}
+                    url="/customer/all"
+                  />
+                </div>
+              </div>
+              <div className="schedule-info__text-container">
+                <p className="title">Fecha: </p>
+                <div className="content">
+                  {getLabelByKey({ key: "dateStart", type: "date" })}
+                </div>
+              </div>
             </div>
-          </div>
-          <div className="schedule-info__text-container">
-            <p className="title">Nit: </p>
-            <div className="content">{getLabelByKey({ key: "nit" })}</div>
-          </div>
-          <div className="schedule-info__text-container">
-            <p className="title">Proveedor: </p>
-            <div className="content">
-              <EditField
-                label={getLabelByKey({ key: ["supplier", "name"] })}
-                handleChange={changeValue}
-                loading={loading}
-                shouldEdit={!getIfOrderEntryExist()}
-                propsField={getConfigForField({
-                  type: "select",
-                  value: getLabelByKey({ key: ["supplier", "name"] }),
-                  name: "supplier",
-                })}
-                url="/customer/all"
-              />
+            <div className="schedule-info__qr">
+              <img src={getLabelByKey({ key: "qr" })} alt="QR Code" />
             </div>
-          </div>
-          <div className="schedule-info__text-container">
-            <p className="title">Cliente: </p>
-            <div className="content">
-              <EditField
-                label={getLabelByKey({ key: ["customer", "name"] })}
-                handleChange={changeValue}
-                loading={loading}
-                shouldEdit={!getIfOrderEntryExist()}
-                propsField={getConfigForField({
-                  type: "select",
-                  value: getLabelByKey({ key: ["customer", "name"] }),
-                  name: "customer",
-                })}
-                url="/customer/all"
-              />
-            </div>
-          </div>
-          <div className="schedule-info__text-container">
-            <p className="title">Sub-cliente: </p>
-            <div className="content">
-              <EditField
-                label={getLabelByKey({ key: ["subCustomer", "name"] })}
-                handleChange={changeValue}
-                loading={loading}
-                shouldEdit={!getIfOrderEntryExist()}
-                propsField={getConfigForField({
-                  type: "select",
-                  value: getLabelByKey({ key: ["subCustomer", "name"] }),
-                  name: "SubCustomer",
-                })}
-                url="/customer/all"
-              />
-            </div>
-          </div>
-          <div className="schedule-info__text-container">
-            <p className="title">Cantidad de pollos: </p>
-            <div className="content">
-              <EditField
-                label={getLabelByKey({ key: "countChickens" })}
-                handleChange={changeValue}
-                loading={loading}
-                shouldEdit={!getIfOrderEntryExist()}
-                propsField={getConfigForField({
-                  type: "number",
-                  value: getLabelByKey({ key: "countChickens" }),
-                  name: "countChickens",
-                })}
-                url="/customer/all"
-              />
-            </div>
-          </div>
-          <div className="schedule-info__text-container">
-            <p className="title">Conductor: </p>
-            <div className="content">
-              <EditField
-                label={getLabelByKey({ key: ["driver", "name"] })}
-                handleChange={changeValue}
-                loading={loading}
-                shouldEdit={!getIfOrderEntryExist()}
-                propsField={getConfigForField({
-                  type: "select",
-                  value: getLabelByKey({ key: ["driver", "name"] }),
-                  name: "driver",
-                })}
-                url="/customer/driver"
-              />
-            </div>
-          </div>
-          <div className="schedule-info__text-container">
-            <p className="title">Ciudad: </p>
-            <div className="content">
-              <EditField
-                label={getLabelByKey({ key: ["city", "name"] })}
-                handleChange={changeValue}
-                loading={loading}
-                shouldEdit={!getIfOrderEntryExist()}
-                propsField={getConfigForField({
-                  type: "select",
-                  value: getLabelByKey({ key: ["city", "name"] }),
-                  name: "city",
-                })}
-                url="/city/city/ATL"
-              />
-            </div>
-          </div>
-          <div className="schedule-info__text-container">
-            <p className="title">Fecha: </p>
-            <div className="content">
-              {getLabelByKey({ key: "dateStart", type: "date" })}
-            </div>
-          </div>
-        </div>
-        <div className="schedule-info__qr">
-          <img src={getLabelByKey({ key: "qr" })} alt="QR Code" />
-        </div>
-      </section>
-      <section className="buttons-container">
-        {getButtonIfOrderEntryCreated()}
-      </section>
+          </section>
+          <section className="buttons-container">
+            {getButtonIfOrderEntryCreated()}
+          </section>
+        </>
+      )}
       <Modal
         open={modalConfirmDelete}
         title={MODAL_CONFIRM_TITLE}
@@ -442,7 +463,7 @@ const SummarySchedule: FC<SummaryScheduleProps> = () => {
           <EntryOrderForm
             handleSubmit={saveData}
             loading={formLoading}
-            countChickens={scheduling?.data?.countChickens}
+            countChickens={data?.countChickens}
           />
         </section>
       )}

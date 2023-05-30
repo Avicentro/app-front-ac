@@ -21,7 +21,10 @@ const DynamicForm: FC<DynamicFormProps> = ({
   numberOfColumns = 1,
 }) => {
   return (
-    <DynamicFormWrapper numberOfColumns={numberOfColumns}>
+    <DynamicFormWrapper
+      className="dynamic-form-container"
+      numberOfColumns={numberOfColumns}
+    >
       {formConfig.map(({ name, ...props }, index) => (
         <Fragment key={`${name}_${index}`}>
           <Controller

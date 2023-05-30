@@ -17,5 +17,6 @@ export const useOrderEntry = (idOrderEntry: any) => {
       };
     },
   });
-  return response?.data || [];
+  const isLoading = response.isLoading;
+  return { data: response?.data || [], isLoading };
 };

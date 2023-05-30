@@ -87,6 +87,23 @@ export const formConfig: IConfig[] = [
     options: [],
   },
   {
+    name: "farm",
+    label: "Granja",
+    value: "",
+    type: "text",
+    fieldType: fieldTypeEnum.select,
+    placeholder: "Granja",
+    validation: {
+      type: "string",
+      settings: [
+        {
+          type: "required",
+        },
+      ],
+    },
+    options: [],
+  },
+  {
     name: "countChickens",
     label: "Cantidad de pollos",
     value: "",

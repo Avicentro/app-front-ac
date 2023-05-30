@@ -17,10 +17,12 @@ export const createSchemaByConfig: any = (config: IConfig[]) => {
           const contentValidation = Object.values(regex);
           const newMessage =
             message ?? `El campo ${element.label} es requerido`;
-          yupObjectShape[element.name] = yupObjectShape[element.name][type](
-            ...contentValidation,
-            newMessage
-          );
+          if (yupObjectShape[element.name][type]) {
+            yupObjectShape[element.name] = yupObjectShape[element.name][type](
+              ...contentValidation,
+              newMessage
+            );
+          }
         } catch (error) {
           console.error(error);
         }

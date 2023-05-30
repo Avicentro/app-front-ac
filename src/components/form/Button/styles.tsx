@@ -55,6 +55,9 @@ const getColorByTypeButton = ({
 
 export const ButtonWrapper = styled.button<ButtonWrapperProps>`
   all: unset;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   box-sizing: border-box;
   width: 100%;
   height: ${({ sizeButton }) => `${sizeButton}px`};
