@@ -491,7 +491,7 @@ const SummarySchedule: FC<SummaryScheduleProps> = () => {
                         propsField={getConfigForField({
                           type: "number",
                           value: getLabelByKey({ key: "klMushroomPaw" }),
-                          name: "farm",
+                          name: "klMushroomPaw",
                         })}
                       />
                     </div>
