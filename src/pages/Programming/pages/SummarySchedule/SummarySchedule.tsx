@@ -430,6 +430,75 @@ const SummarySchedule: FC<SummaryScheduleProps> = () => {
                   />
                 </div>
               </div>
+              {data?.orderEntryExist && (
+                <>
+                  <div className="schedule-info__text-container">
+                    <p className="title">Ahogados: </p>
+                    <div className="content">
+                      <EditField
+                        label={getLabelByKey({ key: "drownedChickens" })}
+                        handleChange={changeValue}
+                        loading={loading}
+                        shouldEdit={getIfOrderEntryExist()}
+                        propsField={getConfigForField({
+                          type: "number",
+                          value: getLabelByKey({ key: "drownedChickens" }),
+                          name: "drownedChickens",
+                        })}
+                      />
+                    </div>
+                  </div>
+                  <div className="schedule-info__text-container">
+                    <p className="title">Pollo tipo B: </p>
+                    <div className="content">
+                      <EditField
+                        label={getLabelByKey({ key: "typeBChickens" })}
+                        handleChange={changeValue}
+                        loading={loading}
+                        shouldEdit={getIfOrderEntryExist()}
+                        propsField={getConfigForField({
+                          type: "number",
+                          value: getLabelByKey({ key: "typeBChickens" }),
+                          name: "typeBChickens",
+                        })}
+                      />
+                    </div>
+                  </div>
+                  <div className="schedule-info__text-container">
+                    <p className="title">Kilo de pata: </p>
+                    <div className="content">
+                      <EditField
+                        label={getLabelByKey({ key: "klFoot" })}
+                        handleChange={changeValue}
+                        loading={loading}
+                        shouldEdit={getIfOrderEntryExist()}
+                        propsField={getConfigForField({
+                          type: "number",
+                          value: getLabelByKey({ key: "klFoot" }),
+                          name: "klFoot",
+                        })}
+                      />
+                    </div>
+                  </div>
+                  <div className="schedule-info__text-container">
+                    <p className="title">Kilo de hongos: </p>
+                    <div className="content">
+                      <EditField
+                        label={getLabelByKey({ key: "klMushroomPaw" })}
+                        handleChange={changeValue}
+                        loading={loading}
+                        shouldEdit={getIfOrderEntryExist()}
+                        propsField={getConfigForField({
+                          type: "number",
+                          value: getLabelByKey({ key: "klMushroomPaw" }),
+                          name: "farm",
+                        })}
+                      />
+                    </div>
+                  </div>
+                </>
+              )}
+
               <div className="schedule-info__text-container">
                 <p className="title">Fecha: </p>
                 <div className="content">
