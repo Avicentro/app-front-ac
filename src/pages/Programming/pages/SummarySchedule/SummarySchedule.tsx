@@ -430,7 +430,7 @@ const SummarySchedule: FC<SummaryScheduleProps> = () => {
                   />
                 </div>
               </div>
-              {data?.orderEntryExist && (
+              {false && (
                 <>
                   <div className="schedule-info__text-container">
                     <p className="title">Ahogados: </p>
