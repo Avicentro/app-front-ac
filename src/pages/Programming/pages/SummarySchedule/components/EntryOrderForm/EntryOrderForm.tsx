@@ -45,9 +45,7 @@ const EntryOrderForm: FC<EntryOrderFormProps> = ({
     watch,
     formState: { errors },
   } = useForm({
-    defaultValues: getDefaultValuesByConfig(
-      mergeNumberOfBaskets({ formConfig: entryOrderConfig, countChickens })
-    ),
+    defaultValues: getDefaultValuesByConfig(entryOrderConfig),
     resolver: yupResolver(createSchemaByConfig(entryOrderConfig)),
   });
 

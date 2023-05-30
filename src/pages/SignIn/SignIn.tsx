@@ -16,12 +16,15 @@ import { useSignInMutation } from "../../hook/useSignIn";
 import { formConfig } from "./formConfig/formConfig";
 import { SignInWrapper } from "./styles";
 import BackButton from "../../components/display/BackButton/BackButton";
+import { useDispatch } from "react-redux";
+import { showToast } from "../../store/toast/actions";
 
 interface SignInProps {}
 
 const SignIn: FC<SignInProps> = () => {
   const [loading, setLoading] = useState(false);
 
+  const dispatch = useDispatch();
   const createUserMutation = useSignInMutation();
 
   const {
@@ -38,8 +41,10 @@ const SignIn: FC<SignInProps> = () => {
     setLoading(true);
     try {
       await createUserMutation.mutateAsync({ ...data, user: data.email });
-    } catch (error) {
+      dispatch(showToast("El usuario ha sido creado exitosamente", "success"));
+    } catch (error: any) {
       console.error(error);
+      dispatch(showToast(error.response.data.message, "error"));
     } finally {
       setLoading(false);
     }

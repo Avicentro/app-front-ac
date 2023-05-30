@@ -47,48 +47,6 @@ export const entryOrderConfig: IConfig[] = [
       ],
     },
   },
-  {
-    name: "chickensBasket",
-    label: "Pollos por Huacal",
-    value: 8,
-    type: "number",
-    fieldType: fieldTypeEnum.text,
-    placeholder: "Pollos por Huacal",
-    validation: {
-      type: "number",
-      settings: [
-        {
-          type: "required",
-        },
-        {
-          type: "matches",
-          message: FEEDBACK_MESSAGES.ONLY_NUMBERS,
-          regex: REGEX_VALIDATION.SHOULD_ONLY_NUMBERS,
-        },
-      ],
-    },
-  },
-  {
-    name: "basket",
-    label: "Número de huacales",
-    value: "",
-    type: "number",
-    fieldType: fieldTypeEnum.text,
-    placeholder: "Número de huacales",
-    validation: {
-      type: "string",
-      settings: [
-        {
-          type: "required",
-        },
-        {
-          type: "matches",
-          message: FEEDBACK_MESSAGES.ONLY_NUMBERS,
-          regex: REGEX_VALIDATION.SHOULD_ONLY_NUMBERS,
-        },
-      ],
-    },
-  },
 
   {
     name: "drownedChickens",

@@ -16,6 +16,10 @@ export const HeaderWrapper = styled.div`
   justify-content: space-between;
   .brand-container {
     cursor: pointer;
+    .brand-name {
+      font: 700 42px Poppins Bold;
+      color: ${({ theme }) => theme.primary};
+    }
   }
   .hamburgerMenu {
     background-color: ${({ theme }) => theme.primary};

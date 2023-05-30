@@ -22,8 +22,8 @@ const Header: FC<HeaderProps> = () => {
   const [isOpenModal, setIsOpenModal] = useState(false);
   return (
     <HeaderWrapper>
-      <div className="brandContainer">
-        <img src={logoContrast} alt="logo" />
+      <div className="brand-container">
+        <span className="brand-name">PROMETEO</span>
       </div>
       <div className="actions-container">
         <span className="user-letter">

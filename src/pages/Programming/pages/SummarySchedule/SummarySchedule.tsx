@@ -260,8 +260,12 @@ const SummarySchedule: FC<SummaryScheduleProps> = () => {
     setLoadingDelete(true);
     try {
       await useDeleteSchedule.mutateAsync(codeToDelete);
-    } catch (error) {
+      dispatch(
+        showToast("Se ha cancelado la programación exitosamente", "success")
+      );
+    } catch (error: any) {
       console.error(error);
+      dispatch(showToast(error.response.data.message, "error"));
     } finally {
       setLoadingDelete(false);
       navigate(ROUTES.PROGRAMMING);
