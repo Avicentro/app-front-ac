@@ -11,10 +11,10 @@ export const ToastWrapper = styled.div<ToastWrapperProps>`
     status === "success" ? theme.green500 : theme.red500};
   bottom: -150px;
   right: 3%;
-  transform: translateX(-50%);
   color: #fff;
   padding: 10px 20px;
   border-radius: 5px;
+  max-width: 600px;
   animation: ${({ show }) =>
     show ? "toastSlideIn" : "toastSlideOut"}  0.3s ease forwards;
     max-height: 250px;
