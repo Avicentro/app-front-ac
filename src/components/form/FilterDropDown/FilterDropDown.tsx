@@ -47,7 +47,6 @@ const FilterDropDown: FC<FilterDropDownProps> = ({
     const localLabel = localOptions?.find(
       (option: any) => option.value === valueSelected
     )?.label;
-    console.log("localLabel", localLabel);
     return localLabel;
   };
 
