@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { IConfig } from "../../../../../models";
 import DatePicker from "../../../DatePicker/DatePicker";
-import Dropdown from "../../../Dropdown/Dropdown";
+import FilterDropDown from "../../../FilterDropDown/FilterDropDown";
 import TextInput from "../../../TextInput/TextInput";
 import COMPONENT_TYPES from "../../constants/componentTypes";
 
@@ -16,7 +16,7 @@ const ComponentSelector: FC<ComponentSelectorProps> = ({ ...props }) => {
     {
       [COMPONENT_TYPES.TEXT]: <TextInput {...props} />,
       [COMPONENT_TYPES.DATE]: <DatePicker {...props} />,
-      [COMPONENT_TYPES.SELECT]: <Dropdown {...props} />,
+      [COMPONENT_TYPES.SELECT]: <FilterDropDown {...props} />,
       [COMPONENT_TYPES.HOURS_DATE]: <TextInput {...props} />,
     }[props.fieldType || ""] || <TextInput {...props} />
   );

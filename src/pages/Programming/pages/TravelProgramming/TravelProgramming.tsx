@@ -3,7 +3,6 @@ import { FC, useState } from "react";
 // Components
 import { formConfig } from "./config/formConfig";
 import Button from "../../../../components/form/Button/Button";
-import SummarySchedule from "../SummarySchedule/SummarySchedule";
 import BackButton from "../../../../components/display/BackButton/BackButton";
 import DynamicForm from "../../../../components/form/DynamicForm/DynamicForm";
 import { createSchemaByConfig } from "../../../../components/form/DynamicForm/helpers/createSchemaByConfig";
@@ -25,7 +24,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useAllCustomers } from "../../../../hook/useSchedule";
 import { useSaveScheduleData } from "../../../../hook/useSchedule";
 import { useAvailableSchedules } from "../../../../hook/useSchedule";
-import { COMPOSED_ROUTES, ROUTES } from "../../../../constants/routes";
+import { COMPOSED_ROUTES } from "../../../../constants/routes";
 import { showToast } from "../../../../store/toast/actions";
 import { useDispatch } from "react-redux";
 
@@ -33,8 +32,6 @@ interface TravelProgrammingProps {}
 
 const TravelProgramming: FC<TravelProgrammingProps> = () => {
   const [loading, setLoading] = useState(false);
-  const [isDataSave, setIsDataSave] = useState(false);
-  const [responseData, setResponseData] = useState(undefined);
   const dispatch = useDispatch();
 
   const { dateSelected = "none" } = useParams();
@@ -114,8 +111,6 @@ const TravelProgramming: FC<TravelProgrammingProps> = () => {
       setLoading(true);
       const { dateSelected, ...rest } = data;
       const responseData = await saveScheduleData.mutateAsync(rest);
-      setResponseData(responseData);
-      setIsDataSave(true);
       navigate(`${COMPOSED_ROUTES.SUMMARY_PROGRAMMING}/${responseData.code}`);
     } catch (error: any) {
       dispatch(showToast(error?.response?.data?.message, "error"));

@@ -13,11 +13,10 @@ import { EntryOrderFormWrapper } from "./styles";
 import { useForm } from "react-hook-form";
 import { entryOrderConfig } from "./formConfig/entryOrderConfig";
 import { yupResolver } from "@hookform/resolvers/yup";
-import Dropdown from "../../../../../../components/form/Dropdown/Dropdown";
+import FilterDropDown from "../../../../../../components/form/FilterDropDown/FilterDropDown";
 import { createArrayOfNumbersForSelect } from "../../../../../../helpers/createData/createArrayOfNumbersForSelect";
 import { weighingConfig } from "./formConfig/weighingConfig";
 import TextInput from "../../../../../../components/form/TextInput/TextInput";
-import { mergeNumberOfBaskets } from "./helpers/mergeNumberOfBaskets";
 import { typeButtonEnum } from "../../../../../../models";
 
 interface EntryOrderFormProps {
@@ -131,7 +130,7 @@ const EntryOrderForm: FC<EntryOrderFormProps> = ({
       />
       <div className="grid-weighing-container">
         <div className="weighing-selector">
-          <Dropdown
+          <FilterDropDown
             label="Seleccione el número de pesajes"
             name="numberOfWeighing"
             value={numberOfWeighing}
