@@ -130,3 +130,7 @@ export type scheduleType = {
   driver: string;
   typeSchedule: string;
 };
+
+export type customStyles = {
+  [key: string]: string | number;
+};

@@ -1,6 +1,15 @@
 import styled from "styled-components";
 
 export const ProgrammingWrapper = styled.div`
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 20px;
+  .ice-info-container {
+    grid-column: 1 / 4;
+  }
+  .calendar-card {
+    grid-column: 4 / -1;
+  }
   .title {
     margin-bottom: 23px;
     h1 {

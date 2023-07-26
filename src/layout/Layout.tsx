@@ -20,10 +20,8 @@ const Layout: FC<LayoutProps> = ({ children }) => {
 
     handleResize();
 
-    // Agregar un listener para escuchar cambios en el tamaño de la pantalla
     mediaQuery.addEventListener("change", handleResize);
 
-    // Remover el listener cuando el componente se desmonta
     return () => {
       mediaQuery.removeEventListener("change", handleResize);
     };
