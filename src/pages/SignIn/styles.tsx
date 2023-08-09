@@ -34,7 +34,7 @@ export const SignInWrapper = styled.div`
     grid-template-columns: repeat(12, 1fr);
     align-self: center;
     .back-button-container {
-      grid-column: 4 / 7;
+      grid-column: 5 / 7;
     }
     .form-container {
       grid-column: 1 / -1;

@@ -46,7 +46,10 @@ const RestProgramming: FC<RestProgrammingProps> = () => {
     try {
       setLoading(true);
       const { dateSelected, ...rest } = data;
-      const responseData = await saveScheduleData.mutateAsync(rest);
+      const responseData = await saveScheduleData.mutateAsync({
+        ...rest,
+        type: "rest",
+      });
       navigate(`${COMPOSED_ROUTES.SUMMARY_PROGRAMMING}/${responseData.code}`);
     } catch (error: any) {
       dispatch(showToast(error?.response?.data?.message, "error"));

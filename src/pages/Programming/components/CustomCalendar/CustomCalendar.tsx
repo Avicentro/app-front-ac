@@ -48,11 +48,12 @@ const CustomCalendar: FC<CustomCalendarProps> = () => {
   const [dateSelected, setDateSelected] = useState<string | null>(null);
   const [schedules, setSchedules] = useState([]);
   const [schedulesModified, setSchedulesModified] = useState([]);
+  const [dateInView, setDateInView] = useState("");
   const [viewCalendar, setViewCalendar] = useState("timeGridDay");
   const schedulesDb = useAllSchedules(
     { sort: "code", order: "-1" },
-    "2023",
-    loginModifiedProgramming
+    dateInView,
+    dateInView
   );
   const calendarRef = useRef<HTMLDivElement>(null);
   const reProgrammingMutation = useReProgrammingMutation();
@@ -188,8 +189,8 @@ const CustomCalendar: FC<CustomCalendarProps> = () => {
         selectable: true,
         headerToolbar: getHeaderToolbar(),
         timeZone: "local",
-        eventClick: ({ event }) => {
-          navigate(`${COMPOSED_ROUTES.SUMMARY_PROGRAMMING}/${event.id}`);
+        eventClick: (e) => {
+          navigate(`${COMPOSED_ROUTES.SUMMARY_PROGRAMMING}/${e.event.id}`);
         },
         displayEventEnd: true,
         dateClick: function (info) {
@@ -247,6 +248,9 @@ const CustomCalendar: FC<CustomCalendarProps> = () => {
           minute: "2-digit",
           omitZeroMinute: false,
           meridiem: "short",
+        },
+        datesSet: (e) => {
+          setDateInView(e.startStr); // AQUI ES DONDE SE ENVÍA LA FECHA QUE SE VISUALIZA PARA ENVIAR EL GET
         },
       });
       calendar.render();

@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 // Components
 import { formConfig } from "./config/formConfig";
 import { showToast } from "../../../../store/toast/actions";
+import Card from "../../../../components/display/Card/Card";
 import Button from "../../../../components/form/Button/Button";
 import BackButton from "../../../../components/display/BackButton/BackButton";
 import DynamicForm from "../../../../components/form/DynamicForm/DynamicForm";
@@ -15,7 +16,6 @@ import { TravelProgrammingWrapper } from "./styles";
 
 // helpers
 import { mergeData } from "../helpers/mergeData";
-import { getFormat } from "../helpers/getFormat";
 import { typeButtonEnum } from "../../../../models";
 import { getAllCustomers } from "../helpers/getAllCustomers";
 import { COMPOSED_ROUTES } from "../../../../constants/routes";
@@ -28,7 +28,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSaveScheduleData } from "../../../../hook/useSchedule";
 import { useAvailableSchedules } from "../../../../hook/useSchedule";
-import Card from "../../../../components/display/Card/Card";
 
 interface TravelProgrammingProps {}
 
@@ -72,7 +71,6 @@ const TravelProgramming: FC<TravelProgrammingProps> = () => {
     control,
     handleSubmit,
     setValue,
-    getValues,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(createSchemaByConfig(formConfig)),
@@ -88,7 +86,10 @@ const TravelProgramming: FC<TravelProgrammingProps> = () => {
     try {
       setLoading(true);
       const { dateSelected, ...rest } = data;
-      const responseData = await saveScheduleData.mutateAsync(rest);
+      const responseData = await saveScheduleData.mutateAsync({
+        ...rest,
+        type: "travel",
+      });
       navigate(`${COMPOSED_ROUTES.SUMMARY_PROGRAMMING}/${responseData.code}`);
     } catch (error: any) {
       dispatch(showToast(error?.response?.data?.message, "error"));
