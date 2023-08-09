@@ -1,6 +1,7 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Prometeo",
+  "name": "Prometeo",
+  "description": "La app de beneficio avicola",
   "icons": [
     {
       "src": "favicon.ico",
@@ -18,8 +19,14 @@
       "sizes": "512x512"
     }
   ],
+  "screenshots": [
+    {
+    "src": "screenshot.png",
+    "type": "image/png"
+    }
+  ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
+  "theme_color": "#EF0B0B",
   "background_color": "#ffffff"
 }
