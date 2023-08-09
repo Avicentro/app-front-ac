@@ -1,4 +1,4 @@
-import { IConfig } from "../../../../../models";
+import { IConfig } from "../../../../models";
 
 type dataToMergeType = {
   name: string;

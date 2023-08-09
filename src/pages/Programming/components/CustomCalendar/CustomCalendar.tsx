@@ -20,7 +20,6 @@ import {
   useReProgrammingMutation,
 } from "../../../../hook/useSchedule";
 import { COMPOSED_ROUTES } from "../../../../constants/routes";
-import { getUserIsAdmin } from "../../../../helpers/getData/getUserIsAdmin";
 import Button from "../../../../components/form/Button/Button";
 import ModalConfirmContent from "../ModalConfirmContent/ModalConfirmContent";
 import {
@@ -49,14 +48,13 @@ const CustomCalendar: FC<CustomCalendarProps> = () => {
   const [dateSelected, setDateSelected] = useState<string | null>(null);
   const [schedules, setSchedules] = useState([]);
   const [schedulesModified, setSchedulesModified] = useState([]);
-  const [viewCalendar, setViewCalendar] = useState("");
+  const [viewCalendar, setViewCalendar] = useState("timeGridDay");
   const schedulesDb = useAllSchedules(
     { sort: "code", order: "-1" },
     "2023",
     loginModifiedProgramming
   );
   const calendarRef = useRef<HTMLDivElement>(null);
-  const userIsAdmin = getUserIsAdmin();
   const reProgrammingMutation = useReProgrammingMutation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -74,33 +72,14 @@ const CustomCalendar: FC<CustomCalendarProps> = () => {
     setSchedules(localSchedules);
   }, [schedulesDb?.data?.data]);
 
-  const getHeaderToolbar = useCallback(() => {
-    return userIsAdmin
-      ? {
-          left: "prev,next today",
-          center: "title",
-          right: "dayGridMonth,timeGridDay",
-        }
-      : {
-          left: "prev,next today",
-          center: "title",
-          right: "dayGridMonth,timeGridDay",
-        };
-  }, [userIsAdmin]);
-
-  const getInitialViewByRole = useCallback(() => {
-    let typeOfView;
-    if (userIsAdmin) {
-      typeOfView = "dayGridMonth";
-    } else {
-      typeOfView = "timeGridDay";
-    }
-    return typeOfView;
-  }, [userIsAdmin]);
-
-  useEffect(() => {
-    setViewCalendar(getInitialViewByRole());
-  }, [getInitialViewByRole]);
+  const getHeaderToolbar = useCallback(
+    () => ({
+      left: "prev,next today",
+      center: "title",
+      right: "timeGridDay",
+    }),
+    []
+  );
 
   const saveReProgramming = async (formData: any) => {
     setLoginModifiedProgramming(true);
@@ -262,12 +241,18 @@ const CustomCalendar: FC<CustomCalendarProps> = () => {
             buttonText: "Día",
           },
         },
+        slotLabelInterval: { minutes: 30 },
+        slotLabelFormat: {
+          hour: "2-digit",
+          minute: "2-digit",
+          omitZeroMinute: false,
+          meridiem: "short",
+        },
       });
       calendar.render();
     }
   }, [
     navigate,
-    getInitialViewByRole,
     getHeaderToolbar,
     schedules,
     schedulesDb?.data?.data,

@@ -3,6 +3,9 @@ import { MIN_WIDTH_QUERIES } from "../../../../constants/constants";
 
 export const TravelProgrammingWrapper = styled.div`
   grid-column: 1/ -1;
+  .card-travel {
+    padding: 30px;
+  }
   .title-schedule-form {
     text-align: center;
     h1 {

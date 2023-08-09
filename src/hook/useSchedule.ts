@@ -68,6 +68,16 @@ export const useSaveScheduleData = () => {
   });
 };
 
+export const useSaveRestScheduleData = () => {
+  return useMutation(async (data) => {
+    const response = await ApiService.postData(
+      data,
+      "/schedule/create-production"
+    );
+    return response.data;
+  });
+};
+
 export const useReProgrammingMutation = () => {
   return useMutation(async (data) => {
     const response = await ApiService.patchData(

@@ -3,7 +3,6 @@ import { FC } from "react";
 // Components
 import Card from "../../components/display/Card/Card";
 import Calendar from "./components/CustomCalendar/CustomCalendar";
-import IceInformation from "./components/IceInformation/IceInformation";
 
 // Styles
 import { ProgrammingWrapper } from "./styles";
@@ -17,9 +16,6 @@ const Programming: FC<ProgrammingProps> = () => {
   return (
     <Container>
       <ProgrammingWrapper>
-        <div className="ice-info-container">
-          <IceInformation />
-        </div>
         <Card customClass="calendar-card">
           <section className="title">
             <h1>Programación</h1>

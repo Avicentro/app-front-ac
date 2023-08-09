@@ -1,16 +1,45 @@
-import { IConfig } from "../../../../../models";
-import { fieldTypeEnum } from "../../../../Login/formConfig/models";
+import { fieldTypeEnum, IConfig } from "../../../../../models";
 
 export const formConfig: IConfig[] = [
   {
-    name: "dateRest",
-    label: "Fecha",
+    name: "type",
+    label: "Tipo de descanso",
+    value: "",
+    type: "text",
+    fieldType: fieldTypeEnum.select,
+    placeholder: "Tipo de descanso",
+    validation: {
+      type: "string",
+      settings: [
+        {
+          type: "required",
+        },
+      ],
+    },
+    options: [
+      {
+        label: "Seleccione la observación",
+        value: "",
+      },
+      {
+        label: "Cena",
+        value: "cena",
+      },
+      {
+        label: "Refrigerio",
+        value: "refrigerio",
+      },
+    ],
+  },
+  {
+    name: "observation",
+    label: "Observación",
     value: "",
     type: "text",
     fieldType: fieldTypeEnum.text,
-    placeholder: "Fecha de descanso",
+    placeholder: "Observación",
     validation: {
-      type: "date",
+      type: "string",
       settings: [
         {
           type: "required",

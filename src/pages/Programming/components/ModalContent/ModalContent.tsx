@@ -33,6 +33,15 @@ const ModalContent: FC<ModalContentProps> = ({ dateSelected }) => {
         >
           Programar viaje
         </Button>
+        <Button
+          extraProps={{
+            onClick: () =>
+              navigate(`${ROUTES.PROGRAMMING}${ROUTES.REST}/${dateSelected}`),
+          }}
+          sizeButton={sizeButtonEnum.extraBig}
+        >
+          Programar descanso
+        </Button>
       </div>
     </ModalContentWrapper>
   );

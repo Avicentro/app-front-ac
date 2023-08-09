@@ -3,6 +3,7 @@ const COMPONENT_TYPES = {
   DATE: "date",
   HOURS_DATE: "hours_date",
   SELECT: "select",
+  CHECKBOX: "checkbox",
 };
 
 export default COMPONENT_TYPES;

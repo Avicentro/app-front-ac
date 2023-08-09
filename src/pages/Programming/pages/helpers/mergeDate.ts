@@ -1,4 +1,4 @@
-import { IConfig } from "../../../../../models";
+import { IConfig } from "../../../../models";
 
 export const mergeDate = (formConfig: IConfig[], date: string) => {
   return formConfig.map((field) => {

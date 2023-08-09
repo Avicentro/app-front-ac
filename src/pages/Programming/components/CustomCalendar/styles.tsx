@@ -77,6 +77,15 @@ export const CustomCalendarWrapper = styled.div`
       }
     }
   }
+  .fc-timegrid-slots {
+    table {
+      tbody {
+        tr {
+          height: 40px;
+        }
+      }
+    }
+  }
   @media ${MIN_WIDTH_QUERIES.TABLET.query} {
     .fc-header-toolbar {
       flex-direction: row;

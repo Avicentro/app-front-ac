@@ -1,7 +1,9 @@
 import { FC, useState } from "react";
+import { useDispatch } from "react-redux";
 
 // Components
 import { formConfig } from "./config/formConfig";
+import { showToast } from "../../../../store/toast/actions";
 import Button from "../../../../components/form/Button/Button";
 import BackButton from "../../../../components/display/BackButton/BackButton";
 import DynamicForm from "../../../../components/form/DynamicForm/DynamicForm";
@@ -12,21 +14,21 @@ import { getDefaultValuesByConfig } from "../../../../components/form/DynamicFor
 import { TravelProgrammingWrapper } from "./styles";
 
 // helpers
-import { mergeData } from "./helpers/mergeData";
+import { mergeData } from "../helpers/mergeData";
+import { getFormat } from "../helpers/getFormat";
 import { typeButtonEnum } from "../../../../models";
-import { getAllCustomers } from "./helpers/getAllCustomers";
-import { getAvailableSchedulesList } from "./helpers/getAvailableSchedulesList";
+import { getAllCustomers } from "../helpers/getAllCustomers";
+import { COMPOSED_ROUTES } from "../../../../constants/routes";
+import { useAllCustomers } from "../../../../hook/useSchedule";
+import { getAvailableSchedulesList } from "../helpers/getAvailableSchedulesList";
 
 // Hooks
 import { useForm } from "react-hook-form";
-import { useNavigate, useParams } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useAllCustomers } from "../../../../hook/useSchedule";
+import { useNavigate, useParams } from "react-router-dom";
 import { useSaveScheduleData } from "../../../../hook/useSchedule";
 import { useAvailableSchedules } from "../../../../hook/useSchedule";
-import { COMPOSED_ROUTES } from "../../../../constants/routes";
-import { showToast } from "../../../../store/toast/actions";
-import { useDispatch } from "react-redux";
+import Card from "../../../../components/display/Card/Card";
 
 interface TravelProgrammingProps {}
 
@@ -42,18 +44,7 @@ const TravelProgramming: FC<TravelProgrammingProps> = () => {
   });
   const { data: allCustomers } = useAllCustomers();
 
-  const getFormat = () => {
-    const daysOfWeek = ["LUN", "MAR", "MIE", "JUE", "VIE", "SAB", "DOM"];
-    const dayOfWeekIndex = new Date(dateSelected).getDay();
-    return `${dateSelected} ${daysOfWeek[dayOfWeekIndex]}`;
-  };
-
   const dataToMerge = [
-    {
-      name: "dateSelected",
-      key: "value",
-      value: getFormat(),
-    },
     {
       name: "date",
       key: "options",
@@ -75,26 +66,13 @@ const TravelProgramming: FC<TravelProgrammingProps> = () => {
         ? getAllCustomers(allCustomers?.data)
         : [{ label: "No existen Proveedores", value: "" }],
     },
-    {
-      name: "subCustomer",
-      key: "options",
-      value: allCustomers?.data
-        ? getAllCustomers(allCustomers?.data)
-        : [{ label: "No existen Sub clientes", value: "" }],
-    },
-    {
-      name: "farm",
-      key: "options",
-      value: allCustomers?.data
-        ? getAllCustomers(allCustomers?.data)
-        : [{ label: "No existen granjas", value: "" }],
-    },
   ];
 
   const {
     control,
     handleSubmit,
     setValue,
+    getValues,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(createSchemaByConfig(formConfig)),
@@ -124,29 +102,31 @@ const TravelProgramming: FC<TravelProgrammingProps> = () => {
     <TravelProgrammingWrapper>
       <>
         <BackButton />
-        <div className="title-schedule-form">
-          <h1>Nueva programación</h1>
-        </div>
-        <form onSubmit={handleSubmit(saveProgramming)}>
-          <DynamicForm
-            formConfig={mergeData({
-              formConfig,
-              dataToMerge,
-            })}
-            errors={errors}
-            setValue={setValue}
-            control={control}
-          />
-          <div className="buttons-container">
-            <Button
-              typeButton={typeButtonEnum.fill}
-              type="submit"
-              loading={loading}
-            >
-              Guardar
-            </Button>
+        <Card customClass="card-travel">
+          <div className="title-schedule-form">
+            <h1>Nueva programación</h1>
           </div>
-        </form>
+          <form onSubmit={handleSubmit(saveProgramming)}>
+            <DynamicForm
+              formConfig={mergeData({
+                formConfig,
+                dataToMerge,
+              })}
+              errors={errors}
+              setValue={setValue}
+              control={control}
+            />
+            <div className="buttons-container">
+              <Button
+                typeButton={typeButtonEnum.fill}
+                type="submit"
+                loading={loading}
+              >
+                Guardar
+              </Button>
+            </div>
+          </form>
+        </Card>
       </>
     </TravelProgrammingWrapper>
   );

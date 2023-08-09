@@ -2,23 +2,6 @@ import { fieldTypeEnum, IConfig } from "../../../../../models";
 
 export const formConfig: IConfig[] = [
   {
-    name: "dateSelected",
-    label: "Fecha",
-    value: "",
-    type: "text",
-    fieldType: fieldTypeEnum.text,
-    placeholder: "Fecha de descanso",
-    disabled: true,
-    validation: {
-      type: "string",
-      settings: [
-        {
-          type: "required",
-        },
-      ],
-    },
-  },
-  {
     name: "date",
     label: "Horas de disponibilidad",
     value: "",
@@ -70,40 +53,6 @@ export const formConfig: IConfig[] = [
     options: [],
   },
   {
-    name: "subCustomer",
-    label: "Sub-cliente",
-    value: "",
-    type: "text",
-    fieldType: fieldTypeEnum.select,
-    placeholder: "Sub-cliente",
-    validation: {
-      type: "string",
-      settings: [
-        {
-          type: "required",
-        },
-      ],
-    },
-    options: [],
-  },
-  {
-    name: "farm",
-    label: "Granja",
-    value: "",
-    type: "text",
-    fieldType: fieldTypeEnum.select,
-    placeholder: "Granja",
-    validation: {
-      type: "string",
-      settings: [
-        {
-          type: "required",
-        },
-      ],
-    },
-    options: [],
-  },
-  {
     name: "countChickens",
     label: "Cantidad de pollos",
     value: "",
@@ -118,5 +67,13 @@ export const formConfig: IConfig[] = [
         },
       ],
     },
+  },
+  {
+    name: "confirmed",
+    label: "Viaje confirmado",
+    value: "",
+    type: "checkbox",
+    fieldType: fieldTypeEnum.checkbox,
+    placeholder: "Viaje confirmado",
   },
 ];

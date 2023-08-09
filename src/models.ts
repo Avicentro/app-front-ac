@@ -57,6 +57,7 @@ export enum fieldTypeEnum {
   text = "text",
   date = "date",
   select = "select",
+  checkbox = "checkbox",
 }
 
 export type optionsType = {
