@@ -26,8 +26,7 @@ import { getAvailableSchedulesList } from "../helpers/getAvailableSchedulesList"
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigate, useParams } from "react-router-dom";
-import { useSaveScheduleData } from "../../../../hook/useSchedule";
-import { useAvailableSchedules } from "../../../../hook/useSchedule";
+import { useSaveScheduleData, useAvailableSchedules } from "../../../../hook/useSchedule";
 
 interface TravelProgrammingProps {}
 

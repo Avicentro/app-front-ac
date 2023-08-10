@@ -17,6 +17,9 @@ export const CardWrapper = styled.div`
     flex-direction: column;
     gap: 4px;
   }
+  .name-container {
+    width: 250px;
+  }
   .title {
     font: 600 20px Poppins SemiBold;
     color: ${({ theme }) => theme.coolGray700};
