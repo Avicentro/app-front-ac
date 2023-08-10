@@ -13,12 +13,17 @@ export const TravelProgrammingWrapper = styled.div`
       font: 700 48px Poppins Bold;
     }
   }
-  .buttons-container {
+  .buttons-container-travel {
     display: flex;
     gap: 24px;
+    min-width: 200px;
   }
   @media ${MIN_WIDTH_QUERIES.TABLET.query} {
-    grid-column: 2/ 12;
+    grid-column: 2/ 10;
+    .buttons-container-travel {
+      max-width: 400px;
+      margin: 0 auto;
+    }
   }
   @media ${MIN_WIDTH_QUERIES.DESKTOP.query} {
   }

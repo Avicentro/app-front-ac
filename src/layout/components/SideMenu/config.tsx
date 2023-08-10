@@ -13,6 +13,12 @@ export const configMenu: configMenuType[] = [
     icon: "dataBase",
     roles: ["ADMIN"],
   },
+  {
+    label: "Personas",
+    route: ROUTES.PEOPLE,
+    icon: "enter",
+    roles: ["ADMIN"],
+  },
   // {
   //   label: "Salida",
   //   route: ROUTES.PROGRAMMING,

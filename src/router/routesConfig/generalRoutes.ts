@@ -16,6 +16,10 @@ const SignIn = lazy(() => import("../../pages/SignIn/SignIn"));
 const OrderEntryDetail = lazy(
   () => import("../../pages/OrderEntryDetail/OrderEntryDetail")
 );
+const People = lazy(() => import("../../pages/People/People"));
+const CreatePeople = lazy(
+  () => import("../../pages/CreatePeople/CreatePeople")
+);
 
 export const generalRoutes: IRoutes[] = [
   {
@@ -45,5 +49,13 @@ export const generalRoutes: IRoutes[] = [
   {
     path: `${ROUTES.SIGN_IN}`,
     component: SignIn,
+  },
+  {
+    path: `${ROUTES.PEOPLE}`,
+    component: People,
+  },
+  {
+    path: `${ROUTES.CREATE_PEOPLE}`,
+    component: CreatePeople,
   },
 ];

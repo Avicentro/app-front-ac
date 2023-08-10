@@ -23,6 +23,7 @@ import { COMPOSED_ROUTES } from "../../../../constants/routes";
 import Button from "../../../../components/form/Button/Button";
 import { useSaveRestScheduleData } from "../../../../hook/useSchedule";
 import Card from "../../../../components/display/Card/Card";
+import { Title } from "../../../../components/genericStyles";
 
 interface RestProgrammingProps {}
 
@@ -64,7 +65,7 @@ const RestProgramming: FC<RestProgrammingProps> = () => {
       <BackButton />
       <Card customClass="card-rest">
         <div className="title-schedule-form">
-          <h1>Nuevo descanso</h1>
+          <Title>Nuevo descanso</Title>
         </div>
         <form onSubmit={handleSubmit(saveRest)}>
           <DynamicForm

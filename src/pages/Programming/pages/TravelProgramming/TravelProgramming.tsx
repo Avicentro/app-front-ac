@@ -117,7 +117,7 @@ const TravelProgramming: FC<TravelProgrammingProps> = () => {
               setValue={setValue}
               control={control}
             />
-            <div className="buttons-container">
+            <div className="buttons-container-travel">
               <Button
                 typeButton={typeButtonEnum.fill}
                 type="submit"
