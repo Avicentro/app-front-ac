@@ -29,20 +29,15 @@ export const useScheduling = (orderId: string) => {
 export const useAllCustomers = () => {
   return useQuery({
     queryKey: ["allCustomers"],
-    queryFn: async () => await ApiService.getData({}, "/customer/all"),
+    queryFn: async () => await ApiService.getData({}, "/people/all"),
     retry: false,
   });
 };
 
-export const useAllSchedules = (
-  data: useAllSchedulesProps,
-  date: string,
-  dependency?: any
-) => {
+export const useAllSchedules = (data: any, date: string, dependency?: any) => {
   return useQuery({
     queryKey: ["allSchedules", dependency],
-    queryFn: async () =>
-      await ApiService.getData(data, `/Programming/all/${date}`),
+    queryFn: async () => await ApiService.getData(data, `/programing/all`),
     retry: false,
     onError: () => {
       return {
@@ -60,10 +55,7 @@ export const useAllSchedules = (
 
 export const useSaveScheduleData = () => {
   return useMutation(async (data) => {
-    const response = await ApiService.postData(
-      data,
-      "/programing"
-    );
+    const response = await ApiService.postData(data, "/programing");
     return response.data;
   });
 };
@@ -79,10 +71,10 @@ export const useSaveRestScheduleData = () => {
 };
 
 export const useReProgrammingMutation = () => {
-  return useMutation(async (data) => {
-    const response = await ApiService.patchData(
+  return useMutation(async (data: any) => {
+    const response = await ApiService.putData(
       { data: data },
-      "/programming/rescheduling"
+      `/programming/${data[0]._id}`
     );
     return response.data;
   });

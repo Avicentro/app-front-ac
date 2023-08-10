@@ -4,11 +4,11 @@ export const ProgrammingWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   gap: 20px;
-  /* .ice-info-container {
+  .ice-info-container {
     grid-column: 1 / 4;
-  } */
+  }
   .calendar-card {
-    grid-column: 1 / -1;
+    grid-column: 4 / -1;
   }
   .title {
     margin-bottom: 23px;

@@ -3,11 +3,12 @@ import { fieldTypeEnum, IConfig } from "../../../../../models";
 export const formConfig: IConfig[] = [
   {
     name: "date",
-    label: "Hora de programación",
+    label: "Hora seleccionada",
     value: "",
     type: "text",
-    fieldType: fieldTypeEnum.select,
+    fieldType: fieldTypeEnum.text,
     placeholder: "HH:MM",
+    disabled: false,
     validation: {
       type: "string",
       settings: [
@@ -18,6 +19,23 @@ export const formConfig: IConfig[] = [
     },
     options: [],
   },
+  // {
+  //   name: "date",
+  //   label: "Hora de programación",
+  //   value: "",
+  //   type: "text",
+  //   fieldType: fieldTypeEnum.select,
+  //   placeholder: "HH:MM",
+  //   validation: {
+  //     type: "string",
+  //     settings: [
+  //       {
+  //         type: "required",
+  //       },
+  //     ],
+  //   },
+  //   options: [],
+  // },
   {
     name: "customer",
     label: "Cliente",

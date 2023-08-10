@@ -8,14 +8,28 @@ type allCustomersType = {
   cellphone: string;
   email: string;
   __v: number;
+  people_type: "PROVIDER" | "CUSTOMER" | "SUBCUSTOMER";
 };
 
 export const getAllCustomers = (allCustomers: allCustomersType[]) => {
   return [
     { label: "Seleccione", value: "" },
-    ...allCustomers.map(({ name, _id }) => ({
-      label: name,
-      value: _id,
-    })),
+    ...allCustomers
+      .filter(({ people_type }) => people_type === "CUSTOMER")
+      .map(({ name, _id }) => ({
+        label: name,
+        value: _id,
+      })),
+  ];
+};
+export const getAllSuplier = (allCustomers: allCustomersType[]) => {
+  return [
+    { label: "Seleccione", value: "" },
+    ...allCustomers
+      .filter(({ people_type }) => people_type === "PROVIDER")
+      .map(({ name, _id }) => ({
+        label: name,
+        value: _id,
+      })),
   ];
 };

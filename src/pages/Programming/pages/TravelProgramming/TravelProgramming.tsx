@@ -26,7 +26,9 @@ import { getAvailableSchedulesList } from "../helpers/getAvailableSchedulesList"
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigate, useParams } from "react-router-dom";
-import { useSaveScheduleData, useAvailableSchedules } from "../../../../hook/useSchedule";
+import { useSaveScheduleData } from "../../../../hook/useSchedule";
+import { getFormat } from "../helpers/getFormat";
+import { addHours } from "../helpers/addHours";
 
 interface TravelProgrammingProps {}
 
@@ -37,18 +39,13 @@ const TravelProgramming: FC<TravelProgrammingProps> = () => {
   const { dateSelected = "none" } = useParams();
   const navigate = useNavigate();
   const saveScheduleData = useSaveScheduleData();
-  const { data: availableSchedules } = useAvailableSchedules({
-    date: dateSelected,
-  });
   const { data: allCustomers } = useAllCustomers();
 
   const dataToMerge = [
     {
       name: "date",
-      key: "options",
-      value: availableSchedules?.data
-        ? getAvailableSchedulesList(availableSchedules?.data)
-        : [{ label: "No existe la jornada laboral", value: "" }],
+      key: "value",
+      value: getFormat(dateSelected),
     },
     {
       name: "customer",
@@ -84,10 +81,13 @@ const TravelProgramming: FC<TravelProgrammingProps> = () => {
   const saveProgramming = async (data: any) => {
     try {
       setLoading(true);
-      const { dateSelected, ...rest } = data;
+      const { date, ...rest } = data;
+      console.log("dateSelected", new Date(dateSelected));
       const responseData = await saveScheduleData.mutateAsync({
         ...rest,
         type: "travel",
+        dateStart: new Date(dateSelected),
+        dateEnd: addHours(new Date(dateSelected), 25),
       });
       navigate(`${COMPOSED_ROUTES.SUMMARY_PROGRAMMING}/${responseData.code}`);
     } catch (error: any) {

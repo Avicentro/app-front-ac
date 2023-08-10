@@ -1,4 +1,12 @@
-import { FC, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+  Dispatch,
+  FC,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { useNavigate } from "react-router-dom";
 
 // Components
@@ -35,12 +43,18 @@ import { showToast } from "../../../../store/toast/actions";
 import { useDispatch } from "react-redux";
 // Icons
 
-interface CustomCalendarProps {}
+interface CustomCalendarProps {
+  setDateInView: any;
+  dateInView: string;
+}
 
 const MODAL_TITLE = "Programación";
 const MODAL_CONFIRM_TITLE = "Modificar programación";
 
-const CustomCalendar: FC<CustomCalendarProps> = () => {
+const CustomCalendar: FC<CustomCalendarProps> = ({
+  setDateInView,
+  dateInView,
+}) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [modalConfirmIsOpen, setModalConfirmIsOpen] = useState(false);
   const [loginModifiedProgramming, setLoginModifiedProgramming] =
@@ -48,13 +62,8 @@ const CustomCalendar: FC<CustomCalendarProps> = () => {
   const [dateSelected, setDateSelected] = useState<string | null>(null);
   const [schedules, setSchedules] = useState([]);
   const [schedulesModified, setSchedulesModified] = useState([]);
-  const [dateInView, setDateInView] = useState("");
   const [viewCalendar, setViewCalendar] = useState("timeGridDay");
-  const schedulesDb = useAllSchedules(
-    { sort: "code", order: "-1" },
-    dateInView,
-    dateInView
-  );
+  const schedulesDb = useAllSchedules({}, dateInView, dateInView);
   const calendarRef = useRef<HTMLDivElement>(null);
   const reProgrammingMutation = useReProgrammingMutation();
   const navigate = useNavigate();
@@ -89,7 +98,6 @@ const CustomCalendar: FC<CustomCalendarProps> = () => {
         if (formData[schedule.code.toString()]) {
           const {
             __v,
-            _id,
             user,
             type,
             status,

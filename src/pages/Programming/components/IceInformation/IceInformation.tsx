@@ -1,6 +1,5 @@
 import { FC } from "react";
 import Card from "../../../../components/display/Card/Card";
-import Calendar from "./components/Calendar/Calendar";
 import IceInfo from "./components/IceInfo/IceInfo";
 
 // Components
@@ -11,17 +10,14 @@ import { IceInformationWrapper } from "./styles";
 
 // helpers
 
-interface IceInformationProps {}
+interface IceInformationProps {
+  dateInView: string;
+}
 
-const IceInformation: FC<IceInformationProps> = () => {
+const IceInformation: FC<IceInformationProps> = ({ dateInView }) => {
   return (
     <IceInformationWrapper>
-      <Card>
-        <Calendar />
-      </Card>
-      <Card>
-        <IceInfo />
-      </Card>
+      <Card>{!!dateInView && <IceInfo dateInView={dateInView} />}</Card>
     </IceInformationWrapper>
   );
 };
