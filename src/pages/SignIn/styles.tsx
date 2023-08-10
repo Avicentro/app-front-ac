@@ -34,21 +34,20 @@ export const SignInWrapper = styled.div`
     grid-template-columns: repeat(12, 1fr);
     align-self: center;
     .back-button-container {
-      grid-column: 5 / 7;
+      grid-column: 4 / 9;
     }
     .form-container {
-      grid-column: 1 / -1;
+      grid-column: 4 / 9;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      .card-new-account {
+        width: 100%;
+      }
       form {
         margin-bottom: 28px;
 
-        .title {
-          font: 700 48px Poppins Bold;
-          margin: 0 0 38px 0;
-        }
         .remember-user {
           display: flex;
           justify-content: space-between;

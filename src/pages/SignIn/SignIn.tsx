@@ -19,6 +19,7 @@ import BackButton from "../../components/display/BackButton/BackButton";
 import { useDispatch } from "react-redux";
 import { showToast } from "../../store/toast/actions";
 import Card from "../../components/display/Card/Card";
+import { Title } from "../../components/genericStyles";
 
 interface SignInProps {}
 
@@ -55,9 +56,9 @@ const SignIn: FC<SignInProps> = () => {
     <SignInWrapper>
       <BackButton />
       <section className="form-container">
-        <Card>
+        <Card customClass="card-new-account">
           <form onSubmit={handleSubmit(createUser)}>
-            <h3 className="title">Crear Nueva Cuenta</h3>
+            <Title>Crear Nueva Cuenta</Title>
             <DynamicForm
               formConfig={formConfig}
               errors={errors}
@@ -67,10 +68,10 @@ const SignIn: FC<SignInProps> = () => {
             <Button
               type="submit"
               mb={28}
-              sizeButton={sizeButtonEnum.extraBig}
+              sizeButton={sizeButtonEnum.big}
               loading={loading}
             >
-              Crear cuenta {"->"}
+              Crear cuenta
             </Button>
           </form>
         </Card>

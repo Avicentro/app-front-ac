@@ -40,3 +40,9 @@ export const Container = styled.div`
   padding: 24px 36px 36px;
   grid-column: 1 / -1;
 `;
+
+export const Title = styled.h1`
+  font: 600 24px Poppins SemiBold;
+  color: ${({ theme }) => theme.coolGray700};
+  text-align: center;
+`;

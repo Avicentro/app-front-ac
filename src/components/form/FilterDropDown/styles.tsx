@@ -19,6 +19,7 @@ export const FilterDropDownWrapper = styled.div`
       border: none;
       padding: 12px;
       min-height: 20px;
+      border: 1px solid ${({ theme }) => theme.coolGray300};
     }
     .options-container {
       position: absolute;
@@ -28,6 +29,7 @@ export const FilterDropDownWrapper = styled.div`
       z-index: 9999;
       max-height: 300px;
       overflow: auto;
+      border: 1px solid ${({ theme }) => theme.coolGray200};
       .option {
         display: flex;
         align-items: center;
@@ -42,9 +44,23 @@ export const FilterDropDownWrapper = styled.div`
         height: 100%;
         padding: 15px;
         input {
-          padding: 10px 12px;
-          font: 400 14px Poppins Regular;
+          border: 1px solid ${({ theme }) => theme.coolGray300};
+          padding: 12px;
+          border-radius: 6px;
           width: 100%;
+          box-sizing: border-box;
+          color: ${({ theme }) => theme.coolGray700};
+          font: 400 12px Montserrat Regular;
+          background-color: ${({ theme }) => theme.coolGray200};
+          height: 38px;
+          &:focus {
+            box-shadow: 0 0 ${({ theme }) => theme.coolGray300};
+            border-color: ${({ theme }) => theme.coolGray300};
+            outline: none;
+          }
+          &::placeholder {
+            color: ${({ theme }) => theme.coolGray500};
+          }
         }
       }
     }
