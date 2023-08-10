@@ -7,19 +7,15 @@ import Button from "../../components/form/Button/Button";
 
 // Styles
 
-import { PeopleWrapper } from "./styles";
+import { UsersWrapper } from "./styles";
 
 // helpers
-import { peopleList } from "./__mock__";
+import { userList } from "./__mock__";
 import { typeButtonEnum } from "../../models";
 import { theme } from "../../static/styles/theme";
-import {
-  useAllPeople,
-  useCreatePeople,
-  useDeletePeople,
-  useEditPeople,
-} from "../../hook/usePeople";
+import { useAllPeople } from "../../hook/usePeople";
 import Modal from "../../components/display/Modal/Modal";
+import { useCreateUser, useDeleteUser, useEditUser } from "../../hook/useUser";
 import Create from "./components/Create/Create";
 
 interface PeopleProps {}
@@ -29,13 +25,11 @@ const People: FC<PeopleProps> = () => {
   const [isEdit, setIsEdit] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const { data } = useAllPeople();
-  const editPersonMutate = useEditPeople();
-  const deletePersonMutate = useDeletePeople();
-  const createPersonMutate = useCreatePeople();
+  const editPersonMutate = useEditUser();
+  const deletePersonMutate = useDeleteUser();
+  const createPersonMutate = useCreateUser();
 
-  console.log("data", data);
-
-  const deletePeople = async (id: string) => {
+  const deleteUser = async (id: string) => {
     setLoading(true);
     try {
       const response = await deletePersonMutate.mutateAsync(id);
@@ -45,7 +39,7 @@ const People: FC<PeopleProps> = () => {
     }
   };
 
-  const editPeople = async (data: any) => {
+  const editUser = async (data: any) => {
     setLoading(true);
     try {
       const response = await editPersonMutate.mutateAsync(data);
@@ -55,7 +49,7 @@ const People: FC<PeopleProps> = () => {
     }
   };
 
-  const createPerson = async (data: any) => {
+  const createUser = async (data: any) => {
     setLoading(true);
     try {
       const response = await createPersonMutate.mutateAsync(data);
@@ -68,33 +62,33 @@ const People: FC<PeopleProps> = () => {
 
   return (
     <Container>
-      <PeopleWrapper>
+      <UsersWrapper>
         {showModal && (
           <Modal
-            title="Crear persona"
+            title="Crear Usuario"
             open={showModal}
             handleClose={() => setShowModal(false)}
           >
-            <Create handleSubmit={createPerson} isEdit={isEdit} />
+            <Create handleSubmit={createUser} isEdit={isEdit} />
           </Modal>
         )}
-        <div className="create-people-container">
+        <div className="create-user-container">
           <Button
             typeButton={typeButtonEnum.fill}
             bgColor={theme.secondary}
             extraProps={{ onClick: () => setShowModal(true) }}
           >
-            Crear Persona +
+            Crear Usuario +
           </Button>
         </div>
-        {data?.data?.map((people: any) => (
+        {userList.map((user) => (
           <Card
-            {...people}
-            handleDelete={deletePeople}
-            handleEdit={editPeople}
+            {...user}
+            handleDelete={deleteUser}
+            handleEdit={editUser}
           ></Card>
         ))}
-      </PeopleWrapper>
+      </UsersWrapper>
     </Container>
   );
 };

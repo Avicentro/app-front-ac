@@ -1,7 +1,11 @@
 export interface CardProps {
-  id: string;
+  _id: string;
   name: string;
-  people_type: string;
+  email?: string;
+  password?: string;
+  role: string;
+  resetPasswordToken?: string;
+  status?: boolean;
   handleEdit: (id: string) => void;
   handleDelete: (id: string) => void;
 }

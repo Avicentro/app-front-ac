@@ -1,7 +1,6 @@
 import { FC } from "react";
 import Delete from "../../../../components/icons/Delete";
 import Edit from "../../../../components/icons/Edit";
-import { getLabelByValue } from "./helper";
 import { CardProps } from "./model";
 
 // Components
@@ -11,19 +10,13 @@ import { CardWrapper } from "./styles";
 
 // helpers
 
-const Card: FC<CardProps> = ({
-  id,
-  name,
-  people_type,
-  handleEdit,
-  handleDelete,
-}) => {
+const Card: FC<CardProps> = ({ _id, name, role, handleEdit, handleDelete }) => {
   const onEdit = () => {
-    handleEdit(id);
+    handleEdit(_id);
   };
 
   const onDelete = () => {
-    handleDelete(id);
+    handleDelete(_id);
   };
 
   return (
@@ -34,7 +27,7 @@ const Card: FC<CardProps> = ({
       </div>
       <div className="type-container flex column">
         <span className="title">Tipo</span>
-        <span className="sub-title">{getLabelByValue(people_type)}</span>
+        <span className="sub-title">{role}</span>
       </div>
       <div className="actions-container flex">
         <span className="action flex" onClick={() => onEdit()}>

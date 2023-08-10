@@ -61,9 +61,9 @@ const FilterDropDown: FC<FilterDropDownProps> = ({
 
   const selectOption = (value: any) => {
     setValueSelected(value);
+    handleChange && handleChange(value);
     setShowOptions(false);
     setFilterContent("");
-    handleChange && handleChange(valueSelected);
   };
 
   const changeFilter = (event: ChangeEvent<HTMLInputElement>) => {

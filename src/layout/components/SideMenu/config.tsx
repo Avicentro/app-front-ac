@@ -19,6 +19,12 @@ export const configMenu: configMenuType[] = [
     icon: "enter",
     roles: ["ADMIN"],
   },
+  {
+    label: "Usuarios",
+    route: ROUTES.USERS,
+    icon: "enter",
+    roles: ["ADMIN"],
+  },
   // {
   //   label: "Salida",
   //   route: ROUTES.PROGRAMMING,
