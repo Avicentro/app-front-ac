@@ -1,12 +1,10 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { FC, useState } from "react";
+import { FC } from "react";
 import { useForm } from "react-hook-form";
 import Button from "../../../../components/form/Button/Button";
 import DynamicForm from "../../../../components/form/DynamicForm/DynamicForm";
 import { createSchemaByConfig } from "../../../../components/form/DynamicForm/helpers/createSchemaByConfig";
 import { getDefaultValuesByConfig } from "../../../../components/form/DynamicForm/helpers/getDefaultValuesByConfig";
-import { Title } from "../../../../components/genericStyles";
-import { useCreatePeople } from "../../../../hook/usePeople";
 import { sizeButtonEnum } from "../../../../models";
 import { formConfig } from "./config/formConfig";
 

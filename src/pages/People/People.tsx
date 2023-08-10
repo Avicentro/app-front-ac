@@ -10,7 +10,6 @@ import Button from "../../components/form/Button/Button";
 import { PeopleWrapper } from "./styles";
 
 // helpers
-import { peopleList } from "./__mock__";
 import { typeButtonEnum } from "../../models";
 import { theme } from "../../static/styles/theme";
 import {
@@ -21,6 +20,8 @@ import {
 } from "../../hook/usePeople";
 import Modal from "../../components/display/Modal/Modal";
 import Create from "./components/Create/Create";
+import { useDispatch } from "react-redux";
+import { showToast } from "../../store/toast/actions";
 
 interface PeopleProps {}
 
@@ -28,11 +29,12 @@ const People: FC<PeopleProps> = () => {
   const [loading, setLoading] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const { data } = useAllPeople();
+  const [incremental, setIncremental] = useState(0);
+  const { data } = useAllPeople(incremental);
   const editPersonMutate = useEditPeople();
   const deletePersonMutate = useDeletePeople();
   const createPersonMutate = useCreatePeople();
-
+  const dispatch = useDispatch();
   console.log("data", data);
 
   const deletePeople = async (id: string) => {
@@ -59,8 +61,11 @@ const People: FC<PeopleProps> = () => {
     setLoading(true);
     try {
       const response = await createPersonMutate.mutateAsync(data);
-    } catch (error) {
+      setIncremental((prev) => prev + 1);
+      setShowModal(false);
+    } catch (error: any) {
       console.error(error);
+      dispatch(showToast(error.response.data.message, "error"));
     } finally {
       setLoading(false);
     }

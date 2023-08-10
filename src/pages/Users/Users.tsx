@@ -17,6 +17,8 @@ import { useAllPeople } from "../../hook/usePeople";
 import Modal from "../../components/display/Modal/Modal";
 import { useCreateUser, useDeleteUser, useEditUser } from "../../hook/useUser";
 import Create from "./components/Create/Create";
+import { useDispatch } from "react-redux";
+import { showToast } from "../../store/toast/actions";
 
 interface PeopleProps {}
 
@@ -24,10 +26,12 @@ const People: FC<PeopleProps> = () => {
   const [loading, setLoading] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const { data } = useAllPeople();
+  const [incremental, setIncremental] = useState(0);
+  const { data } = useAllPeople(incremental);
   const editPersonMutate = useEditUser();
   const deletePersonMutate = useDeleteUser();
   const createPersonMutate = useCreateUser();
+  const dispatch = useDispatch();
 
   const deleteUser = async (id: string) => {
     setLoading(true);
@@ -53,8 +57,12 @@ const People: FC<PeopleProps> = () => {
     setLoading(true);
     try {
       const response = await createPersonMutate.mutateAsync(data);
-    } catch (error) {
+      console.log("response", response);
+      setIncremental((prev) => prev++);
+      setShowModal(false);
+    } catch (error: any) {
       console.error(error);
+      dispatch(showToast(error.response.data.message, "error"));
     } finally {
       setLoading(false);
     }
