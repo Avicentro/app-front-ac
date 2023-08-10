@@ -10,7 +10,7 @@ export const formConfig: IConfig[] = [
     type: "text",
     mb: 22,
     fieldType: fieldTypeEnum.text,
-    placeholder: "Correo",
+    placeholder: "Usuario",
     validation: {
       type: "string",
       settings: [

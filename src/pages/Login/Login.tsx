@@ -6,6 +6,8 @@ import DynamicForm from "../../components/form/DynamicForm/DynamicForm";
 
 // Styles
 import { LoginWrapper } from "./styles";
+import PrometeoLogo from "../../static/vectors/prometeo-logo-background.svg";
+import RightArrow from "../../static/vectors/right-arrow-svgrepo-com.svg";
 
 // helpers
 import { useForm } from "react-hook-form";
@@ -96,7 +98,7 @@ const Login: FC<LoginProps> = () => {
   return (
     <LoginWrapper>
       <section className="brand-container">
-        <h1 className="name">Prometeo</h1>
+        <img src={PrometeoLogo} alt="Prometeo logo" width={600} />
       </section>
       <section className="form-container">
         <form onSubmit={handleSubmit(loginUser)}>
@@ -109,11 +111,19 @@ const Login: FC<LoginProps> = () => {
           />
           <Button
             type="submit"
-            mb={28}
-            sizeButton={sizeButtonEnum.extraBig}
+            mb={8}
+            sizeButton={sizeButtonEnum.medium}
             loading={loading}
           >
-            Iniciar sesión {"->"}
+            <div className="gap">
+              Iniciar sesión
+              <img
+                className="right-arrow"
+                src={RightArrow}
+                alt="flecha derecha"
+                width={15}
+              />
+            </div>
           </Button>
         </form>
         <span

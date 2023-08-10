@@ -14,12 +14,20 @@ export const LoginWrapper = styled.div`
       .title {
         font: 600 32px Poppins SemiBold;
         text-align: center;
+        color: ${({ theme }) => theme.coolGray700};
       }
       .create-account {
         all: unset;
         font: 600 18px Poppins SemiBold;
         color: ${({ theme }) => theme.primary};
         cursor: pointer;
+      }
+      .gap {
+        display: flex;
+        gap: 8px;
+      }
+      .right-arrow {
+        color: ${({ theme }) => theme.white};
       }
     }
   }

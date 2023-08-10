@@ -3,21 +3,21 @@ import styled from "styled-components";
 export const FilterDropDownWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 8px;
   label {
-    font: 400 14px Poppins Regular;
+    font: 400 12px Montserrat Regular;
     color: ${({ theme }) => theme.coolGray800};
   }
   .select-field-container {
     position: relative;
     .content-select-container {
-      font: 400 14px Poppins Regular;
+      font: 400 12px Montserrat Regular;
       color: ${({ theme }) => theme.coolGray800};
       background-color: ${({ theme }) => theme.coolGray200};
-      border-radius: 14px;
+      border-radius: 8px;
       cursor: pointer;
       border: none;
-      padding: 20px 24px;
+      padding: 12px;
       min-height: 20px;
     }
     .options-container {

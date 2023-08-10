@@ -8,10 +8,11 @@ interface TextInputWrapperProps {
 export const TextInputWrapper = styled.div<TextInputWrapperProps>`
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 8px;
   margin-bottom: ${({ mb }) => (mb ? `${mb}px` : 0)};
-  p {
+  .label {
     all: unset;
+    font: 400 12px Montserrat Regular;
   }
   input {
     border: 1px solid
@@ -21,7 +22,7 @@ export const TextInputWrapper = styled.div<TextInputWrapperProps>`
     width: 100%;
     box-sizing: border-box;
     color: ${({ theme, error }) => (error ? theme.red500 : theme.coolGray700)};
-    font: 400 12px Poppins Regular;
+    font: 400 12px Montserrat Regular;
     background-color: ${({ theme }) => theme.coolGray200};
     height: 38px;
     &:focus {
