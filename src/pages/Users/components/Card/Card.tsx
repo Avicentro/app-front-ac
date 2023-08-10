@@ -22,12 +22,13 @@ const Card: FC<CardProps> = ({ _id, name, role, handleEdit, handleDelete }) => {
   return (
     <CardWrapper>
       <div className="name-container flex column">
-        <span className="title">Nombre</span>
-        <span className="sub-title">{name}</span>
+        <span className="sub-title">Nombre</span>
+        <span className="title">{name}</span>
       </div>
       <div className="type-container flex column">
-        <span className="title">Tipo</span>
-        <span className="sub-title">{role}</span>
+        
+        <span className="sub-title">Tipo</span>
+        <span className="title">{role}</span>
       </div>
       <div className="actions-container flex">
         <span className="action flex" onClick={() => onEdit()}>

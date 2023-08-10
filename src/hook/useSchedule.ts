@@ -62,7 +62,7 @@ export const useSaveScheduleData = () => {
   return useMutation(async (data) => {
     const response = await ApiService.postData(
       data,
-      "/schedule/create-production"
+      "/programing"
     );
     return response.data;
   });

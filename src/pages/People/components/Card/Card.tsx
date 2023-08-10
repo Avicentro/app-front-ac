@@ -29,12 +29,13 @@ const Card: FC<CardProps> = ({
   return (
     <CardWrapper>
       <div className="name-container flex column">
-        <span className="title">Nombre</span>
-        <span className="sub-title">{name}</span>
+        <span className="sub-title">Nombre</span>
+        <span className="title">{name}</span>
       </div>
       <div className="type-container flex column">
-        <span className="title">Tipo</span>
-        <span className="sub-title">{getLabelByValue(people_type)}</span>
+        <span className="sub-title">Tipo</span>
+        <span className="title">{getLabelByValue(people_type)}</span>
+        
       </div>
       <div className="actions-container flex">
         <span className="action flex" onClick={() => onEdit()}>

@@ -21,6 +21,12 @@ export const CardWrapper = styled.div`
     font: 600 20px Poppins SemiBold;
     color: ${({ theme }) => theme.coolGray700};
   }
+  .name-container {
+    width: 250px;
+  }
+  .type-container {
+    width: 250px;
+  }
   .sub-title {
     font: 400 12px Montserrat Regular;
     color: ${({ theme }) => theme.coolGray400};
