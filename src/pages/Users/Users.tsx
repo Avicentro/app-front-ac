@@ -71,6 +71,29 @@ const People: FC<PeopleProps> = () => {
     }
   };
 
+  const getContent = () => {
+    if (data?.data.length) {
+      return (
+        <>
+          {data?.data.map((user: any) => (
+            <Card
+              {...user}
+              handleDelete={deleteUser}
+              handleEdit={editUser}
+            ></Card>
+          ))}
+        </>
+      );
+    }
+    return (
+      <div className="empty-message-container">
+        <span className="empty-message">
+          En el momento no hay usuarios existentes
+        </span>
+      </div>
+    );
+  };
+
   return (
     <Container>
       <UsersWrapper>
@@ -94,20 +117,10 @@ const People: FC<PeopleProps> = () => {
         </div>
         {isLoading ? (
           <div className="empty-message-container">
-            <span className="empty-message">
-              En el momento no hay usuarios existentes
-            </span>
+            <span className="empty-message">Cargando Usuarios...</span>
           </div>
         ) : (
-          <>
-            {data?.data.map((user: any) => (
-              <Card
-                {...user}
-                handleDelete={deleteUser}
-                handleEdit={editUser}
-              ></Card>
-            ))}
-          </>
+          <>{getContent()}</>
         )}
       </UsersWrapper>
     </Container>

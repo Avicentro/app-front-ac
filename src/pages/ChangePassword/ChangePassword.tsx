@@ -7,10 +7,12 @@ import Button from "../../components/form/Button/Button";
 import DynamicForm from "../../components/form/DynamicForm/DynamicForm";
 import { createSchemaByConfig } from "../../components/form/DynamicForm/helpers/createSchemaByConfig";
 import { getDefaultValuesByConfig } from "../../components/form/DynamicForm/helpers/getDefaultValuesByConfig";
+import { Title } from "../../components/genericStyles";
 import { ROUTES } from "../../constants/routes";
 import { useChangePasswordMutation } from "../../hook/useLogin";
 import { sizeButtonEnum } from "../../models";
 import { showToast } from "../../store/toast/actions";
+import { BrandImage } from "../Login/styles";
 import { formConfig } from "./formConfig/formConfig";
 
 // Components
@@ -18,7 +20,9 @@ import { formConfig } from "./formConfig/formConfig";
 // Styles
 
 import { ChangePasswordWrapper } from "./styles";
-
+import logoPrometeo from "../../static/img/prometeo_brand_red.svg";
+import RightArrow from "../../static/vectors/right-arrow-svgrepo-com.svg";
+import LayoutAuth from "../../layoutAuth/LayoutAuth";
 // helpers
 
 interface ChangePasswordProps {}
@@ -55,33 +59,47 @@ const ChangePassword: FC<ChangePasswordProps> = () => {
     }
   };
   return (
-    <ChangePasswordWrapper>
-      <section className="brand-container">
-        <h1 className="name">Prometeo</h1>
-      </section>
-      <section className="form-container">
+    <LayoutAuth>
+      <ChangePasswordWrapper>
+        <div className="brand-container">
+          <BrandImage
+            className="brand-name"
+            src={logoPrometeo}
+            alt="prometeo"
+          />
+        </div>
         <form onSubmit={handleSubmit(updatePassword)}>
-          <h3 className="title">Cambio de contraseña</h3>
+          <Title>Reestablecer contraseña</Title>
           <DynamicForm
             formConfig={formConfig}
             errors={errors}
             setValue={setValue}
             control={control}
           />
-          <Button
-            type="submit"
-            mb={28}
-            sizeButton={sizeButtonEnum.extraBig}
-            loading={loading}
-          >
-            Enviar {"->"}
-          </Button>
+          <div className="sign-in-btn">
+            <Button
+              type="submit"
+              mb={8}
+              sizeButton={sizeButtonEnum.medium}
+              loading={loading}
+            >
+              <div className="gap">
+                Iniciar sesión
+                <img
+                  className="right-arrow"
+                  src={RightArrow}
+                  alt="flecha derecha"
+                  width={15}
+                />
+              </div>
+            </Button>
+          </div>
         </form>
         <span className="back-to-login" onClick={() => navigate(ROUTES.LOGIN)}>
-          Volver a login
+          Volver al login
         </span>
-      </section>
-    </ChangePasswordWrapper>
+      </ChangePasswordWrapper>
+    </LayoutAuth>
   );
 };
 
