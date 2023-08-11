@@ -14,4 +14,5 @@ export interface ButtonProps extends ButtonWrapperProps {
   type?: "button" | "submit";
   loading?: boolean;
   extraProps?: any;
+  disabled?: boolean;
 }

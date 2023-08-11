@@ -20,6 +20,7 @@ const Button: FC<ButtonProps> = ({
   type = "button",
   color = theme.white,
   sizeButton = sizeButtonEnum.medium,
+  disabled,
 }) => {
   return (
     <ButtonWrapper
@@ -29,6 +30,7 @@ const Button: FC<ButtonProps> = ({
       color={color}
       {...extraProps}
       sizeButton={sizeButton}
+      disabled={disabled || loading}
     >
       {loading ? <Spinner /> : <>{children}</>}
     </ButtonWrapper>
