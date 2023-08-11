@@ -5,8 +5,8 @@ import Button from "../../components/form/Button/Button";
 import DynamicForm from "../../components/form/DynamicForm/DynamicForm";
 
 // Styles
-import { LoginWrapper } from "./styles";
-import PrometeoLogo from "../../static/vectors/prometeo-logo-background.svg";
+import { BrandImage } from "./styles";
+import logoPrometeo from "../../static/img/prometeo_brand_red.svg";
 import RightArrow from "../../static/vectors/right-arrow-svgrepo-com.svg";
 
 // helpers
@@ -25,6 +25,8 @@ import { sizeButtonEnum } from "../../models";
 import { useLoginMutation } from "../../hook/useLogin";
 import { loginDataType } from "./models";
 import { showToast } from "../../store/toast/actions";
+import { Title } from "../../components/genericStyles";
+import LayoutAuth from "../../layoutAuth/LayoutAuth";
 
 interface LoginProps {}
 
@@ -96,19 +98,19 @@ const Login: FC<LoginProps> = () => {
   };
 
   return (
-    <LoginWrapper>
-      <section className="brand-container">
-        <img src={PrometeoLogo} alt="Prometeo logo" width={600} />
-      </section>
-      <section className="form-container">
+    <LayoutAuth>
+        <div className="brand-container">
+          <BrandImage className="brand-name" src={logoPrometeo} alt="prometeo" />
+        </div>
         <form onSubmit={handleSubmit(loginUser)}>
-          <h3 className="title">Iniciar Sesión</h3>
+          <Title>Iniciar Sesión</Title>
           <DynamicForm
             formConfig={formConfig}
             errors={errors}
             setValue={setValue}
             control={control}
           />
+          <div className="sign-in-btn">
           <Button
             type="submit"
             mb={8}
@@ -125,6 +127,7 @@ const Login: FC<LoginProps> = () => {
               />
             </div>
           </Button>
+          </div>
         </form>
         <span
           className="forgot-password"
@@ -132,8 +135,7 @@ const Login: FC<LoginProps> = () => {
         >
           Olvide mi contraseña
         </span>
-      </section>
-    </LoginWrapper>
+    </LayoutAuth>
   );
 };
 

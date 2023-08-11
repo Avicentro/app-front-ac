@@ -1,14 +1,14 @@
 export const theme = {
   white: "#ffffff",
 
-  primary: "#EF0B0B",
+  primary: "#C20000",
   primaryDark: "#D70000",
   primaryDarkMode: "#FF5A3E",
   primaryLight: "#FFA48E",
   primaryBG: "#FFE8E7",
 
   // SECONDARY:
-  secondary: "#005BD4",
+  secondary: "#000000",
   secondaryDark: "#0041AC",
   secondaryDarkMode: "#50C8FC",
   secondaryLight: "#8DE9FF",

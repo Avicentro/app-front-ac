@@ -121,7 +121,7 @@ const IceInfo: FC<IceInfoProps> = ({ dateInView }) => {
 
   return (
     <IceInfoWrapper>
-      <Title>{getFormat(dateInView)}</Title>
+      <h3>{getFormat(dateInView)}</h3>
       <form onSubmit={handleSubmit(saveData)}>
         <DynamicForm
           formConfig={formConfig}

@@ -16,7 +16,7 @@ export const useCreateUser = () => {
   return useMutation(async (data) => {
     const response = await ApiService.postData(
       data,
-      "/user" //TODO: URL crear PERSON
+      "/users/sign-up" //TODO: URL crear PERSON
     );
     return response.data;
   });

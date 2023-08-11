@@ -13,6 +13,7 @@ export const HeaderWrapper = styled.div`
   z-index: 100;
   box-sizing: border-box;
   grid-row: 1 / 1;
+  box-shadow: 0 3px 20px #0000000b;
   justify-content: space-between;
   .brand-container {
     cursor: pointer;
@@ -41,7 +42,7 @@ export const HeaderWrapper = styled.div`
   }
   @media ${MIN_WIDTH_QUERIES.TABLET.query} {
     flex-direction: row;
-    height: 96px;
+    height: 80px;
     justify-content: space-between;
     .hamburgerMenu {
       display: none;

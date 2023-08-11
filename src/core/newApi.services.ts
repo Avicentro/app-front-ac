@@ -16,7 +16,7 @@ const AuthLogin = async (payload: any) => {
 };
 
 const signIn = async (payload: any) => {
-  const { data } = await API_CLIENT.post("/user/create-user", payload);
+  const { data } = await API_CLIENT.post("/users/sign-up", payload);
   return data;
 };
 

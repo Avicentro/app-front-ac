@@ -28,7 +28,7 @@ export const ChildrenContainer = styled.div`
   overflow: auto;
   @media ${MIN_WIDTH_QUERIES.TABLET.query} {
     grid-template-columns: repeat(10, 1fr);
-    padding: 48px 0;
+    padding: 0;
   }
   @media ${MIN_WIDTH_QUERIES.DESKTOP.query} {
     grid-template-columns: repeat(12, 1fr);
@@ -42,7 +42,7 @@ export const Container = styled.div`
 `;
 
 export const Title = styled.h1`
-  font: 600 24px Poppins SemiBold;
+  font-family: "Signika Bold";
   color: ${({ theme }) => theme.coolGray700};
   text-align: center;
 `;

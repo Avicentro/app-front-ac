@@ -35,14 +35,14 @@ export const ModalWrapper = styled.div`
     width: 600px;
     background-color: #fff;
     z-index: 1000;
-    padding: 14px 16px;
+    padding: 30px 15px;
     transition: top 0.2s ease-out;
     border-radius: 4px;
     overflow: auto;
     max-height: 550px;
     &-title {
       text-align: center;
-      font: 600 32px Poppins Semibold;
+      font: 600 32px Work Sans Regular;
       h2 {
         margin: 0;
       }

@@ -40,9 +40,15 @@ const SignIn: FC<SignInProps> = () => {
   });
 
   const createUser = async (data: any) => {
+    const newUser: any = {
+      name: `${data.names} ${data.surnames}`,
+      email: data.email,
+      password: data.password,
+      role: data.role,
+    }
     setLoading(true);
     try {
-      await createUserMutation.mutateAsync({ ...data, user: data.email });
+      await createUserMutation.mutateAsync(newUser);
       dispatch(showToast("El usuario ha sido creado exitosamente", "success"));
     } catch (error: any) {
       console.error(error);

@@ -9,10 +9,42 @@ body {
   box-sizing: border-box;
   background-color: #f7f7fc;
   background-attachment: fixed;
-  font-family: Roboto, Montserrat, "Open Sans", sans-serif;
+  font-family: Work Sans Regular, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-size: 16px;
 }
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Signika Bold", sans-serif;
+  line-height: 1.2;
+  margin: 15px 0;
+}
+
+h1 {
+  font-size: 2.5rem; /* 2.5 * 16px = 40px */
+}
+
+h2 {
+  font-size: 2rem;   /* 2 * 16px = 32px */
+}
+
+h3 {
+  font-size: 1.75rem; /* 1.75 * 16px = 28px */
+}
+
+h4 {
+  font-size: 1.5rem;  /* 1.5 * 16px = 24px */
+}
+
+h5 {
+  font-size: 1.25rem; /* 1.25 * 16px = 20px */
+}
+
+h6 {
+  font-size: 1rem;    /* 1 * 16px = 16px */
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
@@ -64,4 +96,233 @@ code {
   font-weight: 600;
   font-style: normal;
   font-display: swap;
+}
+
+/* Signika font Header */
+
+@font-face {
+  font-family: "Signika Ligth";
+  src: url("static/fonts/Signika-Light.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Signika Regular";
+  src: url("static/fonts/Signika-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Signika Medium";
+  src: url("static/fonts/Signika-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Signika SemiBold";
+  src: url("static/fonts/Signika-SemiBold.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Signika Bold";
+  src: url("static/fonts/Signika-Bold.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Work Sans font default */
+
+/* vietnamese */
+@font-face {
+  font-family: 'Work Sans Regular';
+  font-style: italic;
+  font-weight: 100;
+  font-display: swap;
+  src: url("static/fonts/WorkSans-Regular.ttf") format("truetype");
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Work Sans Medium';
+  font-style: italic;
+  font-weight: 500;
+  font-display: swap;
+  src: url("static/fonts/WorkSans-Medium.ttf") format("truetype");
+}
+/* latin */
+@font-face {
+  font-family: 'Work Sans SemiBold';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("static/fonts/WorkSans-SemiBold.ttf") format("truetype");
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Work Sans';
+  font-style: italic;
+  font-weight: 200;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/worksans/v18/QGYqz_wNahGAdqQ43Rh_eZDkv_1i4_D2E4A.woff2) format("truetype");
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Work Sans';
+  font-style: italic;
+  font-weight: 200;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/worksans/v18/QGYqz_wNahGAdqQ43Rh_eZDlv_1i4_D2E4A.woff2) format("truetype");
+}
+/* latin */
+@font-face {
+  font-family: 'Work Sans';
+  font-style: italic;
+  font-weight: 200;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/worksans/v18/QGYqz_wNahGAdqQ43Rh_eZDrv_1i4_D2.woff2) format("truetype");
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Work Sans';
+  font-style: italic;
+  font-weight: 300;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/worksans/v18/QGYqz_wNahGAdqQ43Rh_eZDkv_1i4_D2E4A.woff2) format("truetype");
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Work Sans';
+  font-style: italic;
+  font-weight: 300;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/worksans/v18/QGYqz_wNahGAdqQ43Rh_eZDlv_1i4_D2E4A.woff2) format("truetype");
+}
+/* latin */
+@font-face {
+  font-family: 'Work Sans';
+  font-style: italic;
+  font-weight: 300;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/worksans/v18/QGYqz_wNahGAdqQ43Rh_eZDrv_1i4_D2.woff2) format("truetype");
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Work Sans';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/worksans/v18/QGYqz_wNahGAdqQ43Rh_eZDkv_1i4_D2E4A.woff2) format("truetype");
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Work Sans';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/worksans/v18/QGYqz_wNahGAdqQ43Rh_eZDlv_1i4_D2E4A.woff2) format("truetype");
+}
+/* latin */
+@font-face {
+  font-family: 'Work Sans';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/worksans/v18/QGYqz_wNahGAdqQ43Rh_eZDrv_1i4_D2.woff2) format("truetype");
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Work Sans';
+  font-style: italic;
+  font-weight: 500;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/worksans/v18/QGYqz_wNahGAdqQ43Rh_eZDkv_1i4_D2E4A.woff2) format("truetype");
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Work Sans';
+  font-style: italic;
+  font-weight: 500;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/worksans/v18/QGYqz_wNahGAdqQ43Rh_eZDlv_1i4_D2E4A.woff2) format("truetype");
+}
+/* latin */
+@font-face {
+  font-family: 'Work Sans';
+  font-style: italic;
+  font-weight: 500;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/worksans/v18/QGYqz_wNahGAdqQ43Rh_eZDrv_1i4_D2.woff2) format("truetype");
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Work Sans';
+  font-style: italic;
+  font-weight: 600;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/worksans/v18/QGYqz_wNahGAdqQ43Rh_eZDkv_1i4_D2E4A.woff2) format("truetype");
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Work Sans';
+  font-style: italic;
+  font-weight: 600;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/worksans/v18/QGYqz_wNahGAdqQ43Rh_eZDlv_1i4_D2E4A.woff2) format("truetype");
+}
+/* latin */
+@font-face {
+  font-family: 'Work Sans';
+  font-style: italic;
+  font-weight: 600;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/worksans/v18/QGYqz_wNahGAdqQ43Rh_eZDrv_1i4_D2.woff2) format("truetype");
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Work Sans';
+  font-style: italic;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/worksans/v18/QGYqz_wNahGAdqQ43Rh_eZDkv_1i4_D2E4A.woff2) format("truetype");
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Work Sans';
+  font-style: italic;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/worksans/v18/QGYqz_wNahGAdqQ43Rh_eZDlv_1i4_D2E4A.woff2) format("truetype");
+}
+/* latin */
+@font-face {
+  font-family: 'Work Sans';
+  font-style: italic;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/worksans/v18/QGYqz_wNahGAdqQ43Rh_eZDrv_1i4_D2.woff2) format("truetype");
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Work Sans';
+  font-style: italic;
+  font-weight: 800;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/worksans/v18/QGYqz_wNahGAdqQ43Rh_eZDkv_1i4_D2E4A.woff2) format("truetype");
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Work Sans';
+  font-style: italic;
+  font-weight: 800;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/worksans/v18/QGYqz_wNahGAdqQ43Rh_eZDlv_1i4_D2E4A.woff2) format("truetype");
 }

@@ -14,6 +14,8 @@ export const LayoutWrapper = styled.div`
     grid-template-rows: 96px 1fr;
   }
 
+  min-height: calc( 100vh - 80px);
+
   // Custom styles
   .flex {
     display: flex;
