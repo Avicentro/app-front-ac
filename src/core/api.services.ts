@@ -1,10 +1,10 @@
 import axios from "axios";
 import { Headers } from "./http.service";
 
-const { REACT_APP_ENDPOINT_BASE } = process.env;
+const { REACT_APP_ENDPOINT_BASE_TEMP } = process.env;
 
 const API_CLIENT = axios.create({
-  baseURL: `${REACT_APP_ENDPOINT_BASE}`,
+  baseURL: `${REACT_APP_ENDPOINT_BASE_TEMP}`,
   ...Headers,
 });
 
@@ -16,7 +16,7 @@ const AuthLogin = async (payload: any) => {
 };
 
 const signIn = async (payload: any) => {
-  const { data } = await API_CLIENT.post("/user/create-user", payload);
+  const { data } = await API_CLIENT.post("/users/sign-up", payload);
   return data;
 };
 

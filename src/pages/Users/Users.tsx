@@ -54,6 +54,7 @@ const People: FC<PeopleProps> = () => {
   };
 
   const createUser = async (data: any) => {
+
     setLoading(true);
     try {
       const response = await createPersonMutate.mutateAsync(data);
