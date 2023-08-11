@@ -31,8 +31,7 @@ const People: FC<PeopleProps> = () => {
   const [loading, setLoading] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [incremental, setIncremental] = useState(0);
-  const { data } = useAllUser(incremental);
+  const { data, isLoading, isError, refetch } = useAllUser();
   const editUserMutate = useEditUser();
   const deleteUserMutate = useDeleteUser();
   const createUserMutate = useCreateUser();
@@ -59,13 +58,11 @@ const People: FC<PeopleProps> = () => {
   };
 
   const createUser = async (data: any) => {
-
     setLoading(true);
     try {
-      const response = await createUserMutate.mutateAsync(data);
-      console.log("response", response);
-      setIncremental((prev) => prev++);
+      await createUserMutate.mutateAsync(data);
       setShowModal(false);
+      refetch();
     } catch (error: any) {
       console.error(error);
       dispatch(showToast(error.response.data.message, "error"));
@@ -95,13 +92,23 @@ const People: FC<PeopleProps> = () => {
             Crear Usuario +
           </Button>
         </div>
-        {data?.data.map((user: any) => (
-          <Card
-            {...user}
-            handleDelete={deleteUser}
-            handleEdit={editUser}
-          ></Card>
-        ))}
+        {isLoading ? (
+          <div className="empty-message-container">
+            <span className="empty-message">
+              En el momento no hay usuarios existentes
+            </span>
+          </div>
+        ) : (
+          <>
+            {data?.data.map((user: any) => (
+              <Card
+                {...user}
+                handleDelete={deleteUser}
+                handleEdit={editUser}
+              ></Card>
+            ))}
+          </>
+        )}
       </UsersWrapper>
     </Container>
   );

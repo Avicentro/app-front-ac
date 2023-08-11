@@ -8,8 +8,8 @@ export const configMenu: configMenuType[] = [
     icon: "programming",
   },
   {
-    label: "Crear usuario",
-    route: ROUTES.SIGN_IN,
+    label: "Usuarios",
+    route: ROUTES.USERS,
     icon: "dataBase",
     roles: ["ADMIN"],
   },
@@ -19,20 +19,4 @@ export const configMenu: configMenuType[] = [
     icon: "enter",
     roles: ["ADMIN"],
   },
-  {
-    label: "Usuarios",
-    route: ROUTES.USERS,
-    icon: "enter",
-    roles: ["ADMIN"],
-  },
-  // {
-  //   label: "Salida",
-  //   route: ROUTES.PROGRAMMING,
-  //   icon: "out",
-  // },
-  // {
-  //   label: "Datos",
-  //   route: ROUTES.PROGRAMMING,
-  //   icon: "dataBase",
-  // },
 ];

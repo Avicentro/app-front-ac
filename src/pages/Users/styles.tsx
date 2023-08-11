@@ -6,6 +6,20 @@ export const UsersWrapper = styled.div`
   flex-direction: column;
   gap: 12px;
   position: relative;
+  .empty-message-container {
+    display: flex;
+    width: 100%;
+    height: 100px;
+    text-align: center;
+    background-color: ${({ theme }) => theme.white};
+    border-radius: 8px;
+    align-items: center;
+    justify-content: center;
+
+    .empty-message {
+      font: 600 1.25rem Signika SemiBold;
+    }
+  }
   .create-user-container {
     width: 70%;
     display: flex;
