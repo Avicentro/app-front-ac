@@ -15,7 +15,12 @@ import { typeButtonEnum } from "../../models";
 import { theme } from "../../static/styles/theme";
 import { useAllPeople } from "../../hook/usePeople";
 import Modal from "../../components/display/Modal/Modal";
-import { useCreateUser, useDeleteUser, useEditUser } from "../../hook/useUser";
+import {
+  useAllUser,
+  useCreateUser,
+  useDeleteUser,
+  useEditUser,
+} from "../../hook/useUser";
 import Create from "./components/Create/Create";
 import { useDispatch } from "react-redux";
 import { showToast } from "../../store/toast/actions";
@@ -27,16 +32,16 @@ const People: FC<PeopleProps> = () => {
   const [isEdit, setIsEdit] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [incremental, setIncremental] = useState(0);
-  const { data } = useAllPeople(incremental);
-  const editPersonMutate = useEditUser();
-  const deletePersonMutate = useDeleteUser();
-  const createPersonMutate = useCreateUser();
+  const { data } = useAllUser(incremental);
+  const editUserMutate = useEditUser();
+  const deleteUserMutate = useDeleteUser();
+  const createUserMutate = useCreateUser();
   const dispatch = useDispatch();
 
   const deleteUser = async (id: string) => {
     setLoading(true);
     try {
-      const response = await deletePersonMutate.mutateAsync(id);
+      const response = await deleteUserMutate.mutateAsync(id);
     } catch (error) {
     } finally {
       setLoading(false);
@@ -46,7 +51,7 @@ const People: FC<PeopleProps> = () => {
   const editUser = async (data: any) => {
     setLoading(true);
     try {
-      const response = await editPersonMutate.mutateAsync(data);
+      const response = await editUserMutate.mutateAsync(data);
     } catch (error) {
     } finally {
       setLoading(false);
@@ -56,7 +61,7 @@ const People: FC<PeopleProps> = () => {
   const createUser = async (data: any) => {
     setLoading(true);
     try {
-      const response = await createPersonMutate.mutateAsync(data);
+      const response = await createUserMutate.mutateAsync(data);
       console.log("response", response);
       setIncremental((prev) => prev++);
       setShowModal(false);
@@ -89,7 +94,7 @@ const People: FC<PeopleProps> = () => {
             Crear Usuario +
           </Button>
         </div>
-        {userList.map((user) => (
+        {data?.data.map((user: any) => (
           <Card
             {...user}
             handleDelete={deleteUser}
