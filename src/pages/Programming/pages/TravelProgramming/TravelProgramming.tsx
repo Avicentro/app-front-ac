@@ -29,6 +29,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useSaveScheduleData } from "../../../../hook/useSchedule";
 import { getFormat } from "../helpers/getFormat";
 import { addHours } from "../helpers/addHours";
+import { Title } from "../../../../components/genericStyles";
 
 interface TravelProgrammingProps {}
 
@@ -104,7 +105,7 @@ const TravelProgramming: FC<TravelProgrammingProps> = () => {
         <BackButton />
         <Card customClass="card-travel">
           <div className="title-schedule-form">
-            <h1>Nueva programación</h1>
+            <Title>Nueva programación</Title>
           </div>
           <form onSubmit={handleSubmit(saveProgramming)}>
             <DynamicForm

@@ -60,7 +60,7 @@ const Modal: FC<ModalProps> = ({
               onClick={(e) => e.stopPropagation()}
             >
               <div className="modal-title">
-                <h2>{title}</h2>
+                <h3>{title}</h3>
               </div>
               <div className="modal-content">{children}</div>
               <button className="modal-close" onClick={closeModal}>

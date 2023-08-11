@@ -5,11 +5,17 @@ export const SideMenuWrapper = styled.nav`
   grid-row: 2 / 3;
   grid-column: 1 / 4;
   background-image: ${({ theme }) => theme.bgNightSky};
-  padding: 20px 32px;
+  padding: 20px;
   display: flex;
+  position: sticky;
+  top: 95px;
   flex-direction: column;
   justify-content: space-between;
-  height: 100%;
+  height: calc(100vh - 125px);
+  background-color: white;
+  margin-left: 36px;
+  border-radius: 8px;
+  box-shadow: 0 3px 20px #0000000b;
   ul {
     list-style: none;
     margin: 0;
@@ -65,15 +71,20 @@ export const SideMenuWrapper = styled.nav`
         .logo-item {
           svg {
             rect {
-              stroke: ${({ theme }) => theme.primary};
+              stroke: ${({ theme }) => theme.secondary};
             }
             path {
-              stroke: ${({ theme }) => theme.primary};
+              stroke: ${({ theme }) => theme.secondary};
             }
             ellipse {
-              stroke: ${({ theme }) => theme.primary};
+              stroke: ${({ theme }) => theme.secondary};
             }
           }
+        }
+
+        .label-item {
+          color: black;
+          font-family: 'Work Sans Medium';
         }
       }
     }

@@ -59,7 +59,11 @@ export const ButtonWrapper = styled.button<ButtonWrapperProps>`
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
-  width: 100%;
+  text-transform: uppercase;
+  font-family: "Work Sans SemiBold";
+  padding: 8px 30px;
+  width: auto;
+  max-width: 300px;
   height: ${({ sizeButton }) => `${sizeButton}px`};
   text-align: center;
   color: ${({ theme, color, typeButton }) =>
@@ -74,7 +78,8 @@ export const ButtonWrapper = styled.button<ButtonWrapperProps>`
       theme,
       typeButton,
     })};
-  border-radius: 16px;
+  border-radius: 20px;
+  font-weight: 500;
   border: 1px solid
     ${({ theme, bgColor, typeButton }) =>
       getBorderByTypeButton({

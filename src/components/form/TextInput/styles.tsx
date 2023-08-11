@@ -12,7 +12,7 @@ export const TextInputWrapper = styled.div<TextInputWrapperProps>`
   margin-bottom: ${({ mb }) => (mb ? `${mb}px` : 0)};
   .label {
     all: unset;
-    font: 400 12px Montserrat Regular;
+    font: 400 14px Work Sans Regular;
   }
   input {
     border: 1px solid
@@ -22,7 +22,7 @@ export const TextInputWrapper = styled.div<TextInputWrapperProps>`
     width: 100%;
     box-sizing: border-box;
     color: ${({ theme, error }) => (error ? theme.red500 : theme.coolGray700)};
-    font: 400 12px Montserrat Regular;
+    font: 400 14px Work Sans Regular;
     background-color: ${({ theme }) => theme.coolGray200};
     height: 38px;
     &:focus {

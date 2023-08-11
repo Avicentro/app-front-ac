@@ -17,7 +17,10 @@ import { formConfig } from "./formConfig/formConfig";
 
 // Styles
 
-import { ForgotPasswordWrapper } from "./styles";
+import { BrandImage } from "./styles";
+import logoPrometeo from "../../static/img/prometeo_brand_red.svg";
+import LayoutAuth from "../../layoutAuth/LayoutAuth";
+import { Title } from "../../components/genericStyles";
 
 // helpers
 
@@ -58,33 +61,33 @@ const ForgotPassword: FC<ForgotPasswordProps> = () => {
   };
 
   return (
-    <ForgotPasswordWrapper>
-      <section className="brand-container">
-        <h1 className="name">Prometeo</h1>
-      </section>
-      <section className="form-container">
+    <LayoutAuth>
+        <div className="brand-container">
+          <BrandImage className="brand-name" src={logoPrometeo} alt="prometeo" />
+        </div>
         <form onSubmit={handleSubmit(updatePassword)}>
-          <h3 className="title">Olvidó su contraseña</h3>
+          <Title>Olvidó su contraseña</Title>
           <DynamicForm
             formConfig={formConfig}
             errors={errors}
             setValue={setValue}
             control={control}
           />
+          <div className="sign-in-btn">
           <Button
             type="submit"
             mb={28}
-            sizeButton={sizeButtonEnum.extraBig}
+            sizeButton={sizeButtonEnum.medium}
             loading={loading}
           >
-            Enviar {"->"}
+            Enviar
           </Button>
+          </div>
         </form>
-        <span className="back-to-login" onClick={() => navigate(ROUTES.LOGIN)}>
+        <span className="forgot-password" onClick={() => navigate(ROUTES.LOGIN)}>
           Volver a login
         </span>
-      </section>
-    </ForgotPasswordWrapper>
+    </LayoutAuth>
   );
 };
 
