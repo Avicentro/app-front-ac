@@ -47,7 +47,7 @@ const ChangePassword: FC<ChangePasswordProps> = () => {
   const updatePassword = async (data: any) => {
     setLoading(true);
     try {
-      const response = await useForgotPassword.mutateAsync(data);
+      await useForgotPassword.mutateAsync(data);
       dispatch(
         showToast("se ha actualizado su contraseña correctamente", "success")
       );
@@ -69,7 +69,7 @@ const ChangePassword: FC<ChangePasswordProps> = () => {
           />
         </div>
         <form onSubmit={handleSubmit(updatePassword)}>
-          <Title>Reestablecer contraseña</Title>
+          <Title>Cambiar contraseña</Title>
           <DynamicForm
             formConfig={formConfig}
             errors={errors}
@@ -84,7 +84,7 @@ const ChangePassword: FC<ChangePasswordProps> = () => {
               loading={loading}
             >
               <div className="gap">
-                Iniciar sesión
+                Cambiar contraseña
                 <img
                   className="right-arrow"
                   src={RightArrow}
