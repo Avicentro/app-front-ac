@@ -21,12 +21,9 @@ export const useCreateUser = () => {
   });
 };
 
-export const useEditUser = () => {
+export const useEditUser = (id: string) => {
   return useMutation(async (data) => {
-    const response = await ApiService.putData(
-      data,
-      "/schedule/create-production" //TODO: URL editar PERSON
-    );
+    const response = await ApiService.putData(data, `/users/${id}`);
     return response.data;
   });
 };
@@ -34,9 +31,7 @@ export const useEditUser = () => {
 //DELETE
 export const useDeleteUser = () => {
   return useMutation(async (id: string) => {
-    const response = await ApiService.deleteData(
-      `/schedule/delete/${id}` //TODO: URL eliminar PERSON
-    );
+    const response = await ApiService.deleteData(`/users/${id}`);
     return response;
   });
 };

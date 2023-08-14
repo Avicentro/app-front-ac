@@ -135,3 +135,17 @@ export type scheduleType = {
 export type customStyles = {
   [key: string]: string | number;
 };
+
+// CUSTOM TABLE
+export type columnsHeaderType = {
+  Header: string;
+  accessor: string;
+  type?: "incremental" | "edit" | "delete" | "link";
+  callback?: any;
+  content?: string;
+};
+
+export type columnsType = {
+  Header: string;
+  columns: columnsHeaderType[];
+};

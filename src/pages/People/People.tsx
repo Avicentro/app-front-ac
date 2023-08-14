@@ -2,73 +2,92 @@ import { FC, useState } from "react";
 import { Container } from "../../components/genericStyles";
 
 // Components
-import Card from "./components/Card/Card";
+import Edit from "./components/Edit/Edit";
+import Create from "./components/Create/Create";
+import Card from "../../components/display/Card/Card";
 import Button from "../../components/form/Button/Button";
+import Modal from "../../components/display/Modal/Modal";
+import CustomTable from "../../components/display/CustomTable/CustomTable";
+import { getColumnsWithCallbacks } from "../../components/display/CustomTable/helpers/getColumnsWithCallbacks";
 
 // Styles
-
 import { PeopleWrapper } from "./styles";
 
 // helpers
 import { typeButtonEnum } from "../../models";
 import { theme } from "../../static/styles/theme";
-import {
-  useAllPeople,
-  useCreatePeople,
-  useDeletePeople,
-  useEditPeople,
-} from "../../hook/usePeople";
-import Modal from "../../components/display/Modal/Modal";
-import Create from "./components/Create/Create";
+import { useAllPeople, useDeletePeople } from "../../hook/usePeople";
 import { useDispatch } from "react-redux";
 import { showToast } from "../../store/toast/actions";
+import { COLUMNS_PEOPLE } from "./config/config";
+import Delete from "./components/Delete/Delete";
 
 interface PeopleProps {}
 
 const People: FC<PeopleProps> = () => {
-  const [loading, setLoading] = useState(false);
-  const [isEdit, setIsEdit] = useState(false);
+  const [action, setAction] = useState<"create" | "delete" | "edit">("create");
+  const [dataSelected, setDataSelected] = useState<any>({});
   const [showModal, setShowModal] = useState(false);
-  const [incremental, setIncremental] = useState(0);
-  const { data } = useAllPeople(incremental);
-  const editPersonMutate = useEditPeople();
-  const deletePersonMutate = useDeletePeople();
-  const createPersonMutate = useCreatePeople();
-  const dispatch = useDispatch();
-  console.log("data", data);
 
-  const deletePeople = async (id: string) => {
-    setLoading(true);
-    try {
-      const response = await deletePersonMutate.mutateAsync(id);
-    } catch (error) {
-    } finally {
-      setLoading(false);
-    }
+  //Get
+  const { data, isLoading, isError, refetch } = useAllPeople();
+
+  const onSuccessActions = () => {
+    setShowModal(false);
+    setAction("create");
+    setDataSelected({});
+    refetch();
   };
 
-  const editPeople = async (data: any) => {
-    setLoading(true);
-    try {
-      const response = await editPersonMutate.mutateAsync(data);
-    } catch (error) {
-    } finally {
-      setLoading(false);
-    }
+  const openModalEdit = (data: any) => {
+    setDataSelected(data);
+    setAction("edit");
+    setShowModal(true);
   };
 
-  const createPerson = async (data: any) => {
-    setLoading(true);
-    try {
-      const response = await createPersonMutate.mutateAsync(data);
-      setIncremental((prev) => prev + 1);
-      setShowModal(false);
-    } catch (error: any) {
-      console.error(error);
-      dispatch(showToast(error.response.data.message, "error"));
-    } finally {
-      setLoading(false);
-    }
+  const openModalDelete = (data: any) => {
+    setDataSelected(data);
+    setAction("delete");
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+    setAction("create");
+    setDataSelected({});
+  };
+
+  const actionsToMatch = {
+    edit: {
+      callback: (data: any) => {
+        openModalEdit(data);
+      },
+      columnTarget: "all",
+    },
+    delete: {
+      callback: (data: any) => {
+        openModalDelete(data);
+      },
+      columnTarget: "all",
+    },
+  };
+
+  const getLabelByAction = () => {
+    return {
+      create: "Crear",
+      edit: "Editar",
+      delete: "Eliminar",
+    }[action];
+  };
+
+  const getComponentByAction = () => {
+    return {
+      create: <Create handleSubmit={onSuccessActions} />,
+      edit: (
+        <Edit handleSubmit={onSuccessActions} defaultValues={dataSelected} />
+      ),
+      delete: <Delete handleCancel={closeModal} dataSelected={dataSelected} />,
+    }[action];
   };
 
   return (
@@ -76,29 +95,28 @@ const People: FC<PeopleProps> = () => {
       <PeopleWrapper>
         {showModal && (
           <Modal
-            title="Crear persona"
+            title={`${getLabelByAction()} persona`}
             open={showModal}
-            handleClose={() => setShowModal(false)}
+            handleClose={closeModal}
           >
-            <Create handleSubmit={createPerson} isEdit={isEdit} />
+            {getComponentByAction()}
           </Modal>
         )}
-        <div className="create-people-container">
-          <Button
-            typeButton={typeButtonEnum.fill}
-            bgColor={theme.secondary}
-            extraProps={{ onClick: () => setShowModal(true) }}
-          >
-            Crear Persona +
-          </Button>
-        </div>
-        {data?.data?.map((people: any) => (
-          <Card
-            {...people}
-            handleDelete={deletePeople}
-            handleEdit={editPeople}
-          ></Card>
-        ))}
+        <Card>
+          <div className="create-people-container">
+            <Button
+              typeButton={typeButtonEnum.fill}
+              bgColor={theme.secondary}
+              extraProps={{ onClick: () => setShowModal(true) }}
+            >
+              Crear Persona +
+            </Button>
+          </div>
+          <CustomTable
+            data={data?.data || []}
+            columns={getColumnsWithCallbacks(COLUMNS_PEOPLE, actionsToMatch)}
+          />
+        </Card>
       </PeopleWrapper>
     </Container>
   );

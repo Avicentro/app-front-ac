@@ -33,12 +33,24 @@ interface IceInfoProps {
 
 const IceInfo: FC<IceInfoProps> = ({ dateInView }) => {
   const [loadingProduction, setLoadingProduction] = useState(false);
-  const [loadingThirds, setLoadingThirds] = useState(false);
+  const [loadingSuppliers, setLoadingSuppliers] = useState(false);
   const [thirdValue, setThirdValue] = useState("");
   const [amount, setAmount] = useState(0);
-  const dataInformation = useIceInformation(new Date(dateInView).toISOString());
-  const { data } = useThirdsSelected();
-  const mutateAddSupplier = useAddSupplier(dataInformation?.data?._id);
+
+  //GET
+  const {
+    data: iceData,
+    isLoading: iceDataLoading,
+    isError: iceDataError,
+  } = useIceInformation(new Date(dateInView).toISOString());
+  const {
+    data: suppliersData,
+    isLoading: suppliersDataLoading,
+    isError: suppliersDataError,
+  } = useThirdsSelected();
+
+  // MUTATE
+  const mutateAddSupplier = useAddSupplier(iceData?.data?._id);
   const mutateAddIceInformation = useAddIceInformation();
   const dispatch = useDispatch();
   // console.log("dataInformation", dataInformation);
@@ -69,7 +81,7 @@ const IceInfo: FC<IceInfoProps> = ({ dateInView }) => {
   }, [dateInView, mutateAddIceInformation]);
 
   useEffect(() => {
-    if (!dataInformation.data) {
+    if (!iceData?.data) {
       addIceInformation();
     }
   }, []);
@@ -86,42 +98,47 @@ const IceInfo: FC<IceInfoProps> = ({ dateInView }) => {
     }
   };
 
-  const saveThird = async () => {
-    setLoadingThirds(true);
+  const saveSupplier = async () => {
+    setLoadingSuppliers(true);
     try {
-      const newObj = {
+      const iceSupplier = {
         supplier: thirdValue,
         amount,
       };
-      const response = await mutateAddSupplier.mutateAsync(newObj);
+      const response = await mutateAddSupplier.mutateAsync(iceSupplier);
 
       dispatch(showToast("Se han guardado los datos correctamente", "success"));
     } catch (error: any) {
       dispatch(showToast(error.response.data.message, "error"));
     } finally {
-      setLoadingThirds(false);
+      setLoadingSuppliers(false);
     }
   };
 
   const getThirdsOptions = () => {
-    if (data) {
+    if (suppliersData) {
       return [
         {
           label: "Seleccione",
           value: "",
         },
-        ...data?.data.map((third: any) => ({
+        ...suppliersData?.data.map((third: any) => ({
           label: third.name,
           value: third._id,
         })),
       ];
     }
-    return [];
+    return [
+      {
+        label: "No hay proveedores",
+        value: "",
+      },
+    ];
   };
 
   return (
     <IceInfoWrapper>
-      <h3>{getFormat(dateInView)}</h3>
+      <h3>{getFormat(dateInView, true)}</h3>
       <form onSubmit={handleSubmit(saveData)}>
         <DynamicForm
           formConfig={formConfig}
@@ -144,8 +161,8 @@ const IceInfo: FC<IceInfoProps> = ({ dateInView }) => {
         <span>Diferencia:</span>
       </div>
       <hr />
-      <div className="">
-        Terceros
+      <div className="suppliers-container">
+        <span className="suppliers-title">Proveedores</span>
         <div className="third-container">
           <FilterDropDown
             label="Seleccione a un tercero"
@@ -161,16 +178,15 @@ const IceInfo: FC<IceInfoProps> = ({ dateInView }) => {
             value={amount}
             handleChange={setAmount}
           />
-          <Button
-            type="submit"
-            mb={32}
-            sizeButton={sizeButtonEnum.medium}
-            loading={loadingProduction}
-            extraProps={{ onclick: saveThird }}
-          >
-            Guardar Proveedores
-          </Button>
         </div>
+        <Button
+          type="submit"
+          sizeButton={sizeButtonEnum.medium}
+          loading={loadingProduction}
+          extraProps={{ onclick: saveSupplier }}
+        >
+          Guardar Proveedores
+        </Button>
       </div>
     </IceInfoWrapper>
   );

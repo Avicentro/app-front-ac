@@ -2,9 +2,9 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import ApiService from "../core/newApi.services";
 
 // GET
-export const useAllPeople = (dependency: any) => {
+export const useAllPeople = () => {
   return useQuery({
-    queryKey: ["allPeople", dependency],
+    queryKey: ["allPeople"],
     queryFn: async () => await ApiService.getData({}, "/people/all"),
     retry: false,
   });
@@ -14,20 +14,14 @@ export const useAllPeople = (dependency: any) => {
 
 export const useCreatePeople = () => {
   return useMutation(async (data) => {
-    const response = await ApiService.postData(
-      data,
-      "/people" //TODO: URL crear PERSON
-    );
+    const response = await ApiService.postData(data, "/people");
     return response.data;
   });
 };
 
-export const useEditPeople = () => {
+export const useEditPeople = (id: string) => {
   return useMutation(async (data) => {
-    const response = await ApiService.putData(
-      data,
-      "/schedule/create-production" //TODO: URL editar PERSON
-    );
+    const response = await ApiService.putData(data, `/people/${id}`);
     return response.data;
   });
 };
@@ -35,9 +29,7 @@ export const useEditPeople = () => {
 //DELETE
 export const useDeletePeople = () => {
   return useMutation(async (id: string) => {
-    const response = await ApiService.deleteData(
-      `/schedule/delete/${id}` //TODO: URL eliminar PERSON
-    );
+    const response = await ApiService.deleteData(`/people/${id}`);
     return response;
   });
 };

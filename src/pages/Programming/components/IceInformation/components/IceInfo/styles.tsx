@@ -5,8 +5,16 @@ export const IceInfoWrapper = styled.div`
     display: grid;
     gap: 8px;
   }
-  .third-container {
+  .suppliers-container {
     display: grid;
-    gap: 12px;
+    gap: 8px;
+    .suppliers-title {
+      font: 400 20px Signika Medium;
+    }
+    .third-container {
+      display: grid;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
   }
 `;

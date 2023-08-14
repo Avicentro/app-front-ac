@@ -1,97 +1,92 @@
 import { FC, useState } from "react";
-import { Container } from "../../components/genericStyles";
+import { useDispatch } from "react-redux";
 
 // Components
-import Card from "./components/Card/Card";
+import Edit from "./components/Edit/Edit";
+import Create from "./components/Create/Create";
+import Card from "../../components/display/Card/Card";
 import Button from "../../components/form/Button/Button";
+import Modal from "../../components/display/Modal/Modal";
+import { Container } from "../../components/genericStyles";
+import CustomTable from "../../components/display/CustomTable/CustomTable";
+import { getColumnsWithCallbacks } from "../../components/display/CustomTable/helpers/getColumnsWithCallbacks";
 
 // Styles
 
 import { UsersWrapper } from "./styles";
 
 // helpers
-import { userList } from "./__mock__";
 import { typeButtonEnum } from "../../models";
+import { COLUMNS_USER } from "./config/config";
 import { theme } from "../../static/styles/theme";
-import { useAllPeople } from "../../hook/usePeople";
-import Modal from "../../components/display/Modal/Modal";
-import {
-  useAllUser,
-  useCreateUser,
-  useDeleteUser,
-  useEditUser,
-} from "../../hook/useUser";
-import Create from "./components/Create/Create";
-import { useDispatch } from "react-redux";
 import { showToast } from "../../store/toast/actions";
+import { useAllUser, useDeleteUser } from "../../hook/useUser";
+import Delete from "./components/Delete/Delete";
 
-interface PeopleProps {}
+interface UsersProps {}
 
-const People: FC<PeopleProps> = () => {
-  const [loading, setLoading] = useState(false);
-  const [isEdit, setIsEdit] = useState(false);
+const Users: FC<UsersProps> = () => {
+  const [action, setAction] = useState<"create" | "delete" | "edit">("create");
   const [showModal, setShowModal] = useState(false);
+  const [dataSelected, setDataSelected] = useState({});
   const { data, isLoading, isError, refetch } = useAllUser();
-  const editUserMutate = useEditUser();
-  const deleteUserMutate = useDeleteUser();
-  const createUserMutate = useCreateUser();
-  const dispatch = useDispatch();
 
-  const deleteUser = async (id: string) => {
-    setLoading(true);
-    try {
-      const response = await deleteUserMutate.mutateAsync(id);
-    } catch (error) {
-    } finally {
-      setLoading(false);
-    }
+  const onSuccessActions = () => {
+    setShowModal(false);
+    setAction("create");
+    setDataSelected({});
+    refetch();
   };
 
-  const editUser = async (data: any) => {
-    setLoading(true);
-    try {
-      const response = await editUserMutate.mutateAsync(data);
-    } catch (error) {
-    } finally {
-      setLoading(false);
-    }
+  const openModalEdit = (data: any) => {
+    setDataSelected(data);
+    setAction("edit");
+    setShowModal(true);
   };
 
-  const createUser = async (data: any) => {
-    setLoading(true);
-    try {
-      await createUserMutate.mutateAsync(data);
-      setShowModal(false);
-      refetch();
-    } catch (error: any) {
-      console.error(error);
-      dispatch(showToast(error.response.data.message, "error"));
-    } finally {
-      setLoading(false);
-    }
+  const openModalDelete = (data: any) => {
+    setDataSelected(data);
+    setAction("delete");
+    setShowModal(true);
   };
 
-  const getContent = () => {
-    if (data?.data.length) {
-      return (
-        <>
-          {data?.data.map((user: any) => (
-            <Card
-              {...user}
-              handleDelete={deleteUser}
-              handleEdit={editUser}
-            ></Card>
-          ))}
-        </>
-      );
-    }
-    return (
-      <div className="empty-message-container">
-        <span className="empty-message">
-          En el momento no hay usuarios existentes
-        </span>
-      </div>
-    );
+  const closeModal = () => {
+    setShowModal(false);
+    setAction("create");
+    setDataSelected({});
+  };
+
+  const actionsToMatch = {
+    edit: {
+      callback: (data: any) => {
+        openModalEdit(data);
+      },
+      columnTarget: "all",
+    },
+    delete: {
+      callback: (data: any) => {
+        openModalDelete(data);
+      },
+      columnTarget: "all",
+    },
+  };
+
+  const getLabelByAction = () => {
+    return {
+      create: "Crear",
+      edit: "Editar",
+      delete: "Eliminar",
+    }[action];
+  };
+
+  const getComponentByAction = () => {
+    return {
+      create: <Create handleSubmit={onSuccessActions} />,
+      edit: (
+        <Edit handleSubmit={onSuccessActions} defaultValues={dataSelected} />
+      ),
+      delete: <Delete handleCancel={closeModal} dataSelected={dataSelected} />,
+    }[action];
   };
 
   return (
@@ -99,32 +94,32 @@ const People: FC<PeopleProps> = () => {
       <UsersWrapper>
         {showModal && (
           <Modal
-            title="Crear Usuario"
+            title={`${getLabelByAction()} usuario`}
             open={showModal}
-            handleClose={() => setShowModal(false)}
+            handleClose={closeModal}
           >
-            <Create handleSubmit={createUser} isEdit={isEdit} />
+            {getComponentByAction()}
           </Modal>
         )}
-        <div className="create-user-container">
-          <Button
-            typeButton={typeButtonEnum.fill}
-            bgColor={theme.secondary}
-            extraProps={{ onClick: () => setShowModal(true) }}
-          >
-            Crear Usuario +
-          </Button>
-        </div>
-        {isLoading ? (
-          <div className="empty-message-container">
-            <span className="empty-message">Cargando Usuarios...</span>
+        <Card>
+          <div className="create-user-container">
+            <Button
+              typeButton={typeButtonEnum.fill}
+              bgColor={theme.secondary}
+              extraProps={{ onClick: () => setShowModal(true) }}
+              mb={32}
+            >
+              Crear Usuario +
+            </Button>
           </div>
-        ) : (
-          <>{getContent()}</>
-        )}
+          <CustomTable
+            data={data?.data || []}
+            columns={getColumnsWithCallbacks(COLUMNS_USER, actionsToMatch)}
+          />
+        </Card>
       </UsersWrapper>
     </Container>
   );
 };
 
-export default People;
+export default Users;

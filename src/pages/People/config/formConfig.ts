@@ -1,8 +1,5 @@
-import {
-  FEEDBACK_MESSAGES,
-  REGEX_VALIDATION,
-} from "../../../../../constants/form";
-import { fieldTypeEnum, IConfig } from "../../../../../models";
+import { FEEDBACK_MESSAGES, REGEX_VALIDATION } from "../../../constants/form";
+import { fieldTypeEnum, IConfig } from "../../../models";
 
 export const formConfig: IConfig[] = [
   {

@@ -6,17 +6,15 @@ export const ProgrammingWrapper = styled.div`
   gap: 20px;
   .ice-info-container {
     grid-column: 1 / 4;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
   }
   .calendar-card {
     grid-column: 4 / -1;
   }
   .title {
     margin-bottom: 23px;
-    /* h1 {
-      font: 700 40px Poppins Bold;
-      color: ${({ theme }) => theme.coolGray800};
-      margin: 0;
-    } */
     .sub-title {
       margin: 0;
       color: ${({ theme }) => theme.primaryDark};

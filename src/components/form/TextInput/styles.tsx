@@ -37,4 +37,16 @@ export const TextInputWrapper = styled.div<TextInputWrapperProps>`
       color: ${({ theme }) => theme.coolGray500};
     }
   }
+
+  input[type="time"]::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+  }
+
+  input[type="time"]::-moz-calendar-picker-indicator {
+    cursor: pointer;
+  }
+
+  input[type="time"]::-ms-clear {
+    cursor: pointer;
+  }
 `;

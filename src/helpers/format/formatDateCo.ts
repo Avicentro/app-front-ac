@@ -2,7 +2,7 @@ export const formatDateCo = ({
   date,
   addHours,
 }: {
-  date: string;
+  date: string | Date;
   addHours?: boolean;
 }) => {
   try {

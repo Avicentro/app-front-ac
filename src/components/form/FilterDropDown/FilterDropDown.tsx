@@ -28,7 +28,7 @@ const FilterDropDown: FC<FilterDropDownProps> = ({
   handleChange,
   value,
 }) => {
-  const [valueSelected, setValueSelected] = useState("");
+  const [valueSelected, setValueSelected] = useState(value);
   const [showOptions, setShowOptions] = useState(false);
   const [filterContent, setFilterContent] = useState("");
   const [localOptions, setLocalOptions] = useState<any[]>([]);

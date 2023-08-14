@@ -1,19 +1,19 @@
-export const getFormat = (dateSelected: any) => {
-  const fechaHora = new Date(dateSelected);
+export const getFormat = (dateSelected: any, cutHours?: boolean) => {
+  const hourDate = new Date(dateSelected);
 
-  const diaSemana = fechaHora.getUTCDay();
+  const dayOfWeek = hourDate.getUTCDay();
 
-  const diaMes = fechaHora.getUTCDate();
+  const monthDay = hourDate.getUTCDate();
 
-  const mes = fechaHora.getUTCMonth();
+  const month = hourDate.getUTCMonth();
 
-  const año = fechaHora.getUTCFullYear();
+  const year = hourDate.getUTCFullYear();
 
-  const hora = fechaHora.getHours();
+  const hour = hourDate.getHours();
 
-  const minutos = fechaHora.getMinutes();
+  const minutes = hourDate.getMinutes();
 
-  const diasSemanaTexto = [
+  const textWeekDays = [
     "Domingo",
     "Lunes",
     "Martes",
@@ -22,9 +22,9 @@ export const getFormat = (dateSelected: any) => {
     "Viernes",
     "Sábado",
   ];
-  const diaSemanaTexto = diasSemanaTexto[diaSemana];
+  const TextMonth = textWeekDays[dayOfWeek];
 
-  const mesesTexto = [
+  const monthsText = [
     "Enero",
     "Febrero",
     "Marzo",
@@ -38,7 +38,9 @@ export const getFormat = (dateSelected: any) => {
     "Noviembre",
     "Diciembre",
   ];
-  const mesTexto = mesesTexto[mes];
+  const monthText = monthsText[month];
 
-  return `${diaSemanaTexto}, ${diaMes} de ${mesTexto} del ${año}, ${hora}:${minutos}`;
+  const date = `${TextMonth}, ${monthDay} de ${monthText} del ${year}`;
+  const hours = `${hour}:${minutes}`;
+  return cutHours ? date : `${date},${hours}`;
 };

@@ -1,9 +1,6 @@
 import { useQuery, useMutation } from "@tanstack/react-query";
 import ApiService from "../core/newApi.services";
 
-// Models
-import { useAllSchedulesProps } from "./models";
-
 // GET
 export const useThirdsSelected = () => {
   return useQuery({
