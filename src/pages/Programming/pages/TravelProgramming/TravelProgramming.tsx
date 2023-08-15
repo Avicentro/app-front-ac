@@ -69,6 +69,7 @@ const TravelProgramming: FC<TravelProgrammingProps> = () => {
     handleSubmit,
     setValue,
     formState: { errors },
+    getValues,
   } = useForm({
     resolver: yupResolver(createSchemaByConfig(formConfig)),
     defaultValues: getDefaultValuesByConfig(

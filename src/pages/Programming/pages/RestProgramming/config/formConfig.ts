@@ -32,19 +32,11 @@ export const formConfig: IConfig[] = [
     ],
   },
   {
-    name: "observation",
-    label: "Observación",
+    name: "observations",
+    label: "Obsetvaciones",
     value: "",
     type: "text",
-    fieldType: fieldTypeEnum.text,
-    placeholder: "Observación",
-    validation: {
-      type: "string",
-      settings: [
-        {
-          type: "required",
-        },
-      ],
-    },
+    fieldType: fieldTypeEnum.textArea,
+    placeholder: "Obsetvaciones",
   },
 ];

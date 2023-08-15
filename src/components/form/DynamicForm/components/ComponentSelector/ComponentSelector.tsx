@@ -5,6 +5,7 @@ import DatePicker from "../../../DatePicker/DatePicker";
 import COMPONENT_TYPES from "../../constants/componentTypes";
 import CheckboxInput from "../../../CheckboxInput/CheckboxInput";
 import FilterDropDown from "../../../FilterDropDown/FilterDropDown";
+import TextArea from "../../../TextArea/TextArea";
 
 export interface ComponentSelectorProps extends IConfig {
   handleChange?: (e: any) => any;
@@ -20,6 +21,7 @@ const ComponentSelector: FC<ComponentSelectorProps> = ({ ...props }) => {
       [COMPONENT_TYPES.SELECT]: <FilterDropDown {...props} />,
       [COMPONENT_TYPES.HOURS_DATE]: <TextInput {...props} />,
       [COMPONENT_TYPES.CHECKBOX]: <CheckboxInput {...props} />,
+      [COMPONENT_TYPES.TEXT_AREA]: <TextArea {...props} />,
     }[props.fieldType || ""] || <TextInput {...props} />
   );
 };
