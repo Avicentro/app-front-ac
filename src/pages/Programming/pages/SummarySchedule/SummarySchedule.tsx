@@ -1,4 +1,4 @@
-import { FC, useCallback, useEffect, useState } from "react";
+import { FC, useCallback, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 // Components
@@ -12,7 +12,7 @@ import { SummaryScheduleWrapper } from "./styles";
 import { ROUTES } from "../../../../constants/routes";
 import {
   useDeleteScheduleMutate,
-  useScheduling,
+  useSummarySchedule,
 } from "../../../../hook/useSchedule";
 import { formatDateCo } from "../../../../helpers/format/formatDateCo";
 import {
@@ -36,6 +36,7 @@ import Modal from "../../../../components/display/Modal/Modal";
 import { useDispatch } from "react-redux";
 import { showToast } from "../../../../store/toast/actions";
 import FullScreenLoaderContainer from "../../../../components/feedback/FullScreenLoaderContainer/FullScreenLoaderContainer";
+import ServerError from "../../../ServerError/ServerError";
 
 type dataSummaryType = {
   dateStart: string;
@@ -74,7 +75,7 @@ const SummarySchedule: FC<SummaryScheduleProps> = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { orderId = "" } = useParams();
-  const { data, refetch, isLoading } = useScheduling(orderId);
+  const { data, refetch, isLoading, isError } = useSummarySchedule(orderId);
   const useDeleteSchedule = useDeleteScheduleMutate();
 
   const updateProgrammingMutation = useUpdateProgrammingMutation(data?.code);
@@ -179,6 +180,7 @@ const SummarySchedule: FC<SummaryScheduleProps> = () => {
       if (keyIsArray) {
         return data[key[0]] ? data[key[0]][key[1]] : "-";
       }
+      console.log("data", data);
       return data[key] || "-";
     },
     [data]
@@ -271,6 +273,8 @@ const SummarySchedule: FC<SummaryScheduleProps> = () => {
       navigate(ROUTES.PROGRAMMING);
     }
   };
+
+  if (isError) return <ServerError />;
 
   return (
     <SummaryScheduleWrapper>

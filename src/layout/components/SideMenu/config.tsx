@@ -19,4 +19,10 @@ export const configMenu: configMenuType[] = [
     icon: "enter",
     roles: ["ADMIN"],
   },
+  {
+    label: "Proveedores de hielo",
+    route: ROUTES.ICE_PROVIDERS,
+    icon: "ice",
+    roles: ["ADMIN"],
+  },
 ];

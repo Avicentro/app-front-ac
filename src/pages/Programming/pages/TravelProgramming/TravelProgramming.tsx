@@ -69,7 +69,6 @@ const TravelProgramming: FC<TravelProgrammingProps> = () => {
     handleSubmit,
     setValue,
     formState: { errors },
-    getValues,
   } = useForm({
     resolver: yupResolver(createSchemaByConfig(formConfig)),
     defaultValues: getDefaultValuesByConfig(
@@ -84,14 +83,13 @@ const TravelProgramming: FC<TravelProgrammingProps> = () => {
     try {
       setLoading(true);
       const { date, ...rest } = data;
-      console.log("dateSelected", new Date(dateSelected));
       const responseData = await saveScheduleData.mutateAsync({
         ...rest,
         type: "travel",
         dateStart: new Date(dateSelected),
         dateEnd: addHours(new Date(dateSelected), 25),
       });
-      navigate(`${COMPOSED_ROUTES.SUMMARY_PROGRAMMING}/${responseData.code}`);
+      navigate(`${COMPOSED_ROUTES.SUMMARY_PROGRAMMING}/${responseData._id}`);
     } catch (error: any) {
       dispatch(showToast(error?.response?.data?.message, "error"));
       console.error(error);

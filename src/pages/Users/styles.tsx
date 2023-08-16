@@ -32,8 +32,6 @@ export const UsersWrapper = styled.div`
       width: 100%;
     }
   }
-  @media ${MIN_WIDTH_QUERIES.TABLET.query} {
-  }
   @media ${MIN_WIDTH_QUERIES.DESKTOP.query} {
     .create-user-container {
       width: 100%;

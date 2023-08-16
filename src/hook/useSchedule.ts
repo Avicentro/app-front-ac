@@ -14,16 +14,14 @@ export const useAvailableSchedules = (data: any) => {
   });
 };
 
-export const useScheduling = (orderId: string) => {
+export const useSummarySchedule = (orderId: string) => {
   const response = useQuery({
-    queryKey: ["scheduling"],
-    queryFn: async () =>
-      await ApiService.getData({}, `/programming/find/${orderId}`),
+    queryKey: ["summarySchedule"],
+    queryFn: async () => await ApiService.getData({}, `/programing/${orderId}`),
     retry: false,
   });
-  const isLoading = response.isLoading;
-  const refetch = response.refetch;
-  return { data: response?.data?.data, isLoading, refetch };
+  const { isLoading, refetch, isError } = response;
+  return { data: response?.data?.data, isLoading, refetch, isError };
 };
 
 export const useAllCustomers = () => {

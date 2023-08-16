@@ -12,6 +12,7 @@ export const ROUTES = {
   PROGRAMMING: "/programacion",
   ORDER_ENTRY: "/orden-de-entrada",
   CREATE_PEOPLE: "/crear-personas",
+  ICE_PROVIDERS: "/proveedores-hielo",
   FORGOT_PASSWORD: "/olvido-su-contrasena",
   CHANGE_PASSWORD: "/cambio-de-contrasena",
 };
