@@ -98,7 +98,7 @@ const SummarySchedule: FC<SummaryScheduleProps> = () => {
     value,
     name,
   }: {
-    type: "text" | "select" | "number";
+    type: "text" | "select" | "number" | "textArea";
     value: any;
     name: string;
   }) => {
@@ -144,7 +144,7 @@ const SummarySchedule: FC<SummaryScheduleProps> = () => {
         },
       },
       select: {
-        name: name,
+        name,
         value,
         type: "text",
         fieldType: fieldTypeEnum.select,
@@ -158,6 +158,21 @@ const SummarySchedule: FC<SummaryScheduleProps> = () => {
           ],
         },
         options: [],
+      },
+      textArea: {
+        name,
+        value,
+        type: "text",
+        fieldType: fieldTypeEnum.textArea,
+        placeholder: "Modificar Campo",
+        validation: {
+          type: "string" as typeValidationsType,
+          settings: [
+            {
+              type: "required" as settingsValidationsStringType,
+            },
+          ],
+        },
       },
     }[type];
   };
@@ -180,7 +195,6 @@ const SummarySchedule: FC<SummaryScheduleProps> = () => {
       if (keyIsArray) {
         return data[key[0]] ? data[key[0]][key[1]] : "-";
       }
-      console.log("data", data);
       return data[key] || "-";
     },
     [data]
@@ -431,6 +445,21 @@ const SummarySchedule: FC<SummaryScheduleProps> = () => {
                       name: "farm",
                     })}
                     url="/customer/all"
+                  />
+                </div>
+              </div>
+              <div className="schedule-info__text-container">
+                <p className="title">Descripción: </p>
+                <div className="content">
+                  <EditField
+                    label={getLabelByKey({ key: "description" })}
+                    handleChange={changeValue}
+                    loading={loading}
+                    propsField={getConfigForField({
+                      type: "text",
+                      value: getLabelByKey({ key: "description" }),
+                      name: "supplier",
+                    })}
                   />
                 </div>
               </div>

@@ -9,10 +9,12 @@ import ComponentSelector from "../DynamicForm/components/ComponentSelector/Compo
 
 // helpers
 import { useAnyByUrl } from "../../../hook/useSchedule";
+import DOMPurify from "dompurify";
 
 // Models
 import { EditFieldWrapper } from "./styles";
 import Spinner from "../../feedback/Spinner/Spinner";
+import { fieldTypeEnum } from "../../../models";
 
 interface EditFieldProps {
   label: string;
@@ -24,12 +26,12 @@ interface EditFieldProps {
 }
 
 const EditField: FC<EditFieldProps> = ({
+  url,
   label,
-  handleChange,
   loading,
   shouldEdit,
   propsField,
-  url,
+  handleChange,
 }) => {
   const [editing, setEditing] = useState(false);
   const [text, setText] = useState(label);
@@ -121,7 +123,15 @@ const EditField: FC<EditFieldProps> = ({
         </div>
       ) : (
         <div className="icon-container">
-          <label>{!!text ? text : "-"}</label>
+          {field.fieldType === fieldTypeEnum.textArea ? (
+            <span
+              dangerouslySetInnerHTML={{
+                __html: DOMPurify.sanitize(field.value),
+              }}
+            ></span>
+          ) : (
+            <label>{!!text ? text : "-"}</label>
+          )}
           <span
             className="pencil-icon-container"
             onClick={() => shouldEdit && handleLabelClick()}
