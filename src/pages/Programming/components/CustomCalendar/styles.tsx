@@ -92,8 +92,11 @@ export const CustomCalendarWrapper = styled.div`
         }
       }
       &-travel {
-        background-color: ${({ theme }) => theme.coolGray800};
+        background-color: ${({ theme }) => theme.white};
         border: 1px solid ${({ theme }) => theme.coolGray800};
+        .fc-event-main {
+          color: ${({ theme }) => theme.coolGray800};
+        }
       }
     }
   }
