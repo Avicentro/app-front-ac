@@ -2,7 +2,6 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import ApiService from "../core/newApi.services";
 
 // Models
-import { useAllSchedulesProps } from "./models";
 
 // GET
 export const useAvailableSchedules = (data: any) => {
@@ -72,10 +71,7 @@ export const useSaveRestScheduleData = () => {
 
 export const useReProgrammingMutation = () => {
   return useMutation(async (data: any) => {
-    const response = await ApiService.putData(
-      { data: data },
-      `/programming/${data[0]._id}`
-    );
+    const response = await ApiService.putData({ data: data }, `/programming`);
     return response.data;
   });
 };
