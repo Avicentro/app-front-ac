@@ -88,11 +88,11 @@ export const formConfig: IConfig[] = [
   },
   {
     name: "observation",
-    label: "Obsetvaciones",
+    label: "Observaciones",
     value: "",
     type: "text",
     fieldType: fieldTypeEnum.textArea,
-    placeholder: "Obsetvaciones",
+    placeholder: "Observaciones",
   },
   {
     name: "confirmed",

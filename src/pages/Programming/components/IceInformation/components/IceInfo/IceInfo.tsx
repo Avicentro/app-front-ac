@@ -31,10 +31,17 @@ interface IceInfoProps {
   dateInView: string;
 }
 
+type supplierType = {
+  label?: string;
+  value?: string;
+};
+
 const IceInfo: FC<IceInfoProps> = ({ dateInView }) => {
+  const [loadingAddSupplier, setLoadingAddSupplier] = useState(false);
   const [loadingProduction, setLoadingProduction] = useState(false);
-  const [loadingSuppliers, setLoadingSuppliers] = useState(false);
-  const [thirdValue, setThirdValue] = useState("");
+  const [supplierIdSelected, setSupplierIdSelected] = useState("");
+  const [supplierSelected, setSupplierSelected] = useState<supplierType>({});
+  const [supplierList, setSupplierList] = useState<supplierType[]>([]);
   const [amount, setAmount] = useState(0);
 
   //GET
@@ -81,6 +88,15 @@ const IceInfo: FC<IceInfoProps> = ({ dateInView }) => {
   }, [dateInView, mutateAddIceInformation]);
 
   useEffect(() => {
+    if (supplierIdSelected) {
+      const supplierFound = suppliersData?.data.find(
+        (supplier: any) => supplier._id === supplierIdSelected
+      );
+      setSupplierSelected(supplierFound);
+    }
+  }, [supplierIdSelected, suppliersData]);
+
+  useEffect(() => {
     if (!iceData?.data) {
       addIceInformation();
     }
@@ -99,19 +115,21 @@ const IceInfo: FC<IceInfoProps> = ({ dateInView }) => {
   };
 
   const saveSupplier = async () => {
-    setLoadingSuppliers(true);
+    setLoadingAddSupplier(true);
     try {
       const iceSupplier = {
-        supplier: thirdValue,
+        supplier: supplierSelected.value,
         amount,
       };
-      const response = await mutateAddSupplier.mutateAsync(iceSupplier);
-
-      dispatch(showToast("Se han guardado los datos correctamente", "success"));
+      await mutateAddSupplier.mutateAsync(iceSupplier);
+      setSupplierList((prev: any) => [...prev, { iceSupplier }]);
+      dispatch(
+        showToast("Se ha registrado el proveedor correctamente", "success")
+      );
     } catch (error: any) {
       dispatch(showToast(error.response.data.message, "error"));
     } finally {
-      setLoadingSuppliers(false);
+      setLoadingAddSupplier(false);
     }
   };
 
@@ -168,8 +186,8 @@ const IceInfo: FC<IceInfoProps> = ({ dateInView }) => {
             label="Seleccione a un tercero"
             options={getThirdsOptions()}
             name={"thirds"}
-            value={thirdValue}
-            handleChange={setThirdValue}
+            value={supplierSelected.value}
+            handleChange={setSupplierIdSelected}
           />
           <TextInput
             type="number"
@@ -182,12 +200,20 @@ const IceInfo: FC<IceInfoProps> = ({ dateInView }) => {
         <Button
           type="submit"
           sizeButton={sizeButtonEnum.medium}
-          loading={loadingProduction}
-          extraProps={{ onclick: saveSupplier }}
+          loading={loadingAddSupplier}
+          extraProps={{ onClick: saveSupplier }}
         >
           Guardar Proveedores
         </Button>
       </div>
+      <hr />
+      <section className="suppliers-list">
+        <ul>
+          {supplierList.map((supplier) => (
+            <li key={supplier.value}>{supplier.label}</li>
+          ))}
+        </ul>
+      </section>
     </IceInfoWrapper>
   );
 };
