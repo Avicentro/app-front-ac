@@ -48,7 +48,6 @@ import { pdf } from "@react-pdf/renderer";
 import { saveAs } from 'file-saver';
 import PdfProgramming from "./components/PdfProgramming/PdfProgramming";
 // Icons
-
 interface CustomCalendarProps {
   setDateInView: any;
   dateInView: string;
@@ -314,7 +313,7 @@ const CustomCalendar: FC<CustomCalendarProps> = ({
         <h2>Viajes: {schedules?.length}</h2>
         <Button
             sizeButton={sizeButtonEnum.medium}
-            extraProps={{ onClick: () => generatePdfDocument(` Programacion de ${ new Date()}`, <PdfProgramming data={schedulesDb?.data?.data} />)}}
+            extraProps={{ onClick: () => generatePdfDocument(`Programacion de ${ new Date().toLocaleString('es-CO', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', timeZoneName: 'short' })}`, <PdfProgramming data={schedulesDb?.data?.data} />)}}
           >
             Descargar programación
           </Button>
