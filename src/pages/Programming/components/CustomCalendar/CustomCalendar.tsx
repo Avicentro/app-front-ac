@@ -224,8 +224,9 @@ const CustomCalendar: FC<CustomCalendarProps> = ({
         eventDrop: (info: any) => {
           const eventFromSchedule = schedulesDb?.data?.data.find(
             (schedule: any) =>
-              schedule.code.toString() === info.event.id.toString()
+              schedule._id.toString() === info.event.id.toString()
           );
+          console.log("schedulesDb", schedulesDb);
           eventFromSchedule["dateStart"] = info.event.startStr
             .slice(0, 19)
             .replace("T", " ");
