@@ -44,6 +44,8 @@ export const theme = {
   green700: "#067306",
   green800: "#07540A",
 
+  yellow400: "#FDCC62",
+
   primaryFontRegular: "Work Sans Regular",
   primaryFontMedium: "Work Sans Medium",
   primaryFontSemibold: "Work Sans SemiBold",

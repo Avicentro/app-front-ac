@@ -300,6 +300,9 @@ const CustomCalendar: FC<CustomCalendarProps> = ({
           </Button>
         </div>
       )}
+      <section className="travels-cound">
+        <h2>Viajes: {schedules?.length}</h2>
+      </section>
       <CustomCalendarWrapper ref={calendarRef}>
         <Modal
           open={modalIsOpen}

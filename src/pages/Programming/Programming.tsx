@@ -27,9 +27,6 @@ const Programming: FC<ProgrammingProps> = () => {
           <IceInformation dateInView={dateInView} />
         </div>
         <Card customClass="calendar-card">
-          <section className="title">
-            <h2>Viajes: 0</h2>
-          </section>
           <section className="calendar-container">
             <Calendar setDateInView={setDateInView} dateInView={dateInView} />
           </section>

@@ -80,12 +80,15 @@ export const CustomCalendarWrapper = styled.div`
   .fc-timegrid-event-harness {
     .bar {
       &-rest {
-        background-color: ${({ theme }) => theme.green500};
-        border: 1px solid ${({ theme }) => theme.green500};
+        background-color: ${({ theme }) => theme.yellow400};
+        border: 1px solid ${({ theme }) => theme.coolGray800};
+        .fc-event-main {
+          color: ${({ theme }) => theme.coolGray800};
+        }
       }
       &-travel {
-        background-color: ${({ theme }) => theme.primary};
-        border: 1px solid ${({ theme }) => theme.primary};
+        background-color: ${({ theme }) => theme.coolGray800};
+        border: 1px solid ${({ theme }) => theme.coolGray800};
       }
     }
   }
