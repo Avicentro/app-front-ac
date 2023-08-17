@@ -1,9 +1,13 @@
-import { FC, useState } from "react";
+import { FC, useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import Card from "../../../../components/display/Card/Card";
 import Button from "../../../../components/form/Button/Button";
 import TimeInput from "../../../../components/form/TimeInput/TimeInput";
-import { useSaveEntryTime } from "../../../../hook/useEntryTime";
+import {
+  useGetEntryTime,
+  usePostSaveEntryTime,
+  usePutSaveEntryTime,
+} from "../../../../hook/useEntryTime";
 import { sizeButtonEnum } from "../../../../models";
 import { showToast } from "../../../../store/toast/actions";
 
@@ -14,15 +18,21 @@ import { EntryTimeWrapper } from "./styles";
 
 // helpers
 
-interface EntryTimeProps {
-  dateInView: string;
-}
+interface EntryTimeProps {}
 
-const EntryTime: FC<EntryTimeProps> = ({ dateInView }) => {
+const KEY_ID_FOR_ICE_STORAGE = "initProcessId";
+const initProcessId = localStorage.getItem(KEY_ID_FOR_ICE_STORAGE);
+
+const EntryTime: FC<EntryTimeProps> = () => {
   const [timeSelected, setTimeSelected] = useState("");
+  const [time, setTime] = useState("");
   const [loading, setLoading] = useState(false);
-  // const {data, isLoading, isError} = useGetEntryTime(dateInView)
-  const mutateSaveEntryTime = useSaveEntryTime();
+  const mutatePostSaveEntryTime = usePostSaveEntryTime();
+  const mutatePutSaveEntryTime = usePutSaveEntryTime(initProcessId || "");
+  const { data, isLoading, isError, refetch } = useGetEntryTime(
+    initProcessId || ""
+  );
+  console.log("data", data);
 
   const dispatch = useDispatch();
 
@@ -35,8 +45,15 @@ const EntryTime: FC<EntryTimeProps> = ({ dateInView }) => {
 
         currentDate.setHours(parseInt(hours, 10));
         currentDate.setMinutes(parseInt(minutes, 10));
-
-        await mutateSaveEntryTime.mutateAsync(currentDate.toISOString());
+        let response;
+        const dataToSend = { initProcess: currentDate.toISOString() };
+        if (initProcessId) {
+          response = await mutatePutSaveEntryTime.mutateAsync(dataToSend);
+        } else {
+          response = await mutatePostSaveEntryTime.mutateAsync(dataToSend);
+        }
+        localStorage.setItem(KEY_ID_FOR_ICE_STORAGE, response._id);
+        refetch();
       } catch (error: any) {
         dispatch(showToast(error.response.data.message, "error"));
       } finally {
@@ -45,10 +62,26 @@ const EntryTime: FC<EntryTimeProps> = ({ dateInView }) => {
     }
   };
 
+  const getTime = useCallback(() => {
+    if (data?.data?.initProcess) {
+      const date = new Date(data?.data?.initProcess).toLocaleTimeString(
+        "es-CO",
+        {
+          timeZone: "America/Bogota",
+        }
+      );
+      setTime(date);
+    }
+  }, [data?.data?.initProcess]);
+
+  useEffect(() => {
+    getTime();
+  }, [getTime]);
+
   return (
     <EntryTimeWrapper>
       <Card customClass="card-entry-time">
-        <h3>Hora de entrada</h3>
+        <h3>Hora de entrada {time}</h3>
         <TimeInput name="amount" handleChange={setTimeSelected} />
         <div className="button-container">
           <Button

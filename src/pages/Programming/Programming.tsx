@@ -22,7 +22,7 @@ const Programming: FC<ProgrammingProps> = () => {
       <ProgrammingWrapper>
         <Title>Programación</Title>
         <div className="ice-info-container">
-          <EntryTime dateInView={dateInView} />
+          <EntryTime />
           <ClientManagement dateInView={dateInView} />
           <IceInformation dateInView={dateInView} />
         </div>

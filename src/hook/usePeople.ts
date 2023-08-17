@@ -2,11 +2,11 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import ApiService from "../core/newApi.services";
 
 // GET
-export const useAllPeople = () => {
+export const useAllPeople = (dependency?: any) => {
   return useQuery({
-    queryKey: ["allPeople"],
+    queryKey: ["allPeople", dependency],
     queryFn: async () => await ApiService.getData({}, "/people/all"),
-    retry: false,
+    retry: true,
   });
 };
 

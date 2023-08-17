@@ -13,7 +13,7 @@ interface TimeInputProps {
   min?: string;
   max?: string;
   handleChange?: (hour: any) => any;
-  value?: string;
+  value?: any;
   label?: string;
   error?: boolean;
 }
