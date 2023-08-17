@@ -35,6 +35,7 @@ import {
   formConfigType,
   scheduleType,
   settingsValidationsStringType,
+  sizeButtonEnum,
   typeButtonEnum,
   typeType,
   typeValidationsType,
@@ -43,6 +44,9 @@ import { showToast } from "../../../../store/toast/actions";
 import { useDispatch } from "react-redux";
 import { theme } from "../../../../static/styles/theme";
 import { getLabelByType } from "./helpers";
+import { pdf } from "@react-pdf/renderer";
+import { saveAs } from 'file-saver';
+import PdfProgramming from "./components/PdfProgramming/PdfProgramming";
 // Icons
 
 interface CustomCalendarProps {
@@ -97,6 +101,11 @@ const CustomCalendar: FC<CustomCalendarProps> = ({
     }),
     []
   );
+
+  const generatePdfDocument = async (fileName: string, PdfComponent: any) => {
+    const blob = await pdf(PdfComponent).toBlob();
+    saveAs(blob, fileName);
+  }
 
   const saveReProgramming = async (formData: any) => {
     setLoginModifiedProgramming(true);
@@ -303,6 +312,12 @@ const CustomCalendar: FC<CustomCalendarProps> = ({
       )}
       <section className="travels-cound">
         <h2>Viajes: {schedules?.length}</h2>
+        <Button
+            sizeButton={sizeButtonEnum.medium}
+            extraProps={{ onClick: () => generatePdfDocument(` Programacion de ${ new Date()}`, <PdfProgramming data={schedulesDb?.data?.data} />)}}
+          >
+            Descargar programación
+          </Button>
       </section>
       <CustomCalendarWrapper ref={calendarRef}>
         <Modal

@@ -11,6 +11,11 @@ export const CalendarContainer = styled.div`
     gap: 12px;
     justify-content: right;
   }
+
+  .travels-cound {
+    display: flex;
+    justify-content: space-between;
+  }
   @media ${MIN_WIDTH_QUERIES.TABLET.query} {
     .button-modify-container {
       > button {
@@ -106,6 +111,7 @@ export const CustomCalendarWrapper = styled.div`
       flex-direction: row;
     }
   }
+  
   @media ${MIN_WIDTH_QUERIES.DESKTOP.query} {
   }
 `;
