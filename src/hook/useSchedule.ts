@@ -141,7 +141,7 @@ export const useAnyByUrl = (
 //DELETE
 export const useDeleteScheduleMutate = () => {
   return useMutation(async (id) => {
-    const response = await ApiService.deleteData(`/schedule/delete/${id}`);
+    const response = await ApiService.deleteData(`/programing/${id}`);
     return response;
   });
 };

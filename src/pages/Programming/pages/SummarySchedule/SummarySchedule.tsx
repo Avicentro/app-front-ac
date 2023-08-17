@@ -273,7 +273,7 @@ const SummarySchedule: FC<SummaryScheduleProps> = () => {
   };
 
   const deleteSchedule = async () => {
-    const codeToDelete = data?.code;
+    const codeToDelete = data?._id;
     setLoadingDelete(true);
     try {
       await useDeleteSchedule.mutateAsync(codeToDelete);
