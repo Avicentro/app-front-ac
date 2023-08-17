@@ -20,16 +20,15 @@ import { typeButtonEnum } from "../../../../models";
 import { getAllCustomers } from "../helpers/getAllCustomers";
 import { COMPOSED_ROUTES } from "../../../../constants/routes";
 import { useAllCustomers } from "../../../../hook/useSchedule";
-import { getAvailableSchedulesList } from "../helpers/getAvailableSchedulesList";
 
 // Hooks
 import { useForm } from "react-hook-form";
+import { addHours } from "../helpers/addHours";
+import { getFormat } from "../helpers/getFormat";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigate, useParams } from "react-router-dom";
-import { useSaveScheduleData } from "../../../../hook/useSchedule";
-import { getFormat } from "../helpers/getFormat";
-import { addHours } from "../helpers/addHours";
 import { Title } from "../../../../components/genericStyles";
+import { useSaveScheduleData } from "../../../../hook/useSchedule";
 
 interface TravelProgrammingProps {}
 

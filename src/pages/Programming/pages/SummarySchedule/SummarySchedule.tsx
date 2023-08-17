@@ -79,7 +79,7 @@ const SummarySchedule: FC<SummaryScheduleProps> = () => {
   const { data, refetch, isLoading, isError } = useSummarySchedule(orderId);
   const useDeleteSchedule = useDeleteScheduleMutate();
 
-  const updateProgrammingMutation = useUpdateProgrammingMutation(data?.code);
+  const updateProgrammingMutation = useUpdateProgrammingMutation(data?._id);
   const createOrderEntry = useCreateOrderEntryMutation();
 
   const changeValue = async (data: any) => {
@@ -336,10 +336,10 @@ const SummarySchedule: FC<SummaryScheduleProps> = () => {
                     shouldEdit={!getIfOrderEntryExist()}
                     propsField={getConfigForField({
                       type: "select",
-                      value: getLabelByKey({ key: ["supplier", "name"] }),
+                      value: getLabelByKey({ key: ["supplier", "_id"] }),
                       name: "supplier",
                     })}
-                    url="/customer/all"
+                    url="/people/all"
                   />
                 </div>
               </div>
@@ -353,10 +353,10 @@ const SummarySchedule: FC<SummaryScheduleProps> = () => {
                     shouldEdit={!getIfOrderEntryExist()}
                     propsField={getConfigForField({
                       type: "select",
-                      value: getLabelByKey({ key: ["customer", "name"] }),
+                      value: getLabelByKey({ key: ["customer", "_id"] }),
                       name: "customer",
                     })}
-                    url="/customer/all"
+                    url="/people/all"
                   />
                 </div>
               </div>
@@ -373,7 +373,7 @@ const SummarySchedule: FC<SummaryScheduleProps> = () => {
                       value: getLabelByKey({ key: "countChickens" }),
                       name: "countChickens",
                     })}
-                    url="/customer/all"
+                    url="/people/all"
                   />
                 </div>
               </div>

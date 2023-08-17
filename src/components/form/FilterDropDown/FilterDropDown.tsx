@@ -1,6 +1,5 @@
 import { ChangeEvent, FC, useEffect, useRef, useState } from "react";
 import { useOutsideClick } from "../../../customHooks/useOutsideClick";
-import { optionsType, TextInputProps } from "../../../models";
 
 // Components
 
@@ -72,7 +71,7 @@ const FilterDropDown: FC<FilterDropDownProps> = ({
   };
 
   return (
-    <FilterDropDownWrapper>
+    <FilterDropDownWrapper className="dropdown-field">
       {label && <label htmlFor={name}>{label}:</label>}
       <div className="select-field-container" ref={contentRef}>
         <div

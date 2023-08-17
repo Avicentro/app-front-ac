@@ -6,6 +6,9 @@ export const EditFieldWrapper = styled.div`
     align-items: center;
     gap: 4px;
     min-width: max-content;
+    .dropdown-field {
+      width: 400px;
+    }
     .actions-container {
       display: flex;
       gap: 4px;

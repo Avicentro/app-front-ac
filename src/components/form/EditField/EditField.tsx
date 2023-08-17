@@ -46,8 +46,12 @@ const EditField: FC<EditFieldProps> = ({
   const dataResponse = data?.data?.data;
 
   useEffect(() => {
-    setText(label);
+    return setText(label);
   }, [label]);
+
+  const isSelect = () => {
+    return propsField.fieldType === "select";
+  };
 
   useEffect(() => {
     if (editing && dataResponse && !isLoading) {
@@ -61,7 +65,7 @@ const EditField: FC<EditFieldProps> = ({
             },
             ...dataResponse?.map((client: any) => ({
               label: client.name,
-              value: propsField.name === "city" ? client.cityId : client._id,
+              value: client._id,
             })),
           ];
           return cloneField;
@@ -100,7 +104,7 @@ const EditField: FC<EditFieldProps> = ({
           ) : (
             <ComponentSelector
               {...field}
-              value={text}
+              value={isSelect() ? propsField.value : text}
               handleChange={inputChange}
             />
           )}

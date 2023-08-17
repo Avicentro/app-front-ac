@@ -4,12 +4,9 @@ import ApiService from "../core/api.services";
 // Models
 
 // Patch
-export const useUpdateProgrammingMutation = (code: string) => {
+export const useUpdateProgrammingMutation = (id: string) => {
   return useMutation(async (data) => {
-    const response = await ApiService.patchData(
-      data,
-      `/programming/update-programming/${code}`
-    );
+    const response = await ApiService.patchData(data, `/programing/${id}`);
     return response.data;
   });
 };

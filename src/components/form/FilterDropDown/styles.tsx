@@ -4,6 +4,7 @@ export const FilterDropDownWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
+  min-width: 200px;
   label {
     font: 400 14px Work Sans Regular;
     color: ${({ theme }) => theme.coolGray800};
