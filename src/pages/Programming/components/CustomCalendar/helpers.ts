@@ -30,3 +30,14 @@ export const getRangeDatesByViewType = (type: string, date: Date) => {
     }[type] || "2023-06"
   );
 };
+
+export const getLabelByType = (schedule: {
+  typeRest: string;
+  type: string;
+  customer: { name: string; id: string };
+}) => {
+  return {
+    rest: `Descanso - ${schedule.typeRest}`,
+    travel: `Viaje de ${schedule.customer.name}`,
+  }[schedule.type];
+};

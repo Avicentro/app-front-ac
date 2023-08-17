@@ -41,6 +41,8 @@ import {
 } from "../../../../models";
 import { showToast } from "../../../../store/toast/actions";
 import { useDispatch } from "react-redux";
+import { theme } from "../../../../static/styles/theme";
+import { getLabelByType } from "./helpers";
 // Icons
 
 interface CustomCalendarProps {
@@ -77,10 +79,11 @@ const CustomCalendar: FC<CustomCalendarProps> = ({
     let localSchedules = schedulesDb?.data?.data || [];
     localSchedules = localSchedules.map((schedule: any) => {
       return {
-        title: schedule.customer?.name || "Sin Cliente",
+        title: getLabelByType(schedule),
         start: schedule.dateStart,
         end: schedule.dateEnd,
         id: schedule._id,
+        type: schedule.type,
       };
     });
     setSchedules(localSchedules);
@@ -263,6 +266,11 @@ const CustomCalendar: FC<CustomCalendarProps> = ({
         },
         datesSet: (e) => {
           setDateInView(e.startStr); // AQUI ES DONDE SE ENVÍA LA FECHA QUE SE VISUALIZA PARA ENVIAR EL GET
+        },
+        eventClassNames: (renderProps) => {
+          return renderProps.event.extendedProps.type === "rest"
+            ? "bar-rest"
+            : "bar-travel";
         },
       });
       calendar.render();

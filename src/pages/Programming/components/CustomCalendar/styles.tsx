@@ -77,6 +77,18 @@ export const CustomCalendarWrapper = styled.div`
       }
     }
   }
+  .fc-timegrid-event-harness {
+    .bar {
+      &-rest {
+        background-color: ${({ theme }) => theme.green500};
+        border: 1px solid ${({ theme }) => theme.green500};
+      }
+      &-travel {
+        background-color: ${({ theme }) => theme.primary};
+        border: 1px solid ${({ theme }) => theme.primary};
+      }
+    }
+  }
   .fc-timegrid-slots {
     table {
       tbody {
