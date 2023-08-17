@@ -82,7 +82,13 @@ const IceProviders: FC<IceProvidersProps> = () => {
       edit: (
         <Edit handleSubmit={onSuccessActions} defaultValues={dataSelected} />
       ),
-      delete: <Delete handleCancel={closeModal} dataSelected={dataSelected} />,
+      delete: (
+        <Delete
+          handleCancel={closeModal}
+          dataSelected={dataSelected}
+          handleSuccess={onSuccessActions}
+        />
+      ),
     }[action];
   };
 

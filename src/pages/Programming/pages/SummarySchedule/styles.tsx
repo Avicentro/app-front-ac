@@ -15,14 +15,16 @@ export const SummaryScheduleWrapper = styled.div`
 
   .schedule-info {
     display: flex;
-    justify-content: center;
+    /* justify-content: center; */
     gap: 80px;
     flex-direction: column;
     margin-bottom: 80px;
+    width: 100%;
     &__text {
       display: flex;
       flex-direction: column;
       gap: 20px;
+      width: 100%;
       &-container {
         display: flex;
         gap: 16px;
@@ -54,6 +56,7 @@ export const SummaryScheduleWrapper = styled.div`
     display: flex;
     gap: 16px;
     margin-bottom: 32px;
+    justify-content: center;
   }
   @media ${MIN_WIDTH_QUERIES.TABLET.query} {
     grid-column: 2 / 12;
@@ -73,13 +76,5 @@ export const SummaryScheduleWrapper = styled.div`
     }
   }
   @media ${MIN_WIDTH_QUERIES.DESKTOP.query} {
-    .schedule-info {
-      &__text {
-        &-container {
-          flex-direction: row;
-          align-items: center;
-        }
-      }
-    }
   }
 `;

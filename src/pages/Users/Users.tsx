@@ -1,5 +1,4 @@
 import { FC, useState } from "react";
-import { useDispatch } from "react-redux";
 
 // Components
 import Edit from "./components/Edit/Edit";
@@ -19,9 +18,8 @@ import { UsersWrapper } from "./styles";
 import { typeButtonEnum } from "../../models";
 import { COLUMNS_USER } from "./config/config";
 import { theme } from "../../static/styles/theme";
-import { showToast } from "../../store/toast/actions";
-import { useAllUser, useDeleteUser } from "../../hook/useUser";
 import Delete from "./components/Delete/Delete";
+import { useAllUser } from "../../hook/useUser";
 
 interface UsersProps {}
 

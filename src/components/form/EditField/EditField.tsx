@@ -125,8 +125,9 @@ const EditField: FC<EditFieldProps> = ({
         <div className="icon-container">
           {field.fieldType === fieldTypeEnum.textArea ? (
             <span
+              className="observation-container"
               dangerouslySetInnerHTML={{
-                __html: DOMPurify.sanitize(field.value),
+                __html: DOMPurify.sanitize(text),
               }}
             ></span>
           ) : (

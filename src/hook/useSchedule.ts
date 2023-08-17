@@ -17,7 +17,8 @@ export const useAvailableSchedules = (data: any) => {
 export const useSummarySchedule = (orderId: string) => {
   const response = useQuery({
     queryKey: ["summarySchedule"],
-    queryFn: async () => await ApiService.getData({}, `/programing/${orderId}`),
+    queryFn: async () =>
+      await ApiService.getData({}, `/programing/travel/${orderId}`),
     retry: false,
   });
   const { isLoading, refetch, isError } = response;
@@ -35,7 +36,8 @@ export const useAllCustomers = () => {
 export const useAllSchedules = (data: any, date: string, dependency?: any) => {
   return useQuery({
     queryKey: ["allSchedules", dependency],
-    queryFn: async () => await ApiService.getData(data, `/programing/all`),
+    queryFn: async () =>
+      await ApiService.getData(data, `programing/travel/date/${date}`),
     retry: false,
     onError: () => {
       return {

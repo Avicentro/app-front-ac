@@ -32,6 +32,18 @@ export const EditFieldWrapper = styled.div`
       }
     }
   }
+  strong {
+    font: 600 24px ${({ theme }) => theme.primaryFontSemibold};
+  }
+  .observation-container {
+    max-width: 500px;
+    margin-right: 8px;
+    width: 100%;
+    p {
+      word-wrap: break-word;
+      white-space: initial;
+    }
+  }
   .icon-container {
     label {
       margin-right: 8px;

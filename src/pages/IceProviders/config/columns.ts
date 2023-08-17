@@ -15,7 +15,7 @@ export const COLUMNS_ICE_SUPPLIER: columnsType[] = [
         type: "link",
       },
       {
-        Header: "Peso",
+        Header: "Peso (kg)",
         accessor: "weight",
       },
       {

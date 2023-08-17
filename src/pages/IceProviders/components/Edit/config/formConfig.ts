@@ -19,11 +19,6 @@ export const formConfig: IConfig[] = [
         {
           type: "required",
         },
-        {
-          type: "matches",
-          message: FEEDBACK_MESSAGES.ONLY_LETTERS,
-          regex: REGEX_VALIDATION.SHOULD_LETTERS_AND_SPACES,
-        },
       ],
     },
   },

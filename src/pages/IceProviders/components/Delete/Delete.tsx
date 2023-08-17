@@ -13,11 +13,16 @@ import { showToast } from "../../../../store/toast/actions";
 import { useDeleteIceProvider } from "../../../../hook/useIceProvider";
 
 interface DeleteProps {
-  handleCancel: () => void;
   dataSelected: any;
+  handleCancel: () => void;
+  handleSuccess: () => void;
 }
 
-const Delete: FC<DeleteProps> = ({ handleCancel, dataSelected }) => {
+const Delete: FC<DeleteProps> = ({
+  handleCancel,
+  dataSelected,
+  handleSuccess,
+}) => {
   const [loading, setLoading] = useState(false);
   const deleteIceProviderMutate = useDeleteIceProvider();
   const dispatch = useDispatch();
@@ -26,6 +31,7 @@ const Delete: FC<DeleteProps> = ({ handleCancel, dataSelected }) => {
     setLoading(true);
     try {
       await deleteIceProviderMutate.mutateAsync(dataSelected._id);
+      handleSuccess?.();
     } catch (error: any) {
       dispatch(showToast(error.response.data.message, "error"));
     } finally {

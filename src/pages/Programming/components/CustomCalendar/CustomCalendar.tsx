@@ -63,7 +63,11 @@ const CustomCalendar: FC<CustomCalendarProps> = ({
   const [schedules, setSchedules] = useState([]);
   const [schedulesModified, setSchedulesModified] = useState([]);
   const [viewCalendar, setViewCalendar] = useState("timeGridDay");
-  const schedulesDb = useAllSchedules({}, dateInView, dateInView);
+  const schedulesDb = useAllSchedules(
+    {},
+    new Date(dateInView || new Date())?.toISOString(),
+    dateInView
+  );
   const calendarRef = useRef<HTMLDivElement>(null);
   const reProgrammingMutation = useReProgrammingMutation();
   const navigate = useNavigate();
@@ -76,7 +80,7 @@ const CustomCalendar: FC<CustomCalendarProps> = ({
         title: schedule.customer?.name || "Sin Cliente",
         start: schedule.dateStart,
         end: schedule.dateEnd,
-        id: schedule.code,
+        id: schedule._id,
       };
     });
     setSchedules(localSchedules);
@@ -84,7 +88,7 @@ const CustomCalendar: FC<CustomCalendarProps> = ({
 
   const getHeaderToolbar = useCallback(
     () => ({
-      left: "prev,next today",
+      left: "",
       center: "title",
       right: "timeGridDay",
     }),

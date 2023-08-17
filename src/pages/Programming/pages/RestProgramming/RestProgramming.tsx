@@ -14,16 +14,15 @@ import { RestProgrammingWrapper } from "./styles";
 
 // helpers
 import { formConfig } from "./config/formConfig";
-import { getFormat } from "../helpers/getFormat";
-import { mergeData } from "../helpers/mergeData";
 import { typeButtonEnum } from "../../../../models";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { showToast } from "../../../../store/toast/actions";
 import { COMPOSED_ROUTES } from "../../../../constants/routes";
 import Button from "../../../../components/form/Button/Button";
-import { useSaveRestScheduleData } from "../../../../hook/useSchedule";
+import { useSaveScheduleData } from "../../../../hook/useSchedule";
 import Card from "../../../../components/display/Card/Card";
 import { Title } from "../../../../components/genericStyles";
+import { addHours } from "../helpers/addHours";
 
 interface RestProgrammingProps {}
 
@@ -32,7 +31,7 @@ const RestProgramming: FC<RestProgrammingProps> = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { dateSelected = "none" } = useParams();
-  const saveScheduleData = useSaveRestScheduleData();
+  const saveScheduleData = useSaveScheduleData();
   const {
     control,
     setValue,
@@ -46,12 +45,17 @@ const RestProgramming: FC<RestProgrammingProps> = () => {
   const saveRest = async (data: any) => {
     try {
       setLoading(true);
-      const { dateSelected, ...rest } = data;
       const responseData = await saveScheduleData.mutateAsync({
-        ...rest,
+        ...data,
         type: "rest",
+        customer: "64d465cbbe81c7dfcda485d7", //Se envía vacío para que el servicio funcione
+        countChickens: 0,
+        supplier: "64d4681abe81c7dfcda48618",
+        confirmed: true,
+        dateStart: new Date(dateSelected),
+        dateEnd: addHours(new Date(dateSelected), 25),
       });
-      navigate(`${COMPOSED_ROUTES.SUMMARY_PROGRAMMING}/${responseData.code}`);
+      navigate(`${COMPOSED_ROUTES.SUMMARY_PROGRAMMING}/${responseData._id}`);
     } catch (error: any) {
       dispatch(showToast(error?.response?.data?.message, "error"));
       console.error(error);

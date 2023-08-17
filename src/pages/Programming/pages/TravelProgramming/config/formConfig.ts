@@ -87,7 +87,7 @@ export const formConfig: IConfig[] = [
     },
   },
   {
-    name: "observations",
+    name: "observation",
     label: "Obsetvaciones",
     value: "",
     type: "text",

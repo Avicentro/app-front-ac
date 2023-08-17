@@ -2,7 +2,7 @@ import { fieldTypeEnum, IConfig } from "../../../../../models";
 
 export const formConfig: IConfig[] = [
   {
-    name: "type",
+    name: "typeRest",
     label: "Tipo de descanso",
     value: "",
     type: "text",
@@ -32,11 +32,11 @@ export const formConfig: IConfig[] = [
     ],
   },
   {
-    name: "observations",
-    label: "Obsetvaciones",
+    name: "observation",
+    label: "Observación",
     value: "",
     type: "text",
     fieldType: fieldTypeEnum.textArea,
-    placeholder: "Obsetvaciones",
+    placeholder: "Observación",
   },
 ];
