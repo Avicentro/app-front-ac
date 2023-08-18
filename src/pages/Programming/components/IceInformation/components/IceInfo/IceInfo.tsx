@@ -175,6 +175,8 @@ const IceInfo: FC<IceInfoProps> = ({ dateInView, travelLength }) => {
     ];
   };
 
+  const deleteSupplier = (id: string) => {};
+
   return (
     <IceInfoWrapper>
       <h3>{getFormat(dateInView, true)}</h3>
