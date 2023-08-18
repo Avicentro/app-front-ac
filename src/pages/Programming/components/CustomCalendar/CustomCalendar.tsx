@@ -42,23 +42,26 @@ import {
 } from "../../../../models";
 import { showToast } from "../../../../store/toast/actions";
 import { useDispatch } from "react-redux";
-import { theme } from "../../../../static/styles/theme";
 import { getLabelByType } from "./helpers";
 import { pdf } from "@react-pdf/renderer";
-import { saveAs } from 'file-saver';
+import { saveAs } from "file-saver";
 import PdfProgramming from "./components/PdfProgramming/PdfProgramming";
 // Icons
 interface CustomCalendarProps {
   setDateInView: any;
   dateInView: string;
+  setTravelLength: (s: number) => void;
+  travelLength: number;
 }
 
 const MODAL_TITLE = "Programación";
 const MODAL_CONFIRM_TITLE = "Modificar programación";
 
 const CustomCalendar: FC<CustomCalendarProps> = ({
-  setDateInView,
   dateInView,
+  travelLength,
+  setDateInView,
+  setTravelLength,
 }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [modalConfirmIsOpen, setModalConfirmIsOpen] = useState(false);
@@ -92,6 +95,13 @@ const CustomCalendar: FC<CustomCalendarProps> = ({
     setSchedules(localSchedules);
   }, [schedulesDb?.data?.data]);
 
+  useEffect(() => {
+    const onlyTravels = schedules?.filter(
+      (schedule: any) => schedule.type === "travel"
+    );
+    setTravelLength(onlyTravels.length);
+  }, [schedules, setTravelLength]);
+
   const getHeaderToolbar = useCallback(
     () => ({
       left: "",
@@ -104,7 +114,7 @@ const CustomCalendar: FC<CustomCalendarProps> = ({
   const generatePdfDocument = async (fileName: string, PdfComponent: any) => {
     const blob = await pdf(PdfComponent).toBlob();
     saveAs(blob, fileName);
-  }
+  };
 
   const saveReProgramming = async (formData: any) => {
     setLoginModifiedProgramming(true);
@@ -310,13 +320,25 @@ const CustomCalendar: FC<CustomCalendarProps> = ({
         </div>
       )}
       <section className="travels-cound">
-        <h2>Viajes: {schedules?.length}</h2>
+        <h2>Viajes: {travelLength}</h2>
         <Button
-            sizeButton={sizeButtonEnum.medium}
-            extraProps={{ onClick: () => generatePdfDocument(`Programacion de ${ new Date().toLocaleString('es-CO', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', timeZoneName: 'short' })}`, <PdfProgramming data={schedulesDb?.data?.data} />)}}
-          >
-            Descargar programación
-          </Button>
+          sizeButton={sizeButtonEnum.medium}
+          extraProps={{
+            onClick: () =>
+              generatePdfDocument(
+                `Programacion de ${new Date().toLocaleString("es-CO", {
+                  weekday: "long",
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                  timeZoneName: "short",
+                })}`,
+                <PdfProgramming data={schedulesDb?.data?.data} />
+              ),
+          }}
+        >
+          Descargar programación
+        </Button>
       </section>
       <CustomCalendarWrapper ref={calendarRef}>
         <Modal

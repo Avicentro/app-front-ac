@@ -17,6 +17,8 @@ interface ProgrammingProps {}
 
 const Programming: FC<ProgrammingProps> = () => {
   const [dateInView, setDateInView] = useState("");
+  const [travelLength, setTravelLength] = useState(0);
+
   return (
     <Container>
       <ProgrammingWrapper>
@@ -24,11 +26,16 @@ const Programming: FC<ProgrammingProps> = () => {
         <div className="ice-info-container">
           <EntryTime />
           <ClientManagement dateInView={dateInView} />
-          <IceInformation dateInView={dateInView} />
+          <IceInformation dateInView={dateInView} travelLength={travelLength} />
         </div>
         <Card customClass="calendar-card">
           <section className="calendar-container">
-            <Calendar setDateInView={setDateInView} dateInView={dateInView} />
+            <Calendar
+              setDateInView={setDateInView}
+              dateInView={dateInView}
+              setTravelLength={setTravelLength}
+              travelLength={travelLength}
+            />
           </section>
         </Card>
       </ProgrammingWrapper>

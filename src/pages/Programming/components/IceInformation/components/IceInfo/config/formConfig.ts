@@ -22,7 +22,7 @@ export const formConfig: IConfig[] = [
     },
   },
   {
-    name: "production",
+    name: "produccion",
     label: "Producción",
     value: "",
     type: "text",

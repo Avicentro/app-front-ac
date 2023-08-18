@@ -12,12 +12,20 @@ import { IceInformationWrapper } from "./styles";
 
 interface IceInformationProps {
   dateInView: string;
+  travelLength: number;
 }
 
-const IceInformation: FC<IceInformationProps> = ({ dateInView }) => {
+const IceInformation: FC<IceInformationProps> = ({
+  dateInView,
+  travelLength,
+}) => {
   return (
     <IceInformationWrapper>
-      <Card>{!!dateInView && <IceInfo dateInView={dateInView} />}</Card>
+      <Card>
+        {!!dateInView && (
+          <IceInfo dateInView={dateInView} travelLength={travelLength} />
+        )}
+      </Card>
     </IceInformationWrapper>
   );
 };

@@ -7,7 +7,6 @@ import { IceInfoWrapper } from "./styles";
 
 // helpers
 import { getFormat } from "../../../../pages/helpers/getFormat";
-import { Title } from "../../../../../../components/genericStyles";
 import { useForm } from "react-hook-form";
 import { getDefaultValuesByConfig } from "../../../../../../components/form/DynamicForm/helpers/getDefaultValuesByConfig";
 import { formConfig } from "./config/formConfig";
@@ -23,12 +22,14 @@ import {
   useAddIceInformation,
   useAddSupplier,
   useIceInformation,
+  usePutIceInformation,
   useThirdsSelected,
 } from "../../../../../../hook/useIce";
 import TextInput from "../../../../../../components/form/TextInput/TextInput";
 
 interface IceInfoProps {
   dateInView: string;
+  travelLength: number;
 }
 
 type supplierType = {
@@ -36,7 +37,12 @@ type supplierType = {
   value?: string;
 };
 
-const IceInfo: FC<IceInfoProps> = ({ dateInView }) => {
+const BAGS_PER_TRAVEL = 80;
+
+const KEY_ICE_PRODUCTION = "idIceProduction";
+const idIceProductionStorage = localStorage.getItem(KEY_ICE_PRODUCTION);
+
+const IceInfo: FC<IceInfoProps> = ({ dateInView, travelLength }) => {
   const [loadingAddSupplier, setLoadingAddSupplier] = useState(false);
   const [loadingProduction, setLoadingProduction] = useState(false);
   const [supplierIdSelected, setSupplierIdSelected] = useState("");
@@ -59,8 +65,10 @@ const IceInfo: FC<IceInfoProps> = ({ dateInView }) => {
   // MUTATE
   const mutateAddSupplier = useAddSupplier(iceData?.data?._id);
   const mutateAddIceInformation = useAddIceInformation();
+  const mutateAddPutIceInformation = usePutIceInformation(
+    idIceProductionStorage || ""
+  );
   const dispatch = useDispatch();
-  // console.log("dataInformation", dataInformation);
   const {
     control,
     setValue,
@@ -75,7 +83,6 @@ const IceInfo: FC<IceInfoProps> = ({ dateInView }) => {
     try {
       const emptyIceData = {
         date: new Date(dateInView).toISOString(),
-        name: "",
         inventory: 0,
         produccion: 0,
         supplier: 0,
@@ -83,9 +90,35 @@ const IceInfo: FC<IceInfoProps> = ({ dateInView }) => {
         difference: 0,
         required: 0,
       };
-      await mutateAddIceInformation.mutateAsync(emptyIceData);
-    } catch (error) {}
+
+      const { _id } = await mutateAddIceInformation.mutateAsync(emptyIceData);
+      localStorage.setItem(KEY_ICE_PRODUCTION, _id);
+      dispatch(showToast("Se han guardado los datos correctamente", "success"));
+    } catch (error: any) {
+      dispatch(showToast(error.response.data.message, "error"));
+    }
   }, [dateInView, mutateAddIceInformation]);
+
+  const addPutIceInformation = async (data: any) => {
+    setLoadingProduction(true);
+    try {
+      const initialIceData = {
+        date: new Date(dateInView).toISOString(),
+        inventory: +data.inventory,
+        produccion: +data.produccion,
+        supplier: 0,
+        supplier_list: [],
+        difference: 0,
+        required: 0,
+      };
+      await mutateAddPutIceInformation.mutateAsync(initialIceData);
+      dispatch(showToast("Se han guardado los datos correctamente", "success"));
+    } catch (error: any) {
+      dispatch(showToast(error.response.data.message, "error"));
+    } finally {
+      setLoadingProduction(false);
+    }
+  };
 
   useEffect(() => {
     if (supplierIdSelected) {
@@ -97,22 +130,10 @@ const IceInfo: FC<IceInfoProps> = ({ dateInView }) => {
   }, [supplierIdSelected, suppliersData]);
 
   useEffect(() => {
-    if (!iceData?.data) {
+    if (!idIceProductionStorage) {
       addIceInformation();
     }
   }, []);
-
-  const saveData = (data: any) => {
-    setLoadingProduction(true);
-    try {
-      const response = "algo";
-      dispatch(showToast("Se han guardado los datos correctamente", "success"));
-    } catch (error: any) {
-      dispatch(showToast(error.response.data.message, "error"));
-    } finally {
-      setLoadingProduction(false);
-    }
-  };
 
   const saveSupplier = async () => {
     setLoadingAddSupplier(true);
@@ -157,7 +178,7 @@ const IceInfo: FC<IceInfoProps> = ({ dateInView }) => {
   return (
     <IceInfoWrapper>
       <h3>{getFormat(dateInView, true)}</h3>
-      <form onSubmit={handleSubmit(saveData)}>
+      <form onSubmit={handleSubmit(addPutIceInformation)}>
         <DynamicForm
           formConfig={formConfig}
           errors={errors}
@@ -175,8 +196,8 @@ const IceInfo: FC<IceInfoProps> = ({ dateInView }) => {
       </form>
       <div className="info">
         <span>Terceros:</span>
-        <span>Requeridos:</span>
-        <span>Diferencia:</span>
+        <span>Requeridos: {travelLength * BAGS_PER_TRAVEL}</span>
+        <span>Diferencia: </span>
       </div>
       <hr />
       <div className="suppliers-container">

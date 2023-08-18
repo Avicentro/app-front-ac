@@ -97,7 +97,7 @@ export const formConfig: IConfig[] = [
   {
     name: "confirmed",
     label: "Viaje confirmado",
-    value: "",
+    value: false,
     type: "checkbox",
     fieldType: fieldTypeEnum.checkbox,
     placeholder: "Viaje confirmado",

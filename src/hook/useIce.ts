@@ -19,14 +19,20 @@ export const useIceInformation = (date: string) => {
 };
 
 // PUT
-
 export const useAddSupplier = (id: any) => {
   return useMutation(async (data: any) => {
     const response = await ApiService.putData(data, `/ice/${id}`);
     return response.data;
   });
 };
+export const usePutIceInformation = (id: any) => {
+  return useMutation(async (data: any) => {
+    const response = await ApiService.putData(data, `/ice/calculate/${id}`);
+    return response.data;
+  });
+};
 
+// POST
 export const useAddIceInformation = () => {
   return useMutation(async (data: any) => {
     const response = await ApiService.postData(data, `/ice`);
