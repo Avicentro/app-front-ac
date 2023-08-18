@@ -46,7 +46,7 @@ const IceInfo: FC<IceInfoProps> = ({ dateInView, travelLength }) => {
   const [loadingAddSupplier, setLoadingAddSupplier] = useState(false);
   const [loadingProduction, setLoadingProduction] = useState(false);
   const [supplierIdSelected, setSupplierIdSelected] = useState("");
-  const [supplierSelected, setSupplierSelected] = useState<supplierType>({});
+  const [supplierSelected, setSupplierSelected] = useState<any>({});
   const [supplierList, setSupplierList] = useState<supplierType[]>([]);
   const [amount, setAmount] = useState(0);
 
@@ -63,7 +63,7 @@ const IceInfo: FC<IceInfoProps> = ({ dateInView, travelLength }) => {
   } = useThirdsSelected();
 
   // MUTATE
-  const mutateAddSupplier = useAddSupplier(iceData?.data?._id);
+  const mutateAddSupplier = useAddSupplier(idIceProductionStorage);
   const mutateAddIceInformation = useAddIceInformation();
   const mutateAddPutIceInformation = usePutIceInformation(
     idIceProductionStorage || ""
@@ -143,7 +143,14 @@ const IceInfo: FC<IceInfoProps> = ({ dateInView, travelLength }) => {
         amount,
       };
       await mutateAddSupplier.mutateAsync(iceSupplier);
-      setSupplierList((prev: any) => [...prev, { iceSupplier }]);
+      setSupplierList((prev: any) => [
+        ...prev,
+        {
+          ...iceSupplier,
+          value: supplierSelected.value,
+          label: supplierSelected.name,
+        },
+      ]);
       dispatch(
         showToast("Se ha registrado el proveedor correctamente", "success")
       );
@@ -175,7 +182,23 @@ const IceInfo: FC<IceInfoProps> = ({ dateInView, travelLength }) => {
     ];
   };
 
-  const deleteSupplier = (id: string) => {};
+  const deleteSupplier = async (supplier: any) => {
+    try {
+      const newObj = {
+        date: new Date(dateInView).toISOString(),
+        inventory: 0,
+        produccion: 0,
+        supplier: 0,
+        supplier_list: [],
+        difference: 0,
+        required: 0,
+      };
+      await mutateAddPutIceInformation.mutateAsync(newObj);
+    } catch (error: any) {
+      dispatch(showToast(error.response.data.message, "error"));
+    } finally {
+    }
+  };
 
   return (
     <IceInfoWrapper>
@@ -233,7 +256,10 @@ const IceInfo: FC<IceInfoProps> = ({ dateInView, travelLength }) => {
       <section className="suppliers-list">
         <ul>
           {supplierList.map((supplier) => (
-            <li key={supplier.value}>{supplier.label}</li>
+            <li key={supplier.value}>
+              <p>{supplier.label}</p>
+              <span onClick={() => deleteSupplier(supplier)}> X</span>
+            </li>
           ))}
         </ul>
       </section>
