@@ -64,6 +64,26 @@ export const CustomCalendarWrapper = styled.div`
       border: 1px solid ${({ theme }) => theme.primary};
     }
   }
+
+  .fc-event-title-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    align-content: center;
+    padding-left: 5px;
+    .fc-event-title.fc-sticky {
+    display: flex;
+    align-content: center;
+    padding-left: 5px;
+    height: 15px;
+  }
+  }
+
+  .fc-event-main-frame {
+        .fc-event-time {
+          display: none !important;
+        }
+      }
   .fc-daygrid-event-harness {
     background-color: ${({ theme }) => theme.secondary};
     border-radius: 8px;
