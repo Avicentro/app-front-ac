@@ -299,7 +299,7 @@ const SummarySchedule: FC<SummaryScheduleProps> = () => {
           typeButton={typeButtonEnum.fill}
           extraProps={{ onClick: () => setModalConfirmDelete(true) }}
         >
-          Cancelar Programación
+          Eliminar {data?.type === "travel" ? 'Programación' : 'Descanso'}
         </Button>
       </div>
       {isLoading ? (
@@ -307,7 +307,7 @@ const SummarySchedule: FC<SummaryScheduleProps> = () => {
       ) : (
         <Card>
           <div className="title">
-            <h1>Resumen programación</h1>
+            <h1>Resumen {data?.type === "travel" ? 'Programación' : 'Descanso'}</h1>
           </div>
           <section className="schedule-info">
             <div className="schedule-info__text">

@@ -9,7 +9,7 @@ export const SummaryScheduleWrapper = styled.div`
     h1 {
       all: unset;
       color: ${({ theme }) => theme.coolGray800};
-      font: 700 40px Poppins Bold;
+      font: 700 40px "Signika Bold";
     }
   }
 
@@ -35,10 +35,10 @@ export const SummaryScheduleWrapper = styled.div`
           all: unset;
         }
         .title {
-          font: 700 24px Poppins Bold;
+          font: 700 24px "Signika Bold";
         }
         .content {
-          font: 400 20px Poppins Regular;
+          font: 400 20px "Work Sans Regular";
         }
       }
     }

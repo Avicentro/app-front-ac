@@ -38,6 +38,6 @@ export const getLabelByType = (schedule: {
 }) => {
   return {
     rest: `Descanso - ${schedule.typeRest}`,
-    travel: `Viaje de ${schedule.customer.name}`,
+    travel: `${schedule.customer.name}`,
   }[schedule.type];
 };

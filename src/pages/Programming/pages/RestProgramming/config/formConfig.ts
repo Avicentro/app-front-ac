@@ -23,11 +23,19 @@ export const formConfig: IConfig[] = [
       },
       {
         label: "Cena",
-        value: "cena",
+        value: "Cena",
       },
       {
         label: "Refrigerio",
-        value: "refrigerio",
+        value: "Refrigerio",
+      },
+      {
+        label: "Tinto",
+        value: "Tinto",
+      },
+      {
+        label: "Desayuno",
+        value: "Desayuno",
       },
     ],
   },
