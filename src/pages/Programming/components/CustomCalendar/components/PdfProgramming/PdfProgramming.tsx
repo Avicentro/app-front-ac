@@ -36,9 +36,9 @@ const PdfProgramming = (data: PropsWithRef<any>) => {
         {/* <Text style={style.text}>{JSON.stringify(data.data)}</Text> */}
         <View style={style.data}>
           <Text style={style.detailDataTableTime}>Hora</Text>
-          <Text style={style.detailDataTableChi}>Cantidad</Text>
           <Text style={style.detailDataTable}>Clientes</Text>
           <Text style={style.detailDataTable}>Proveedor</Text>
+          <Text style={style.detailDataTableChi}>Cantidad</Text>
           <Text style={style.detailDataTableObs}>Observaciones</Text>
         </View>
         {data["data"].map((item: any) => (
@@ -54,11 +54,6 @@ const PdfProgramming = (data: PropsWithRef<any>) => {
                   })}
                 </Text>
               </View>
-              {item.type === "travel" && (
-                <View style={style.detailDataChi}>
-                  <Text style={style.text}>{item.countChickens}</Text>
-                </View>
-              )}
               {item.type === "rest" && (
                 <View style={style.detailData}>
                   <Text style={style.text}>Descanso - {item.typeRest}</Text>
@@ -72,6 +67,11 @@ const PdfProgramming = (data: PropsWithRef<any>) => {
               {item.type === "travel" && (
                 <View style={style.detailData}>
                   <Text style={style.text}>{item.supplier?.name}</Text>
+                </View>
+              )}
+              {item.type === "travel" && (
+                <View style={style.detailDataChi}>
+                  <Text style={style.text}>{item.countChickens}</Text>
                 </View>
               )}
               {item.observation !== "" &&
@@ -94,7 +94,7 @@ const style = StyleSheet.create({
     paddingTop: 35,
     paddingBottom: 65,
     paddingHorizontal: 35,
-    fontSize: 12,
+    fontSize: 10,
   },
   title: {
     fontSize: 24,
@@ -110,11 +110,11 @@ const style = StyleSheet.create({
     marginBottom: 20,
   },
   text: {
-    fontSize: 12,
+    fontSize: 10,
     fontFamily: "Helvetica",
   },
   textBold: {
-    fontSize: 10,
+    fontSize: 12,
     fontFamily: "Helvetica-Bold",
   },
   img: {
@@ -145,7 +145,8 @@ const style = StyleSheet.create({
     display: "flex",
     flexDirection: "column",
     justifyContent: "flex-start",
-    width: 120,
+    width: 100,
+    fontSize: 10,
     margin: 'auto 0'
   },
   detailDataObs: {
@@ -159,7 +160,7 @@ const style = StyleSheet.create({
     display: "flex",
     justifyContent: "flex-start",
     width: 150,
-    fontSize: 10,
+    fontSize: 12,
     fontFamily: "Helvetica-Bold",
   },
   detailDataChi: {
@@ -168,7 +169,8 @@ const style = StyleSheet.create({
     justifyContent: "flex-start",
     width: 70,
     fontWeight: "bold",
-    margin: 'auto 0'
+    margin: 'auto 0',
+    fontSize: 10,
   },
   detailDataTime: {
     display: "flex",
@@ -176,12 +178,13 @@ const style = StyleSheet.create({
     justifyContent: "flex-start",
     width: 60,
     fontWeight: "bold",
-    margin: 'auto 0'
+    margin: 'auto 0',
+    fontSize: 10,
   },
   detailDataTable: {
     display: "flex",
     justifyContent: "flex-start",
-    width: 120,
+    width: 100,
     fontSize: 10,
     fontFamily: "Helvetica-Bold",
   },
@@ -196,7 +199,7 @@ const style = StyleSheet.create({
     display: "flex",
     justifyContent: "flex-start",
     width: 60,
-    fontSize: 10,
+    fontSize: 12,
     fontFamily: "Helvetica-Bold",
   },
   obs: {
