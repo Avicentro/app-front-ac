@@ -194,9 +194,9 @@ const SummarySchedule: FC<SummaryScheduleProps> = () => {
     (key: any) => {
       const keyIsArray = Array.isArray(key);
       if (keyIsArray) {
-        return data[key[0]] ? data[key[0]][key[1]] : "-";
+        return data?.[key[0]] ? data?.[key[0]][key[1]] : "-";
       }
-      return data[key] || "-";
+      return data?.[key] || "-";
     },
     [data]
   );
