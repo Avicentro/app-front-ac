@@ -276,7 +276,8 @@ const CustomCalendar: FC<CustomCalendarProps> = ({
             buttonText: "Día",
           },
         },
-        slotLabelInterval: { minutes: 30 },
+        slotDuration: '00:25:00',
+        // slotLabelInterval: { minutes: 30 },
         slotLabelFormat: {
           hour: "2-digit",
           minute: "2-digit",
