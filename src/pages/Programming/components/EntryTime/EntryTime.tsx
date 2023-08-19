@@ -32,7 +32,6 @@ const EntryTime: FC<EntryTimeProps> = () => {
   const { data, isLoading, isError, refetch } = useGetEntryTime(
     initProcessId || ""
   );
-  console.log("data", data);
 
   const dispatch = useDispatch();
 

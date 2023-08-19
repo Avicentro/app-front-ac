@@ -17,7 +17,7 @@ import { TravelProgrammingWrapper } from "./styles";
 // helpers
 import { mergeData } from "../helpers/mergeData";
 import { typeButtonEnum } from "../../../../models";
-import { getAllCustomers } from "../helpers/getAllCustomers";
+import { getAllCustomers, getAllSupplier } from "../helpers/getAllCustomers";
 import { COMPOSED_ROUTES } from "../../../../constants/routes";
 import { useAllCustomers } from "../../../../hook/useSchedule";
 
@@ -58,7 +58,7 @@ const TravelProgramming: FC<TravelProgrammingProps> = () => {
       name: "supplier",
       key: "options",
       value: allCustomers?.data
-        ? getAllCustomers(allCustomers?.data)
+        ? getAllSupplier(allCustomers?.data)
         : [{ label: "No existen Proveedores", value: "" }],
     },
   ];

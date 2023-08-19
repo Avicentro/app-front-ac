@@ -22,7 +22,7 @@ export const getAllCustomers = (allCustomers: allCustomersType[]) => {
       })),
   ];
 };
-export const getAllSuplier = (allCustomers: allCustomersType[]) => {
+export const getAllSupplier = (allCustomers: allCustomersType[]) => {
   return [
     { label: "Seleccione", value: "" },
     ...allCustomers

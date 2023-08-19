@@ -26,16 +26,16 @@ import {
   useThirdsSelected,
 } from "../../../../../../hook/useIce";
 import TextInput from "../../../../../../components/form/TextInput/TextInput";
+import { mergeData } from "../../../../pages/helpers/mergeData";
+import { addSupplier } from "../../helpers/addSupplier";
+import { supplierSelectType } from "../../model";
+import { getLabelSuppliers } from "../../helpers/getLabelSuppliers";
+import { deleteSupplier } from "../../helpers/deleteSupplier";
 
 interface IceInfoProps {
   dateInView: string;
   travelLength: number;
 }
-
-type supplierType = {
-  label?: string;
-  value?: string;
-};
 
 const BAGS_PER_TRAVEL = 80;
 
@@ -46,15 +46,18 @@ const IceInfo: FC<IceInfoProps> = ({ dateInView, travelLength }) => {
   const [loadingAddSupplier, setLoadingAddSupplier] = useState(false);
   const [loadingProduction, setLoadingProduction] = useState(false);
   const [supplierIdSelected, setSupplierIdSelected] = useState("");
-  const [supplierSelected, setSupplierSelected] = useState<any>({});
-  const [supplierList, setSupplierList] = useState<supplierType[]>([]);
+  const [supplierSelected, setSupplierSelected] = useState<any>({ value: "" });
+  const [supplierList, setSupplierList] = useState<supplierSelectType[]>([]);
   const [amount, setAmount] = useState(0);
+
+  const TOTAL_BAGS_BY_TRAVEL = travelLength * BAGS_PER_TRAVEL;
 
   //GET
   const {
     data: iceData,
     isLoading: iceDataLoading,
     isError: iceDataError,
+    refetch,
   } = useIceInformation(new Date(dateInView).toISOString());
   const {
     data: suppliersData,
@@ -69,13 +72,33 @@ const IceInfo: FC<IceInfoProps> = ({ dateInView, travelLength }) => {
     idIceProductionStorage || ""
   );
   const dispatch = useDispatch();
+
+  const dataToMerge = [
+    {
+      name: "inventory",
+      key: "value",
+      value: iceData?.data?.[0].inventory,
+    },
+    {
+      name: "produccion",
+      key: "value",
+      value: iceData?.data?.[0].produccion,
+    },
+  ];
+
+  const dataMerged = mergeData({
+    formConfig,
+    dataToMerge,
+  });
+
   const {
     control,
     setValue,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm({
-    defaultValues: getDefaultValuesByConfig(formConfig),
+    defaultValues: getDefaultValuesByConfig(dataMerged),
     resolver: yupResolver(createSchemaByConfig(formConfig)),
   });
 
@@ -109,9 +132,10 @@ const IceInfo: FC<IceInfoProps> = ({ dateInView, travelLength }) => {
         supplier: 0,
         supplier_list: [],
         difference: 0,
-        required: 0,
+        required: TOTAL_BAGS_BY_TRAVEL,
       };
       await mutateAddPutIceInformation.mutateAsync(initialIceData);
+      refetch();
       dispatch(showToast("Se han guardado los datos correctamente", "success"));
     } catch (error: any) {
       dispatch(showToast(error.response.data.message, "error"));
@@ -130,27 +154,35 @@ const IceInfo: FC<IceInfoProps> = ({ dateInView, travelLength }) => {
   }, [supplierIdSelected, suppliersData]);
 
   useEffect(() => {
-    if (!idIceProductionStorage) {
+    if (iceData?.data?.length === 0) {
       addIceInformation();
+    } else {
+      setSupplierList(
+        getLabelSuppliers(iceData?.data?.[0].supplier_list, suppliersData?.data)
+      );
     }
-  }, []);
+  }, [iceData?.data?.length, suppliersData]);
 
   const saveSupplier = async () => {
     setLoadingAddSupplier(true);
     try {
       const iceSupplier = {
-        supplier: supplierSelected.value,
+        supplier: supplierSelected._id,
         amount,
       };
-      await mutateAddSupplier.mutateAsync(iceSupplier);
+      const iceDataCopy = { ...iceData?.data?.[0] };
+      const newIceSupplier = addSupplier(iceDataCopy, iceSupplier);
+      await mutateAddPutIceInformation.mutateAsync(newIceSupplier);
       setSupplierList((prev: any) => [
         ...prev,
         {
           ...iceSupplier,
-          value: supplierSelected.value,
+          value: supplierSelected._id,
           label: supplierSelected.name,
         },
       ]);
+      refetch();
+      reset();
       dispatch(
         showToast("Se ha registrado el proveedor correctamente", "success")
       );
@@ -182,21 +214,33 @@ const IceInfo: FC<IceInfoProps> = ({ dateInView, travelLength }) => {
     ];
   };
 
-  const deleteSupplier = async (supplier: any) => {
+  const onDeleteSupplier = async (supplier: any) => {
+    setLoadingAddSupplier(true);
+    console.log("supplier", supplier);
     try {
-      const newObj = {
-        date: new Date(dateInView).toISOString(),
-        inventory: 0,
-        produccion: 0,
-        supplier: 0,
-        supplier_list: [],
-        difference: 0,
-        required: 0,
+      const iceSupplier = {
+        supplier: supplierSelected._id,
+        amount,
       };
-      await mutateAddPutIceInformation.mutateAsync(newObj);
+      const iceDataCopy = { ...iceData?.data?.[0] };
+      const newIceSupplier = deleteSupplier(iceDataCopy, iceSupplier);
+      await mutateAddPutIceInformation.mutateAsync(newIceSupplier);
+      setSupplierList((prev: any) => {
+        const prevCopy = [...prev];
+        const indexIceSupplierFound = prevCopy.findIndex(
+          (prevSupplier: any) => prevSupplier.value === supplier.value
+        );
+        prevCopy.splice(indexIceSupplierFound, 1);
+        return prevCopy;
+      });
+      refetch();
+      dispatch(
+        showToast("Se ha registrado el proveedor correctamente", "success")
+      );
     } catch (error: any) {
       dispatch(showToast(error.response.data.message, "error"));
     } finally {
+      setLoadingAddSupplier(false);
     }
   };
 
@@ -205,7 +249,7 @@ const IceInfo: FC<IceInfoProps> = ({ dateInView, travelLength }) => {
       <h3>{getFormat(dateInView, true)}</h3>
       <form onSubmit={handleSubmit(addPutIceInformation)}>
         <DynamicForm
-          formConfig={formConfig}
+          formConfig={dataMerged}
           errors={errors}
           setValue={setValue}
           control={control}
@@ -220,9 +264,11 @@ const IceInfo: FC<IceInfoProps> = ({ dateInView, travelLength }) => {
         </Button>
       </form>
       <div className="info">
-        <span>Terceros:</span>
-        <span>Requeridos: {travelLength * BAGS_PER_TRAVEL}</span>
-        <span>Diferencia: </span>
+        <span>Inventario: {iceData?.data?.[0].inventory}</span>
+        <span>Producción: {iceData?.data?.[0].produccion}</span>
+        <span>Terceros: {iceData?.data?.[0].supplier}</span>
+        <span>Requeridos: {TOTAL_BAGS_BY_TRAVEL}</span>
+        <span>Diferencia: {iceData?.data?.[0].difference}</span>
       </div>
       <hr />
       <div className="suppliers-container">
@@ -257,8 +303,8 @@ const IceInfo: FC<IceInfoProps> = ({ dateInView, travelLength }) => {
         <ul>
           {supplierList.map((supplier) => (
             <li key={supplier.value}>
-              <p>{supplier.label}</p>
-              <span onClick={() => deleteSupplier(supplier)}> X</span>
+              <p className="">{supplier.label}</p>
+              <span onClick={() => onDeleteSupplier(supplier)}>X</span>
             </li>
           ))}
         </ul>

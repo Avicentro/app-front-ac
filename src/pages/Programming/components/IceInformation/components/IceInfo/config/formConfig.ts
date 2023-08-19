@@ -9,11 +9,11 @@ export const formConfig: IConfig[] = [
     name: "inventory",
     label: "Inventario",
     value: "",
-    type: "text",
+    type: "number",
     fieldType: fieldTypeEnum.text,
     placeholder: "Inventario",
     validation: {
-      type: "string",
+      type: "number",
       settings: [
         {
           type: "required",
@@ -25,11 +25,11 @@ export const formConfig: IConfig[] = [
     name: "produccion",
     label: "Producción",
     value: "",
-    type: "text",
+    type: "number",
     fieldType: fieldTypeEnum.text,
     placeholder: "Producción",
     validation: {
-      type: "string",
+      type: "number",
       settings: [
         {
           type: "required",

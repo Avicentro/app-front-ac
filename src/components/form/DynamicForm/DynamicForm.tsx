@@ -35,6 +35,8 @@ const DynamicForm: FC<DynamicFormProps> = ({
                 <ComponentSelector
                   handleChange={(e) => {
                     setValue(name, e);
+                    console.log("{...props}", { ...props });
+                    console.log(" {...field}", { ...field });
                   }}
                   mb={mb}
                   error={!!errors[name]}
