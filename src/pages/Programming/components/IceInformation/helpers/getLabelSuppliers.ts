@@ -15,6 +15,5 @@ export const getLabelSuppliers = (
       }
     });
   });
-  console.log("select", select);
   return select;
 };

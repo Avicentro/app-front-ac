@@ -6,9 +6,12 @@ import { FC } from "react";
 
 // helpers
 
-interface DeleteProps {}
+interface DeleteProps {
+  width?: number;
+  height?: number;
+}
 
-const Delete: FC<DeleteProps> = () => {
+const Delete: FC<DeleteProps> = ({ width, height }) => {
   return (
     <svg
       width="24px"

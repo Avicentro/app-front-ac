@@ -80,7 +80,10 @@ const EntryTime: FC<EntryTimeProps> = () => {
   return (
     <EntryTimeWrapper>
       <Card customClass="card-entry-time">
-        <h3>Hora de entrada {time}</h3>
+        <div className="title-entry-time">
+          <h3>Hora de entrada:</h3>
+          <h3>{isError || isLoading ? "--:-- --" : <>{time}</>}</h3>
+        </div>
         <TimeInput name="amount" handleChange={setTimeSelected} />
         <div className="button-container">
           <Button

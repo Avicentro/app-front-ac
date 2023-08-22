@@ -49,4 +49,8 @@ export const theme = {
   primaryFontRegular: "Work Sans Regular",
   primaryFontMedium: "Work Sans Medium",
   primaryFontSemibold: "Work Sans SemiBold",
+
+  secondaryFontRegular: "Signika Regular",
+  secondaryFontMedium: "Signika Medium",
+  secondaryFontSemibold: "Signika SemiBold",
 };

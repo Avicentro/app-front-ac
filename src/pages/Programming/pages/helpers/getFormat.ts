@@ -1,3 +1,8 @@
+export const addZeroWhenHaveOneDigit = (digit: number) => {
+  const digitStr = digit.toString();
+  return digitStr.length > 1 ? digitStr : `0${digitStr}`;
+};
+
 export const getFormat = (dateSelected: any, cutHours?: boolean) => {
   const hourDate = new Date(dateSelected);
 
@@ -13,34 +18,28 @@ export const getFormat = (dateSelected: any, cutHours?: boolean) => {
 
   const minutes = hourDate.getMinutes();
 
-  const textWeekDays = [
-    "Domingo",
-    "Lunes",
-    "Martes",
-    "Miércoles",
-    "Jueves",
-    "Viernes",
-    "Sábado",
-  ];
-  const TextMonth = textWeekDays[dayOfWeek];
+  const textWeekDays = ["DOM", "LUN", "MAR", "MIE", "JUE", "VIE", "SAB"];
+  const TextDay = textWeekDays[dayOfWeek];
 
   const monthsText = [
-    "Enero",
-    "Febrero",
-    "Marzo",
-    "Abril",
-    "Mayo",
-    "Junio",
-    "Julio",
-    "Agosto",
-    "Septiembre",
-    "Octubre",
-    "Noviembre",
-    "Diciembre",
+    "ENE",
+    "FEB",
+    "MAR",
+    "ABR",
+    "MAY",
+    "JUN",
+    "JUL",
+    "AGO",
+    "SEP",
+    "OCT",
+    "NOV",
+    "DIC",
   ];
   const monthText = monthsText[month];
 
-  const date = `${TextMonth}, ${monthDay} de ${monthText} del ${year}`;
-  const hours = `${hour}:${minutes}`;
-  return cutHours ? date : `${date},${hours}`;
+  const date = `${year}-${monthText}-${monthDay} ${TextDay}`;
+  const hours = `${addZeroWhenHaveOneDigit(hour)}:${addZeroWhenHaveOneDigit(
+    minutes
+  )}`;
+  return cutHours ? date : `${date} ${hours}`;
 };

@@ -31,6 +31,9 @@ import { addSupplier } from "../../helpers/addSupplier";
 import { supplierSelectType } from "../../model";
 import { getLabelSuppliers } from "../../helpers/getLabelSuppliers";
 import { deleteSupplier } from "../../helpers/deleteSupplier";
+import { ceilNumber } from "../../../../pages/helpers/ceilNumber";
+import { getColorClassByValue } from "../../helpers/getColorClassByValue";
+import Delete from "../../../../../../components/icons/Delete";
 
 interface IceInfoProps {
   dateInView: string;
@@ -72,17 +75,17 @@ const IceInfo: FC<IceInfoProps> = ({ dateInView, travelLength }) => {
     idIceProductionStorage || ""
   );
   const dispatch = useDispatch();
-
+  const iceDataList = iceData?.data?.[0];
   const dataToMerge = [
     {
       name: "inventory",
       key: "value",
-      value: iceData?.data?.[0].inventory,
+      value: iceDataList?.inventory,
     },
     {
       name: "produccion",
       key: "value",
-      value: iceData?.data?.[0].produccion,
+      value: iceDataList?.produccion,
     },
   ];
 
@@ -112,6 +115,7 @@ const IceInfo: FC<IceInfoProps> = ({ dateInView, travelLength }) => {
         supplier_list: [],
         difference: 0,
         required: 0,
+        total: 0,
       };
 
       const { _id } = await mutateAddIceInformation.mutateAsync(emptyIceData);
@@ -158,7 +162,7 @@ const IceInfo: FC<IceInfoProps> = ({ dateInView, travelLength }) => {
       addIceInformation();
     } else {
       setSupplierList(
-        getLabelSuppliers(iceData?.data?.[0].supplier_list, suppliersData?.data)
+        getLabelSuppliers(iceDataList?.supplier_list, suppliersData?.data)
       );
     }
   }, [iceData?.data?.length, suppliersData]);
@@ -170,7 +174,7 @@ const IceInfo: FC<IceInfoProps> = ({ dateInView, travelLength }) => {
         supplier: supplierSelected._id,
         amount,
       };
-      const iceDataCopy = { ...iceData?.data?.[0] };
+      const iceDataCopy = { ...iceDataList };
       const newIceSupplier = addSupplier(iceDataCopy, iceSupplier);
       await mutateAddPutIceInformation.mutateAsync(newIceSupplier);
       setSupplierList((prev: any) => [
@@ -216,13 +220,12 @@ const IceInfo: FC<IceInfoProps> = ({ dateInView, travelLength }) => {
 
   const onDeleteSupplier = async (supplier: any) => {
     setLoadingAddSupplier(true);
-    console.log("supplier", supplier);
     try {
       const iceSupplier = {
         supplier: supplierSelected._id,
         amount,
       };
-      const iceDataCopy = { ...iceData?.data?.[0] };
+      const iceDataCopy = { ...iceDataList };
       const newIceSupplier = deleteSupplier(iceDataCopy, iceSupplier);
       await mutateAddPutIceInformation.mutateAsync(newIceSupplier);
       setSupplierList((prev: any) => {
@@ -264,11 +267,29 @@ const IceInfo: FC<IceInfoProps> = ({ dateInView, travelLength }) => {
         </Button>
       </form>
       <div className="info">
-        <span>Inventario: {iceData?.data?.[0].inventory}</span>
-        <span>Producción: {iceData?.data?.[0].produccion}</span>
-        <span>Terceros: {iceData?.data?.[0].supplier}</span>
-        <span>Requeridos: {TOTAL_BAGS_BY_TRAVEL}</span>
-        <span>Diferencia: {iceData?.data?.[0].difference}</span>
+        <span className="info-item">
+          Inventario:
+          <p>{ceilNumber(iceDataList?.inventory)}</p>
+        </span>
+        <span className="info-item">
+          Producción:
+          <p>{ceilNumber(iceDataList?.produccion)}</p>
+        </span>
+        <span className="info-item">
+          Terceros:
+          <p>{ceilNumber(iceDataList?.supplier)}</p>
+        </span>
+        <span className="info-item">
+          Total:
+          <p>{ceilNumber(iceDataList?.total)}</p>
+        </span>
+        <span className="info-item">
+          Requeridos:
+          <p>{TOTAL_BAGS_BY_TRAVEL}</p>
+        </span>
+        <span className={getColorClassByValue(iceDataList?.difference)}>
+          Diferencia: {ceilNumber(iceDataList?.difference)}
+        </span>
       </div>
       <hr />
       <div className="suppliers-container">
@@ -298,16 +319,27 @@ const IceInfo: FC<IceInfoProps> = ({ dateInView, travelLength }) => {
           Guardar Proveedores
         </Button>
       </div>
-      <hr />
       <section className="suppliers-list">
-        <ul>
-          {supplierList.map((supplier) => (
-            <li key={supplier.value}>
-              <p className="">{supplier.label}</p>
-              <span onClick={() => onDeleteSupplier(supplier)}>X</span>
-            </li>
-          ))}
-        </ul>
+        <hr />
+        {supplierList.length ? (
+          <div>
+            <h4>Proveedores seleccionados</h4>
+            <ul className="supplier-container">
+              {supplierList.map((supplier, index) => (
+                <li key={supplier.value} className="supplier-item">
+                  <p className="">
+                    {index + 1}. {supplier.label}
+                  </p>
+                  <span onClick={() => onDeleteSupplier(supplier)}>
+                    <Delete width={12} />
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : (
+          <p className="empty-suppliers">No hay proveedores seleccionados</p>
+        )}
       </section>
     </IceInfoWrapper>
   );
