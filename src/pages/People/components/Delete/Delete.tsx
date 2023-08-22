@@ -14,10 +14,11 @@ import { useDeletePeople } from "../../../../hook/usePeople";
 
 interface DeleteProps {
   handleCancel: () => void;
+  handleSuccess: () => void;
   dataSelected: any;
 }
 
-const Delete: FC<DeleteProps> = ({ handleCancel, dataSelected }) => {
+const Delete: FC<DeleteProps> = ({ handleCancel, handleSuccess, dataSelected }) => {
   const [loading, setLoading] = useState(false);
   const deletePersonMutate = useDeletePeople();
   const dispatch = useDispatch();
@@ -30,6 +31,7 @@ const Delete: FC<DeleteProps> = ({ handleCancel, dataSelected }) => {
       dispatch(showToast(error.response.data.message, "error"));
     } finally {
       setLoading(false);
+      handleSuccess();
     }
   };
 

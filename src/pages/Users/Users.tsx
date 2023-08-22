@@ -83,7 +83,7 @@ const Users: FC<UsersProps> = () => {
       edit: (
         <Edit handleSubmit={onSuccessActions} defaultValues={dataSelected} />
       ),
-      delete: <Delete handleCancel={closeModal} dataSelected={dataSelected} />,
+      delete: <Delete handleCancel={closeModal} handleSuccess={onSuccessActions} dataSelected={dataSelected} />,
     }[action];
   };
 
