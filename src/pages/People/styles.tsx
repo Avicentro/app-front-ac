@@ -9,7 +9,7 @@ export const PeopleWrapper = styled.div`
   .create-people-container {
     width: 70%;
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
     position: fixed;
     left: 50%;
     bottom: 20px;

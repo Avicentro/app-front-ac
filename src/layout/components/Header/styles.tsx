@@ -15,6 +15,7 @@ export const HeaderWrapper = styled.div`
   grid-row: 1 / 1;
   box-shadow: 0 3px 20px #0000000b;
   justify-content: space-between;
+  flex-direction: column;
   .brand-container {
     cursor: pointer;
     .brand-name {
@@ -22,20 +23,25 @@ export const HeaderWrapper = styled.div`
       color: ${({ theme }) => theme.primary};
     }
   }
-  .hamburgerMenu {
-    background-color: ${({ theme }) => theme.primary};
-    border-radius: 50%;
-    width: 48px;
-    height: 48px;
+  .buttons-info-container {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    span {
-      svg {
-        width: 24px;
-        height: 24px;
-        path {
-          fill: ${({ theme }) => theme.white};
+    justify-content: space-between;
+    width: 100%;
+    .hamburgerMenu {
+      background-color: ${({ theme }) => theme.primary};
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      span {
+        svg {
+          width: 24px;
+          height: 24px;
+          path {
+            fill: ${({ theme }) => theme.white};
+          }
         }
       }
     }
@@ -44,8 +50,11 @@ export const HeaderWrapper = styled.div`
     flex-direction: row;
     height: 80px;
     justify-content: space-between;
-    .hamburgerMenu {
-      display: none;
+    .buttons-info-container {
+      width: auto;
+      .hamburgerMenu {
+        display: none;
+      }
     }
   }
   @media ${MIN_WIDTH_QUERIES.DESKTOP.query} {

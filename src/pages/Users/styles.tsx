@@ -23,7 +23,7 @@ export const UsersWrapper = styled.div`
   .create-user-container {
     width: 70%;
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
     position: fixed;
     left: 50%;
     bottom: 20px;

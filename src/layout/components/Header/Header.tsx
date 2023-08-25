@@ -25,17 +25,25 @@ const Header: FC<HeaderProps> = () => {
   return (
     <HeaderWrapper>
       <div className="brand-container">
-          <img className="brand-name" src={logoPrometeo} alt="prometeo" height={60} style={{margin: 10}} />
+        <img
+          className="brand-name"
+          src={logoPrometeo}
+          alt="prometeo"
+          height={60}
+          style={{ margin: 10 }}
+        />
       </div>
-      <div className="actions-container">
-        <span className="user-letter">
-          <Letter label={userName} />
-        </span>
-      </div>
-      <div className="hamburgerMenu">
-        <span onClick={() => setIsOpenModal(true)}>
-          <FontAwesomeIcon icon={faBars} />
-        </span>
+      <div className="buttons-info-container">
+        <div className="actions-container">
+          <span className="user-letter">
+            <Letter label={userName} />
+          </span>
+        </div>
+        <div className="hamburgerMenu">
+          <span onClick={() => setIsOpenModal(true)}>
+            <FontAwesomeIcon icon={faBars} />
+          </span>
+        </div>
       </div>
       <LateralModal
         isOpen={isOpenModal}

@@ -84,7 +84,7 @@ export const SideMenuWrapper = styled.nav`
 
         .label-item {
           color: black;
-          font-family: 'Work Sans Medium';
+          font-family: "Work Sans Medium";
         }
       }
     }

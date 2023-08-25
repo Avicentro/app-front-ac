@@ -37,8 +37,11 @@ export const ChildrenContainer = styled.div`
 `;
 
 export const Container = styled.div`
-  padding: 24px 36px 36px;
   grid-column: 1 / -1;
+  padding: 12px;
+  @media ${MIN_WIDTH_QUERIES.TABLET.query} {
+    padding: 24px 36px 36px;
+  }
 `;
 
 export const Title = styled.h1`

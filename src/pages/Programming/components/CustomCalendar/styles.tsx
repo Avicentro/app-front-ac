@@ -12,9 +12,14 @@ export const CalendarContainer = styled.div`
     justify-content: right;
   }
 
-  .travels-cound {
+  .travels-count {
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
+    margin-bottom: 16px;
+    h2 {
+      font-size: 20px;
+    }
   }
   @media ${MIN_WIDTH_QUERIES.TABLET.query} {
     .button-modify-container {
@@ -22,6 +27,11 @@ export const CalendarContainer = styled.div`
         width: 300px;
         float: right;
       }
+    }
+
+    .travels-count {
+      display: flex;
+      justify-content: space-between;
     }
   }
   @media ${MIN_WIDTH_QUERIES.DESKTOP.query} {
@@ -38,14 +48,15 @@ export const CustomCalendarWrapper = styled.div`
     border: 1px solid ${({ theme }) => theme.secondary};
   }
   .fc-toolbar-title {
-    font: 600 32px Poppins SemiBold;
+    font: 600 20px ${({ theme }) => theme.primaryFontRegular};
+    margin-bottom: 14px;
   }
   .fc-divider {
     border-color: ${({ theme }) => theme.coolGray300};
   }
   .fc-col-header-cell {
     height: 48px;
-    font: 600 14px Poppins SemiBold;
+    font: 600 14px ${({ theme }) => theme.primaryFontRegular};
     color: ${({ theme }) => theme.coolGray500};
   }
   .fc-day {
@@ -55,7 +66,7 @@ export const CustomCalendarWrapper = styled.div`
     }
   }
   .fc-daygrid-day-number {
-    font: 600 14px Poppins SemiBold;
+    font: 600 14px ${({ theme }) => theme.primaryFontRegular};
     color: ${({ theme }) => theme.coolGray500};
   }
   .fc-button-group {
@@ -72,18 +83,18 @@ export const CustomCalendarWrapper = styled.div`
     align-content: center;
     padding-left: 5px;
     .fc-event-title.fc-sticky {
-    display: flex;
-    align-content: center;
-    padding-left: 5px;
-    height: 15px;
-  }
+      display: flex;
+      align-content: center;
+      padding-left: 5px;
+      height: 15px;
+    }
   }
 
   .fc-event-main-frame {
-        .fc-event-time {
-          display: none !important;
-        }
-      }
+    .fc-event-time {
+      display: none !important;
+    }
+  }
   .fc-daygrid-event-harness {
     background-color: ${({ theme }) => theme.secondary};
     border-radius: 8px;
@@ -134,7 +145,10 @@ export const CustomCalendarWrapper = styled.div`
       flex-direction: row;
     }
   }
-  
+
   @media ${MIN_WIDTH_QUERIES.DESKTOP.query} {
+    .fc-toolbar-title {
+      font: 600 32px ${({ theme }) => theme.primaryFontRegular};
+    }
   }
 `;

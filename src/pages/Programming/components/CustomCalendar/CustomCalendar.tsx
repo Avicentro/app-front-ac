@@ -319,7 +319,7 @@ const CustomCalendar: FC<CustomCalendarProps> = ({
           </Button>
         </div>
       )}
-      <section className="travels-cound">
+      <section className="travels-count">
         <h2>Viajes: {travelLength}</h2>
         <Button
           sizeButton={sizeButtonEnum.medium}
