@@ -30,16 +30,7 @@ import {
 import { COMPOSED_ROUTES } from "../../../../constants/routes";
 import Button from "../../../../components/form/Button/Button";
 import ModalConfirmContent from "../ModalConfirmContent/ModalConfirmContent";
-import {
-  fieldTypeEnum,
-  formConfigType,
-  scheduleType,
-  settingsValidationsStringType,
-  sizeButtonEnum,
-  typeButtonEnum,
-  typeType,
-  typeValidationsType,
-} from "../../../../models";
+import { sizeButtonEnum, typeButtonEnum } from "../../../../models";
 import { showToast } from "../../../../store/toast/actions";
 import { useDispatch } from "react-redux";
 import { getLabelByType } from "./helpers";
@@ -81,6 +72,16 @@ const CustomCalendar: FC<CustomCalendarProps> = ({
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const today = useMemo(() => new Date(), []);
+  const previousDay = useMemo(
+    () => new Date(today.getTime() - 24 * 60 * 60 * 1000),
+    [today]
+  );
+  const nextDay = useMemo(
+    () => new Date(today.getTime() + 24 * 60 * 60 * 1000),
+    [today]
+  );
+
   useEffect(() => {
     let localSchedules = schedulesDb?.data?.data || [];
     localSchedules = localSchedules.map((schedule: any) => {
@@ -116,38 +117,14 @@ const CustomCalendar: FC<CustomCalendarProps> = ({
     saveAs(blob, fileName);
   };
 
-  const saveReProgramming = async (formData: any) => {
+  const saveReProgramming = async () => {
     setLoginModifiedProgramming(true);
     try {
-      const schedulesWithDriver = schedulesModified.map((schedule: any) => {
-        if (formData[schedule.code.toString()]) {
-          const {
-            __v,
-            user,
-            type,
-            status,
-            qr,
-            nit,
-            codeWorkingTime,
-            supplier,
-            customer,
-            subCustomer,
-            countChickens,
-            numberForm,
-            ...props
-          } = schedule;
-          return {
-            ...props,
-            remarks: formData[schedule.code],
-            countChickens,
-          };
-        }
-        return schedule;
-      });
-      await reProgrammingMutation.mutateAsync(schedulesWithDriver as any);
-      dispatch(
-        showToast("Se ha modificado la programación correctamente", "success")
+      const schedulesWithDriver = schedulesModified;
+      const response = await reProgrammingMutation.mutateAsync(
+        schedulesWithDriver as any
       );
+      dispatch(showToast(response, "success"));
     } catch (error) {
       console.error(error);
       dispatch(
@@ -162,52 +139,6 @@ const CustomCalendar: FC<CustomCalendarProps> = ({
       setSchedulesModified([]);
     }
   };
-
-  const getFormConfigSchedules = (): formConfigType[] => {
-    try {
-      return schedulesModified.map((schedule: scheduleType) => {
-        return {
-          name: schedule.code.toString(),
-          label: `Escriba aquí la razón del cambio de la programación, codigo: ${
-            schedule.code
-          } cliente: ${schedule.customer["name" as any]}`,
-          value: "",
-          type: "text" as typeType,
-          fieldType: fieldTypeEnum.text,
-          placeholder: `Escriba aquí la razón del cambio de la programación:, codigo: ${
-            schedule.code
-          } cliente: ${schedule.customer["name" as any]}`,
-          validation: {
-            type: "string" as typeValidationsType,
-            settings: [
-              {
-                type: "required" as settingsValidationsStringType,
-              },
-            ],
-          },
-        };
-      });
-    } catch (error) {
-      dispatch(
-        showToast(
-          "Para mover de fecha la programacion es necesario que cuente con un cliente asignado",
-          "success"
-        )
-      );
-      setModalConfirmIsOpen(false);
-      return [];
-    }
-  };
-
-  const today = useMemo(() => new Date(), []);
-  const previousDay = useMemo(
-    () => new Date(today.getTime() - 24 * 60 * 60 * 1000),
-    [today]
-  ); // Restar un día
-  const nextDay = useMemo(
-    () => new Date(today.getTime() + 24 * 60 * 60 * 1000),
-    [today]
-  );
 
   useEffect(() => {
     const calendarEl = calendarRef.current;
@@ -244,7 +175,6 @@ const CustomCalendar: FC<CustomCalendarProps> = ({
             (schedule: any) =>
               schedule._id.toString() === info.event.id.toString()
           );
-          console.log("schedulesDb", schedulesDb);
           eventFromSchedule["dateStart"] = info.event.startStr
             .slice(0, 19)
             .replace("T", " ");
@@ -294,6 +224,8 @@ const CustomCalendar: FC<CustomCalendarProps> = ({
       });
       calendar.render();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // No poner todas las dependencias
   }, [
     navigate,
     getHeaderToolbar,
@@ -362,7 +294,6 @@ const CustomCalendar: FC<CustomCalendarProps> = ({
           <ModalConfirmContent
             handleClick={saveReProgramming}
             loading={loginModifiedProgramming}
-            formConfig={getFormConfigSchedules()}
           />
         </Modal>
       </CustomCalendarWrapper>

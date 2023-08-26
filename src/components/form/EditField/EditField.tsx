@@ -44,10 +44,7 @@ const EditField: FC<EditFieldProps> = ({
     propsField.name
   );
   const dataResponse = data?.data?.data;
-  console.log("label", label);
-  console.log("text", text);
   useEffect(() => {
-    console.log("label", label);
     return setText(label);
   }, [label]);
 

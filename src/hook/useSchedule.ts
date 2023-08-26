@@ -71,7 +71,10 @@ export const useSaveRestScheduleData = () => {
 
 export const useReProgrammingMutation = () => {
   return useMutation(async (data: any) => {
-    const response = await ApiService.putData({ data: data }, `/programming`);
+    const response = await ApiService.postData(
+      { data },
+      `/programing/travel/all-edit`
+    );
     return response.data;
   });
 };

@@ -299,7 +299,7 @@ const SummarySchedule: FC<SummaryScheduleProps> = () => {
           typeButton={typeButtonEnum.fill}
           extraProps={{ onClick: () => setModalConfirmDelete(true) }}
         >
-          Eliminar {data?.type === "travel" ? 'Programación' : 'Descanso'}
+          Eliminar {data?.type === "travel" ? "Programación" : "Descanso"}
         </Button>
       </div>
       {isLoading ? (
@@ -307,7 +307,9 @@ const SummarySchedule: FC<SummaryScheduleProps> = () => {
       ) : (
         <Card>
           <div className="title">
-            <h1>Resumen {data?.type === "travel" ? 'Programación' : 'Descanso'}</h1>
+            <h1>
+              Resumen {data?.type === "travel" ? "Programación" : "Descanso"}
+            </h1>
           </div>
           <section className="schedule-info">
             <div className="schedule-info__text">
@@ -414,11 +416,11 @@ const SummarySchedule: FC<SummaryScheduleProps> = () => {
               </div>
             )}
           </section>
-          {data?.type === "travel" && (
+          {/* {data?.type === "travel" && (
             <section className="buttons-container">
               {getButtonIfOrderEntryCreated()}
             </section>
-          )}
+          )} */}
         </Card>
       )}
       <Modal
