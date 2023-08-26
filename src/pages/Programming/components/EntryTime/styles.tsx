@@ -21,8 +21,11 @@ export const EntryTimeWrapper = styled.div`
     }
   }
   @media ${MIN_WIDTH_QUERIES.TABLET.query} {
-    .title-entry-time {
-      flex-direction: row;
+    .card-entry-time {
+      .title-entry-time {
+        flex-direction: row;
+        justify-content: space-between;
+      }
     }
   }
   @media ${MIN_WIDTH_QUERIES.DESKTOP.query} {

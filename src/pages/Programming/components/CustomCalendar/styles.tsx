@@ -31,6 +31,7 @@ export const CalendarContainer = styled.div`
 
     .travels-count {
       display: flex;
+      flex-direction: row;
       justify-content: space-between;
     }
   }
