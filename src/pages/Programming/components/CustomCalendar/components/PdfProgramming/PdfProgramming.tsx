@@ -3,7 +3,7 @@ import {
   Page,
   Text,
   StyleSheet,
-  Font,
+  Image,
   View,
 } from "@react-pdf/renderer";
 import { PropsWithRef } from "react";
@@ -18,6 +18,8 @@ fechaActual.setDate(fechaActual.getDate() + 1);
 const año = fechaActual.getFullYear();
 const mes = fechaActual.getMonth() + 1; // Los meses van de 0 a 11, por lo que se suma 1
 const dia = fechaActual.getDate();
+const logo = "https://prometeo-avicentro.s3.us-east-2.amazonaws.com/prometeo-logo.png";
+
 
 // Formatear la fecha para que tenga el formato deseado (por ejemplo, 'YYYY-MM-DD')
 const fechaFormateada = año + '-' + (mes < 10 ? '0' : '') + mes + '-' + (dia < 10 ? '0' : '') + dia;
@@ -27,6 +29,7 @@ const PdfProgramming = (data: PropsWithRef<any>) => {
   return (
     <Document>
       <Page size={"LETTER"} style={style.body}>
+        <Image style={style.img} src={logo} />
         <Text style={style.title}>
           Programación - Inversiones Avicentro S.A.S
         </Text>
@@ -118,7 +121,7 @@ const style = StyleSheet.create({
     fontFamily: "Helvetica-Bold",
   },
   img: {
-    width: 200,
+    width: 150,
     marginVertical: 5,
     marginHorizontal: 5,
   },
