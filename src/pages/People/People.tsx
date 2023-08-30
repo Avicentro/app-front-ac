@@ -77,7 +77,7 @@ const People: FC<PeopleProps> = () => {
       create: "Crear",
       edit: "Editar",
       delete: "Eliminar",
-    }[action];
+    }[action]; 
   };
 
   const getComponentByAction = () => {
@@ -89,6 +89,24 @@ const People: FC<PeopleProps> = () => {
       delete: <Delete handleCancel={closeModal} handleSuccess={onSuccessActions} dataSelected={dataSelected} />,
     }[action];
   };
+
+  const DataPeople = (data: any[]): any[] => {
+      const newData: any[] = [];
+
+        data?.forEach((people: any) => {    
+            if (people.people_type !== 'Cliente' &&  people.people_type !== 'Proveedor') {
+            const type = people.people_type !== 'CUSTOMER' ? 'Cliente' : 'Proveedor';
+            people.people_type = type;
+            }
+            
+          const newPeople = {...people};
+          newData.push(newPeople);
+        });
+
+        console.log(newData);
+        return newData
+
+  }
 
   return (
     <Container>
@@ -113,7 +131,7 @@ const People: FC<PeopleProps> = () => {
             </Button>
           </div>
           <CustomTable
-            data={data?.data || []}
+            data={DataPeople(data?.data) || []}
             columns={getColumnsWithCallbacks(COLUMNS_PEOPLE, actionsToMatch)}
           />
         </Card>

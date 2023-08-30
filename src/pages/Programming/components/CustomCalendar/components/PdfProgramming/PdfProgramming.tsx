@@ -6,9 +6,8 @@ import {
   Image,
   View,
 } from "@react-pdf/renderer";
-import { PropsWithRef } from "react";
+import { PropsWithRef, useState } from "react";
 import Html from "react-pdf-html";
-
 const fechaActual = new Date();
 
 // Sumar 1 día (en milisegundos)
@@ -18,38 +17,53 @@ fechaActual.setDate(fechaActual.getDate() + 1);
 const año = fechaActual.getFullYear();
 const mes = fechaActual.getMonth() + 1; // Los meses van de 0 a 11, por lo que se suma 1
 const dia = fechaActual.getDate();
-const logo = "https://prometeo-avicentro.s3.us-east-2.amazonaws.com/prometeo-logo.png";
-
+const logo =
+  "https://prometeo-avicentro.s3.us-east-2.amazonaws.com/prometeo-logo.png";
 
 // Formatear la fecha para que tenga el formato deseado (por ejemplo, 'YYYY-MM-DD')
-const fechaFormateada = año + '-' + (mes < 10 ? '0' : '') + mes + '-' + (dia < 10 ? '0' : '') + dia;
+const fechaFormateada =
+  año + "-" + (mes < 10 ? "0" : "") + mes + "-" + (dia < 10 ? "0" : "") + dia;
 
 const PdfProgramming = (data: PropsWithRef<any>) => {
-  console.log(data);
+  const [numberRest, setNumberRest] = useState(0);
+
+  const numTravel = (data: any, travel: number): number => {
+    if (data.type === "rest") {
+      setNumberRest(numberRest + 1);
+    }
+    console.log(numberRest);
+    return travel + 1 - numberRest;
+  };
+
   return (
     <Document>
       <Page size={"LETTER"} style={style.body}>
+        <View style={style.header}>
         <Image style={style.img} src={logo} />
-        <Text style={style.title}>
+        <View><Text style={style.title}>
           Programación - Inversiones Avicentro S.A.S
         </Text>
-        <Text style={style.subTitle}>
-          Fecha: {fechaFormateada}
-        </Text>
-        {/* <Text style={style.text}>{JSON.stringify(data.data)}</Text> */}
+        <Text style={style.subTitle}>Fecha: {fechaFormateada}</Text></View>        
+        </View>
         <View style={style.data}>
+          <Text style={style.detailDataTableNum}>#</Text>
           <Text style={style.detailDataTableTime}>Hora</Text>
           <Text style={style.detailDataTable}>Clientes</Text>
           <Text style={style.detailDataTable}>Proveedor</Text>
           <Text style={style.detailDataTableChi}>Cantidad</Text>
           <Text style={style.detailDataTableObs}>Observaciones</Text>
         </View>
-        {data["data"].map((item: any) => (
+        {data["data"].map((item: any, index: number) => (
           <View
             style={item.type === "travel" ? style.travel : style.rest}
-            key={item.id}
+            key={`${item.id}0${item.n_document}`}
           >
             <View style={style.data}>
+              {item.type === "travel" && (
+                <View style={style.detailDataNum}>
+                  <Text>{numTravel(item, index)}</Text>
+                </View>
+              )}
               <View style={style.detailDataTime}>
                 <Text>
                   {new Date(item.dateStart).toLocaleTimeString([], {
@@ -81,7 +95,7 @@ const PdfProgramming = (data: PropsWithRef<any>) => {
                 item.observation !== null &&
                 item.observation !== undefined && (
                   <View style={style.obs}>
-                    <Html style={style.text}>{item.observation}</Html>
+                    <Html style={style.html} stylesheet={stylesheet}>{item.observation}</Html>
                   </View>
                 )}
             </View>
@@ -92,44 +106,58 @@ const PdfProgramming = (data: PropsWithRef<any>) => {
   );
 };
 
+const stylesheet = {
+  // clear margins for all <p> tags
+  p: {
+    margin: 0,
+  },
+};
+
 const style = StyleSheet.create({
   body: {
-    paddingTop: 35,
-    paddingBottom: 65,
-    paddingHorizontal: 35,
-    fontSize: 10,
+    paddingTop: 15,
+    paddingBottom: 15,
+    paddingHorizontal: 15,
+    fontSize: 8,
+  },
+  header: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignContent: 'center',
+    alignItems: 'center',
+    marginBottom: 10
   },
   title: {
-    fontSize: 24,
-    marginHorizontal: 10,
+    fontSize: 15,
     fontFamily: "Helvetica-Bold",
-    marginBottom: 5,
+    marginBottom: 3,
   },
   subTitle: {
-    fontSize: 10,
+    fontSize: 8,
     fontFamily: "Helvetica",
     fontWeight: "bold",
-    marginHorizontal: 10,
-    marginBottom: 20,
   },
   text: {
-    fontSize: 10,
+    fontSize: 8,
+    fontFamily: "Helvetica",
+  },
+  html: {
+    fontSize: 8,
     fontFamily: "Helvetica",
   },
   textBold: {
-    fontSize: 12,
+    fontSize: 8,
     fontFamily: "Helvetica-Bold",
   },
   img: {
     width: 150,
-    marginVertical: 5,
-    marginHorizontal: 5,
   },
   travel: {
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
-    paddingVertical: 5,
+    paddingVertical: 3,
     borderBottom: "1px solid #F7F7FC",
   },
   rest: {
@@ -149,21 +177,21 @@ const style = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "flex-start",
     width: 100,
-    fontSize: 10,
-    margin: 'auto 0'
+    fontSize: 8,
+    margin: "auto 0",
   },
   detailDataObs: {
     display: "flex",
     flexDirection: "column",
     justifyContent: "flex-start",
-    width: 150,
-    margin: 'auto 0'
+    width: 250,
+    margin: "auto 0",
   },
   detailDataTableObs: {
     display: "flex",
     justifyContent: "flex-start",
-    width: 150,
-    fontSize: 12,
+    width: 250,
+    fontSize: 8,
     fontFamily: "Helvetica-Bold",
   },
   detailDataChi: {
@@ -172,8 +200,24 @@ const style = StyleSheet.create({
     justifyContent: "flex-start",
     width: 70,
     fontWeight: "bold",
-    margin: 'auto 0',
-    fontSize: 10,
+    margin: "auto 0",
+    fontSize: 8,
+  },
+  detailDataNum: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    width: 20,
+    fontWeight: "bold",
+    margin: "auto 0",
+    fontSize: 8,
+  },
+  detailDataTableNum: {
+    display: "flex",
+    justifyContent: "flex-start",
+    width: 20,
+    fontSize: 8,
+    fontFamily: "Helvetica-Bold",
   },
   detailDataTime: {
     display: "flex",
@@ -181,36 +225,37 @@ const style = StyleSheet.create({
     justifyContent: "flex-start",
     width: 60,
     fontWeight: "bold",
-    margin: 'auto 0',
-    fontSize: 10,
+    margin: "auto 0",
+    fontSize: 8,
   },
   detailDataTable: {
     display: "flex",
     justifyContent: "flex-start",
     width: 100,
-    fontSize: 10,
+    fontSize: 8,
     fontFamily: "Helvetica-Bold",
   },
   detailDataTableChi: {
     display: "flex",
     justifyContent: "flex-start",
     width: 70,
-    fontSize: 10,
+    fontSize: 8,
     fontFamily: "Helvetica-Bold",
   },
   detailDataTableTime: {
     display: "flex",
     justifyContent: "flex-start",
     width: 60,
-    fontSize: 12,
+    fontSize: 8,
     fontFamily: "Helvetica-Bold",
   },
   obs: {
-    width: 150,
+    width: 230,
     display: "flex",
+    fontSize: 8,
     flexDirection: "column",
     justifyContent: "flex-start",
-    margin: 'auto 0'
+    margin: "0",
   },
 });
 
