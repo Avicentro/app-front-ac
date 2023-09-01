@@ -43,10 +43,11 @@ const Programming: FC<ProgrammingProps> = () => {
               type="button"
               typeButton={typeButtonEnum.stroke}
               extraProps={{
-                onClick: () => navigate(COMPOSED_ROUTES.LOGBOOK_PROGRAMMING),
+                onClick: () =>
+                  navigate(COMPOSED_ROUTES.CURRENT_TRAVEL_PROGRAMMING),
               }}
             >
-              Ver vitácora
+              Ver viaje actual
             </Button>
           </div>
         </div>

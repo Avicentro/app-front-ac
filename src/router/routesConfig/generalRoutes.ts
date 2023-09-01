@@ -33,6 +33,9 @@ const LogbookProgramming = lazy(
       "../../pages/Programming/pages/LogbookProgramming/LogbookProgramming"
     )
 );
+const CurrentTravel = lazy(
+  () => import("../../pages/Programming/pages/CurrentTravel/CurrentTravel")
+);
 
 export const generalRoutes: IRoutes[] = [
   {
@@ -58,6 +61,10 @@ export const generalRoutes: IRoutes[] = [
   {
     path: `${COMPOSED_ROUTES.HISTORY_PROGRAMMING}`,
     component: HistoryProgramming,
+  },
+  {
+    path: `${COMPOSED_ROUTES.CURRENT_TRAVEL_PROGRAMMING}`,
+    component: CurrentTravel,
   },
   {
     path: `${COMPOSED_ROUTES.REST}/:dateSelected`,

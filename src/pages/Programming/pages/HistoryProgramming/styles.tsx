@@ -18,6 +18,9 @@ export const HistoryProgrammingWrapper = styled.div`
         display: flex;
         flex-direction: row;
         gap: 8px;
+        button {
+          align-self: center;
+        }
       }
     }
   }
