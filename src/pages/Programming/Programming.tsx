@@ -10,6 +10,10 @@ import ClientManagement from "./components/ClientManagement/ClientManagement";
 
 // Styles
 import { ProgrammingWrapper } from "./styles";
+import Button from "../../components/form/Button/Button";
+import { typeButtonEnum } from "../../models";
+import { useNavigate } from "react-router-dom";
+import { COMPOSED_ROUTES } from "../../constants/routes";
 
 // helpers
 
@@ -18,11 +22,34 @@ interface ProgrammingProps {}
 const Programming: FC<ProgrammingProps> = () => {
   const [dateInView, setDateInView] = useState("");
   const [travelLength, setTravelLength] = useState(0);
+  const navigate = useNavigate();
 
   return (
     <Container>
       <ProgrammingWrapper>
-        <Title>Programación</Title>
+        <div className="title-container">
+          <Title>Programación</Title>
+          <div className="buttons-container">
+            <Button
+              type="button"
+              typeButton={typeButtonEnum.stroke}
+              extraProps={{
+                onClick: () => navigate(COMPOSED_ROUTES.HISTORY_PROGRAMMING),
+              }}
+            >
+              Ver Historial
+            </Button>
+            <Button
+              type="button"
+              typeButton={typeButtonEnum.stroke}
+              extraProps={{
+                onClick: () => navigate(COMPOSED_ROUTES.LOGBOOK_PROGRAMMING),
+              }}
+            >
+              Ver vitácora
+            </Button>
+          </div>
+        </div>
         <div className="ice-info-container">
           <EntryTime />
           <ClientManagement dateInView={dateInView} />

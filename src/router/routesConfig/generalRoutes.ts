@@ -21,6 +21,18 @@ const Users = lazy(() => import("../../pages/Users/Users"));
 const IceProviders = lazy(
   () => import("../../pages/IceProviders/IceProviders")
 );
+const HistoryProgramming = lazy(
+  () =>
+    import(
+      "../../pages/Programming/pages/HistoryProgramming/HistoryProgramming"
+    )
+);
+const LogbookProgramming = lazy(
+  () =>
+    import(
+      "../../pages/Programming/pages/LogbookProgramming/LogbookProgramming"
+    )
+);
 
 export const generalRoutes: IRoutes[] = [
   {
@@ -38,6 +50,14 @@ export const generalRoutes: IRoutes[] = [
   {
     path: `${COMPOSED_ROUTES.SUMMARY_PROGRAMMING}/:orderId`,
     component: SummarySchedule,
+  },
+  {
+    path: `${COMPOSED_ROUTES.LOGBOOK_PROGRAMMING}`,
+    component: LogbookProgramming,
+  },
+  {
+    path: `${COMPOSED_ROUTES.HISTORY_PROGRAMMING}`,
+    component: HistoryProgramming,
   },
   {
     path: `${COMPOSED_ROUTES.REST}/:dateSelected`,

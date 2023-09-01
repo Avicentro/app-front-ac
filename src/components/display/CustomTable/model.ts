@@ -35,6 +35,7 @@ export interface CustomTableProps {
   columns: columnsType[];
   data: dataType[];
   paging?: pagingType;
+  loading?: boolean;
 }
 
 export interface TableProps extends CustomTableProps {

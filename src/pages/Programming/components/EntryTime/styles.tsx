@@ -26,6 +26,8 @@ export const EntryTimeWrapper = styled.div`
         flex-direction: row;
         justify-content: space-between;
       }
+      .title-entry-date {
+      }
     }
   }
   @media ${MIN_WIDTH_QUERIES.DESKTOP.query} {

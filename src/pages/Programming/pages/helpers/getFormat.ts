@@ -4,6 +4,7 @@ export const addZeroWhenHaveOneDigit = (digit: number) => {
 };
 
 export const getFormat = (dateSelected: any, cutHours?: boolean) => {
+  console.log("dateSelected", dateSelected);
   const hourDate = new Date(dateSelected);
 
   const dayOfWeek = hourDate.getUTCDay();

@@ -1,8 +1,16 @@
 import { FC, useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+
+// Components
 import Card from "../../../../components/display/Card/Card";
 import Button from "../../../../components/form/Button/Button";
 import TimeInput from "../../../../components/form/TimeInput/TimeInput";
+import DatePicker from "../../../../components/form/DatePicker/DatePicker";
+
+// Styles
+import { EntryTimeWrapper } from "./styles";
+
+// helpers
 import {
   useGetEntryTime,
   usePostSaveEntryTime,
@@ -10,13 +18,7 @@ import {
 } from "../../../../hook/useEntryTime";
 import { sizeButtonEnum } from "../../../../models";
 import { showToast } from "../../../../store/toast/actions";
-
-// Components
-
-// Styles
-import { EntryTimeWrapper } from "./styles";
-
-// helpers
+import { getFormat } from "../../pages/helpers/getFormat";
 
 interface EntryTimeProps {}
 
@@ -26,6 +28,8 @@ const initProcessId = localStorage.getItem(KEY_ID_FOR_ICE_STORAGE);
 const EntryTime: FC<EntryTimeProps> = () => {
   const [timeSelected, setTimeSelected] = useState("");
   const [time, setTime] = useState("");
+  const [dateSelected, setDateSelected] = useState("");
+  const [date, setDate] = useState("");
   const [loading, setLoading] = useState(false);
   const mutatePostSaveEntryTime = usePostSaveEntryTime();
   const mutatePutSaveEntryTime = usePutSaveEntryTime(initProcessId || "");
@@ -45,7 +49,10 @@ const EntryTime: FC<EntryTimeProps> = () => {
         currentDate.setHours(parseInt(hours, 10));
         currentDate.setMinutes(parseInt(minutes, 10));
         let response;
-        const dataToSend = { initProcess: currentDate.toISOString() };
+        const dataToSend = {
+          initProcess: new Date(date).toISOString(),
+          entryHour: currentDate.toISOString(),
+        };
         if (initProcessId) {
           response = await mutatePutSaveEntryTime.mutateAsync(dataToSend);
         } else {
@@ -73,6 +80,15 @@ const EntryTime: FC<EntryTimeProps> = () => {
     }
   }, [data?.data?.initProcess]);
 
+  const getDate = useCallback(() => {
+    const date = getFormat(dateSelected || new Date(), true);
+    setDate(date);
+  }, [dateSelected]);
+
+  useEffect(() => {
+    getDate();
+  }, [getDate]);
+
   useEffect(() => {
     getTime();
   }, [getTime]);
@@ -85,6 +101,16 @@ const EntryTime: FC<EntryTimeProps> = () => {
           <h3>{isError || isLoading ? "--:-- --" : <>{time}</>}</h3>
         </div>
         <TimeInput name="amount" handleChange={setTimeSelected} />
+        <div className="title-entry-date">
+          <h3>Fecha del proceso:</h3>
+          <p>{date ?? "yy-mm-dd"}</p>
+        </div>
+        <DatePicker
+          name="dateProgramming"
+          handleChange={setDateSelected}
+          value={dateSelected}
+          type="date"
+        />
         <div className="button-container">
           <Button
             sizeButton={sizeButtonEnum.medium}

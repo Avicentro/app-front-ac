@@ -141,9 +141,10 @@ export type customStyles = {
 export type columnsHeaderType = {
   Header: string;
   accessor: string;
-  type?: "incremental" | "edit" | "delete" | "link";
+  type?: "incremental" | "edit" | "delete" | "link" | "html" | "date";
   callback?: any;
   content?: string;
+  feedback?: string; // Representa el contenido por defecto, de no existir contenido en la celda
 };
 
 export type columnsType = {

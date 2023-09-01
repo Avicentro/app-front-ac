@@ -18,7 +18,7 @@ export const DatePickerWrapper = styled.div<DatePickerWrapperProps>`
     color: ${({ theme, error }) => (error ? theme.red500 : theme.coolGray700)};
     font: 400 16px Poppins Regular;
     background-color: ${({ theme }) => theme.coolGray200};
-    height: 64px;
+    height: 38px;
     &:focus {
       box-shadow: 0 0
         ${({ theme, error }) =>

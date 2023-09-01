@@ -1,5 +1,7 @@
 import { FC } from "react";
+import { getFormat } from "../../../../../pages/Programming/pages/helpers/getFormat";
 import { theme } from "../../../../../static/styles/theme";
+import Calendar from "../../../../icons/Calendar";
 import Delete from "../../../../icons/Delete";
 import Edit from "../../../../icons/Edit";
 
@@ -30,6 +32,7 @@ const RowByTable: FC<RowByTableProps> = ({
     }
     return original[column.columnTarget];
   };
+
   const executeAction = () => {
     return column.callback ? column.callback(getDataFromRow()) : null;
   };
@@ -66,11 +69,42 @@ const RowByTable: FC<RowByTableProps> = ({
     </FlexWrapper>
   );
 
+  const getDateField = () => (
+    <FlexWrapper
+      onClick={() => executeAction()}
+      hasCallback={!!column.callback}
+      color={theme.primary}
+    >
+      <Calendar />
+      {getFormat(content.props.value)}
+    </FlexWrapper>
+  );
+
+  const getHtmlField = () => (
+    <FlexWrapper
+      onClick={() => executeAction()}
+      hasCallback={!!column.callback}
+      color={theme.coolGray700}
+    >
+      <div>
+        {content.props.value ? (
+          <span
+            dangerouslySetInnerHTML={{ __html: content.props.value }}
+          ></span>
+        ) : (
+          <>{column.feedback}</>
+        )}
+      </div>
+    </FlexWrapper>
+  );
+
   const getRowByTable = () => {
     const components = {
       incremental: getIncrementalComponent(),
       delete: getDeleteBlock(),
       edit: getEditBlock(),
+      date: getDateField(),
+      html: getHtmlField(),
     };
     return (
       components[column.type as keyof typeof components] || (
@@ -79,7 +113,7 @@ const RowByTable: FC<RowByTableProps> = ({
           hasCallback={!!column.callback}
           color={theme.coolGray700}
         >
-          {content}
+          {content.props.value ?? <>{column.feedback}</>}
         </FlexWrapper>
       )
     );
