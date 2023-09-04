@@ -222,7 +222,6 @@ const IceInfo: FC<IceInfoProps> = ({ dateInView, travelLength }) => {
   const onDeleteSupplier = async (supplier: any) => {
     setLoadingAddSupplier(true);
     try {
-      console.log("supplier", supplier);
       const iceSupplier = {
         supplier: supplier.value,
         amount,
