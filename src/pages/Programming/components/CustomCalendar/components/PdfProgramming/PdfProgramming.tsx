@@ -6,7 +6,7 @@ import {
   Image,
   View,
 } from "@react-pdf/renderer";
-import { PropsWithRef, useState } from "react";
+import { PropsWithRef } from "react";
 import Html from "react-pdf-html";
 const fechaActual = new Date();
 
@@ -24,16 +24,9 @@ const logo =
 const fechaFormateada =
   año + "-" + (mes < 10 ? "0" : "") + mes + "-" + (dia < 10 ? "0" : "") + dia;
 
-const PdfProgramming = (data: PropsWithRef<any>) => {
-  const [numberRest, setNumberRest] = useState(0);
+  const initList = 1;
 
-  const numTravel = (data: any, travel: number): number => {
-    if (data.type === "rest") {
-      setNumberRest(numberRest + 1);
-    }
-    console.log(numberRest);
-    return travel + 1 - numberRest;
-  };
+const PdfProgramming = (data: PropsWithRef<any>) => {
 
   return (
     <Document>
@@ -61,7 +54,7 @@ const PdfProgramming = (data: PropsWithRef<any>) => {
             <View style={style.data}>
               {item.type === "travel" && (
                 <View style={style.detailDataNum}>
-                  <Text>{numTravel(item, index)}</Text>
+                  <Text>{initList + 1}</Text>
                 </View>
               )}
               <View style={style.detailDataTime}>
@@ -107,7 +100,6 @@ const PdfProgramming = (data: PropsWithRef<any>) => {
 };
 
 const stylesheet = {
-  // clear margins for all <p> tags
   p: {
     margin: 0,
   },
