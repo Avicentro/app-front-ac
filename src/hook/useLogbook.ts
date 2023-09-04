@@ -4,10 +4,28 @@ import ApiService from "../core/newApi.services";
 // GET
 export const useAllLogbook = (dependency?: any) => {
   return useQuery({
-    queryKey: ["allPeople", dependency],
+    queryKey: ["allLogbook", dependency],
     queryFn: async () =>
       await ApiService.getData({}, "/programing/logbook/all"),
     retry: true,
+  });
+};
+
+export const useSearchLogbookByQuery = (query: string) => {
+  return useQuery({
+    queryKey: ["searchLogbookByQuery"],
+    queryFn: async () =>
+      await ApiService.getData({ query: query }, "/programing/logbook/search"),
+    retry: true,
+  });
+};
+
+export const useSearchLogbookByDate = (date: string) => {
+  return useQuery({
+    queryKey: ["searchLogbookByDate"],
+    queryFn: async () =>
+      await ApiService.getData({}, `/programing/logbook/date/${date}`),
+    retry: false,
   });
 };
 
@@ -16,20 +34,5 @@ export const useCreateLogbook = () => {
   return useMutation(async (data: any) => {
     const response = await ApiService.postData(data, "/programing/logbook");
     return response.data;
-  });
-};
-
-export const useEditPeople = (id: string) => {
-  return useMutation(async (data) => {
-    const response = await ApiService.putData(data, `/people/${id}`);
-    return response.data;
-  });
-};
-
-//DELETE
-export const useDeletePeople = () => {
-  return useMutation(async (id: string) => {
-    const response = await ApiService.deleteData(`/people/${id}`);
-    return response;
   });
 };

@@ -7,6 +7,7 @@ import { DatePickerWrapper } from "./styles";
 
 // helpers
 import { TextInputProps } from "../../../models";
+import { useEffect } from "react";
 
 interface DatePickerProps extends TextInputProps {}
 
@@ -15,18 +16,22 @@ const DatePicker: FC<DatePickerProps> = ({
   handleChange,
   value,
   type = "datetime-local",
+  disabled,
 }) => {
-  const [selectedDate, setSelectedDate] = useState("");
-
   const dateChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setSelectedDate(event.target.value);
     handleChange?.(event.target.value);
   };
 
   return (
     <DatePickerWrapper>
       {label && <label htmlFor="date">{label}:</label>}
-      <input type={type} id="date" value={selectedDate} onChange={dateChange} />
+      <input
+        type={type}
+        id="date"
+        value={value}
+        onChange={dateChange}
+        disabled={disabled}
+      />
     </DatePickerWrapper>
   );
 };

@@ -20,6 +20,7 @@ export const CurrentTravelWrapper = styled.div`
     .buttons-container {
       display: flex;
       justify-content: flex-end;
+      gap: 12px;
     }
   }
   @media ${MIN_WIDTH_QUERIES.DESKTOP.query} {

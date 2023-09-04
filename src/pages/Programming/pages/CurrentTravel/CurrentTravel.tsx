@@ -19,6 +19,9 @@ import { showToast } from "../../../../store/toast/actions";
 import { useCreateLogbook } from "../../../../hook/useLogbook";
 import { useAllSchedules } from "../../../../hook/useSchedule";
 import TextArea from "../../../../components/form/TextArea/TextArea";
+import { typeButtonEnum } from "../../../../models";
+import { useNavigate } from "react-router-dom";
+import { COMPOSED_ROUTES } from "../../../../constants/routes";
 
 interface CurrentTravelProps {}
 
@@ -33,6 +36,7 @@ const CurrentTravel: FC<CurrentTravelProps> = () => {
   const mutateCreateLogbook = useCreateLogbook();
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const actionsToMatch = {};
 
@@ -77,7 +81,19 @@ const CurrentTravel: FC<CurrentTravelProps> = () => {
         )}
         <BackButton />
         <div className="buttons-container">
-          <Button extraProps={{ onClick: () => setShowModal(true) }}>
+          <Button
+            extraProps={{
+              onClick: () => navigate(COMPOSED_ROUTES.LOGBOOK_PROGRAMMING),
+            }}
+            typeButton={typeButtonEnum.stroke}
+          >
+            Ver bitácoras
+          </Button>
+          <Button
+            extraProps={{
+              onClick: () => setShowModal(true),
+            }}
+          >
             Crear bitácora
           </Button>
         </div>
