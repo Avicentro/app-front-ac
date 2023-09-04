@@ -19,12 +19,11 @@ import {
 import { sizeButtonEnum } from "../../../../models";
 import { showToast } from "../../../../store/toast/actions";
 import { getFormat } from "../../pages/helpers/getFormat";
-import { formatDateToInit } from "../../../../helpers/format/formatDateToInit";
 
 interface EntryTimeProps {}
 
-const KEY_ID_FOR_ICE_STORAGE = "initProcessId";
-const initProcessId = localStorage.getItem(KEY_ID_FOR_ICE_STORAGE);
+const KEY_ID_FOR_PROCESS_STORAGE = "initProcessId";
+const initProcessId = localStorage.getItem(KEY_ID_FOR_PROCESS_STORAGE);
 
 const EntryTime: FC<EntryTimeProps> = () => {
   const [timeSelected, setTimeSelected] = useState("");
@@ -40,34 +39,49 @@ const EntryTime: FC<EntryTimeProps> = () => {
 
   const dispatch = useDispatch();
 
-  const saveHour = async () => {
-    if (!!timeSelected) {
-      setLoading(true);
-      try {
-        const currentDate = new Date();
+  const saveHour = useCallback(async () => {
+    setLoading(true);
+    try {
+      let currentDate = new Date();
+      let initProcess = dateSelected
+        ? new Date(dateSelected).toISOString()
+        : new Date().toISOString();
+      if (!!timeSelected) {
         const [hours, minutes] = timeSelected.split(":");
-
         currentDate.setHours(parseInt(hours, 10));
         currentDate.setMinutes(parseInt(minutes, 10));
-        let response;
-        const dataToSend = {
-          initProcess: new Date(dateSelected).toISOString(),
-          entryHour: currentDate.toISOString(),
-        };
-        if (initProcessId) {
-          response = await mutatePutSaveEntryTime.mutateAsync(dataToSend);
-        } else {
-          response = await mutatePostSaveEntryTime.mutateAsync(dataToSend);
-        }
-        localStorage.setItem(KEY_ID_FOR_ICE_STORAGE, response._id);
-        refetch();
-      } catch (error: any) {
-        dispatch(showToast(error?.response?.data?.message, "error"));
-      } finally {
-        setLoading(false);
       }
+      let response;
+      const dataToSend = {
+        initProcess,
+        entryHour: currentDate.toISOString(),
+      };
+      if (initProcessId) {
+        response = await mutatePutSaveEntryTime.mutateAsync(dataToSend);
+      } else {
+        response = await mutatePostSaveEntryTime.mutateAsync(dataToSend);
+      }
+      localStorage.setItem(KEY_ID_FOR_PROCESS_STORAGE, response._id);
+      refetch();
+    } catch (error: any) {
+      dispatch(showToast(error?.response?.data?.message, "error"));
+    } finally {
+      setLoading(false);
     }
-  };
+  }, [
+    dateSelected,
+    dispatch,
+    mutatePostSaveEntryTime,
+    mutatePutSaveEntryTime,
+    timeSelected,
+    refetch,
+  ]);
+
+  useEffect(() => {
+    if (data?.data?.length === 0) {
+      saveHour();
+    }
+  }, [data?.data?.length, saveHour]);
 
   const getTime = useCallback(() => {
     if (data?.data?.entryHour) {
