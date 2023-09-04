@@ -73,6 +73,8 @@ const EntryTime: FC<EntryTimeProps> = () => {
   useEffect(() => {
     if (data?.data?.length === 0) {
       saveHour();
+    } else {
+      localStorage.setItem(KEY_ID_FOR_PROCESS_STORAGE, data?.data?.[0]._id);
     }
   }, [data?.data?.length]);
 
