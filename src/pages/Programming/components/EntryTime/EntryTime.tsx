@@ -71,7 +71,7 @@ const EntryTime: FC<EntryTimeProps> = () => {
   }, []);
 
   useEffect(() => {
-    if (data?.data?.length === 0) {
+    if (data?.data?.[0].length === 0) {
       saveHour();
     } else {
       localStorage.setItem(KEY_ID_FOR_PROCESS_STORAGE, data?.data?.[0]._id);
@@ -79,20 +79,24 @@ const EntryTime: FC<EntryTimeProps> = () => {
   }, [data?.data?.length]);
 
   const getTime = useCallback(() => {
-    if (data?.data?.entryHour) {
-      const date = new Date(data?.data?.entryHour).toLocaleTimeString("es-CO", {
+    if (data?.data?.[0].entryHour) {
+      console.log(data?.data?.[0].entryHour)
+      const date = new Date(data?.data?.[0].entryHour).toLocaleTimeString("es-CO", {
         timeZone: "America/Bogota",
       });
       setTime(date);
+      console.log(date);
     }
-  }, [data?.data?.entryHour]);
+  }, [data?.data?.[0].entryHour]);
 
   const getDate = useCallback(() => {
-    if (data?.data?.initProcess) {
-      const date = getFormat(data?.data?.initProcess || new Date(), true);
+    if (data?.data?.[0].initProcess) {
+      console.log(data?.data?.[0].initProcess)
+      const date = getFormat(data?.data?.[0].initProcess || new Date(), true);
       setDate(date);
+      console.log(date);
     }
-  }, [data?.data?.initProcess]);
+  }, [data?.data?.[0].initProcess]);
 
   useEffect(() => {
     getDate();
