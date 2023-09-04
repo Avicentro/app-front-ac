@@ -50,7 +50,7 @@ const EntryTime: FC<EntryTimeProps> = () => {
         currentDate.setMinutes(parseInt(minutes, 10));
         let response;
         const dataToSend = {
-          initProcess: new Date(date).toISOString(),
+          initProcess: new Date(dateSelected).toISOString(),
           entryHour: currentDate.toISOString(),
         };
         if (initProcessId) {
@@ -61,7 +61,8 @@ const EntryTime: FC<EntryTimeProps> = () => {
         localStorage.setItem(KEY_ID_FOR_ICE_STORAGE, response._id);
         refetch();
       } catch (error: any) {
-        dispatch(showToast(error.response.data.message, "error"));
+        console.log("error", error);
+        dispatch(showToast(error?.response?.data?.message, "error"));
       } finally {
         setLoading(false);
       }
@@ -69,21 +70,20 @@ const EntryTime: FC<EntryTimeProps> = () => {
   };
 
   const getTime = useCallback(() => {
-    if (data?.data?.initProcess) {
-      const date = new Date(data?.data?.initProcess).toLocaleTimeString(
-        "es-CO",
-        {
-          timeZone: "America/Bogota",
-        }
-      );
+    if (data?.data?.entryHour) {
+      const date = new Date(data?.data?.entryHour).toLocaleTimeString("es-CO", {
+        timeZone: "America/Bogota",
+      });
       setTime(date);
     }
-  }, [data?.data?.initProcess]);
+  }, [data?.data?.entryHour]);
 
   const getDate = useCallback(() => {
-    const date = getFormat(dateSelected || new Date(), true);
-    setDate(date);
-  }, [dateSelected]);
+    if (data?.data?.initProcess) {
+      const date = getFormat(data?.data?.initProcess || new Date(), true);
+      setDate(date);
+    }
+  }, [data?.data?.initProcess]);
 
   useEffect(() => {
     getDate();
@@ -97,12 +97,14 @@ const EntryTime: FC<EntryTimeProps> = () => {
     <EntryTimeWrapper>
       <Card customClass="card-entry-time">
         <div className="title-entry-time">
-          <h3>Hora de entrada:</h3>
-          <h3>{isError || isLoading ? "--:-- --" : <>{time}</>}</h3>
+          <h3 className="title">Hora de entrada:</h3>
+          <p className="title">
+            {isError || isLoading ? "--:-- --" : <>{time}</>}
+          </p>
         </div>
         <TimeInput name="amount" handleChange={setTimeSelected} />
         <div className="title-entry-date">
-          <h3>Fecha del proceso:</h3>
+          <h3 className="title">Fecha del proceso:</h3>
           <p>{date ?? "yy-mm-dd"}</p>
         </div>
         <DatePicker

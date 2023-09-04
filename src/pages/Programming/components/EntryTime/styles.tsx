@@ -3,14 +3,17 @@ import { MIN_WIDTH_QUERIES } from "../../../../constants/constants";
 
 export const EntryTimeWrapper = styled.div`
   .card-entry-time {
+    .title {
+      margin: 0;
+      font: 600 16px ${({ theme }) => theme.primaryFontBold};
+    }
+    p {
+      all: unset;
+    }
     .title-entry-time {
       display: flex;
       flex-direction: column;
       gap: 8px;
-      h3 {
-        margin: 0;
-        font: 600 20px ${({ theme }) => theme.primaryFontBold};
-      }
     }
     display: flex;
     flex-direction: column;
@@ -23,7 +26,6 @@ export const EntryTimeWrapper = styled.div`
   @media ${MIN_WIDTH_QUERIES.TABLET.query} {
     .card-entry-time {
       .title-entry-time {
-        flex-direction: row;
         justify-content: space-between;
       }
       .title-entry-date {
