@@ -1,5 +1,4 @@
 import { FC, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
 import BackButton from "../../../../components/display/BackButton/BackButton";
 import Card from "../../../../components/display/Card/Card";
 import LoadingContainer from "../../../../components/feedback/LoadingContainer/LoadingContainer";
@@ -14,7 +13,6 @@ import {
   useSearchLogbookByQuery,
 } from "../../../../hook/useLogbook";
 import { typeButtonEnum } from "../../../../models";
-import { showToast } from "../../../../store/toast/actions";
 import LogbookHtml from "./components/LogbookHtml/LogbookHtml";
 
 // Components

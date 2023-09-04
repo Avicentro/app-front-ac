@@ -22,6 +22,7 @@ import TextArea from "../../../../components/form/TextArea/TextArea";
 import { typeButtonEnum } from "../../../../models";
 import { useNavigate } from "react-router-dom";
 import { COMPOSED_ROUTES } from "../../../../constants/routes";
+import { formatDateToInit } from "../../../../helpers/format/formatDateToInit";
 
 interface CurrentTravelProps {}
 
@@ -29,9 +30,9 @@ const CurrentTravel: FC<CurrentTravelProps> = () => {
   const [showModal, setShowModal] = useState(false);
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
-  const { data, isLoading, isError, refetch } = useAllSchedules(
+  const { data, isLoading, isError } = useAllSchedules(
     {},
-    new Date().toISOString()
+    formatDateToInit(new Date()).toISOString()
   );
   const mutateCreateLogbook = useCreateLogbook();
 
