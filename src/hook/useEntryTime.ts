@@ -2,11 +2,11 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import ApiService from "../core/newApi.services";
 
 // GET
-export const useGetEntryTime = (id: string) => {
+export const useGetEntryTime = (date: string) => {
   return useQuery({
     queryKey: ["entry-time"],
     queryFn: async () =>
-      await ApiService.getData({}, `/programming-entry-time/${id}`),
+      await ApiService.getData({}, `/programming-entry-time/date/${date}`),
   });
 };
 

@@ -19,6 +19,7 @@ import {
 import { sizeButtonEnum } from "../../../../models";
 import { showToast } from "../../../../store/toast/actions";
 import { getFormat } from "../../pages/helpers/getFormat";
+import { formatDateToInit } from "../../../../helpers/format/formatDateToInit";
 
 interface EntryTimeProps {}
 
@@ -34,7 +35,7 @@ const EntryTime: FC<EntryTimeProps> = () => {
   const mutatePostSaveEntryTime = usePostSaveEntryTime();
   const mutatePutSaveEntryTime = usePutSaveEntryTime(initProcessId || "");
   const { data, isLoading, isError, refetch } = useGetEntryTime(
-    initProcessId || ""
+    new Date().toISOString() || ""
   );
 
   const dispatch = useDispatch();
