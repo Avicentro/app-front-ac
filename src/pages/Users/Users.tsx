@@ -27,7 +27,7 @@ const Users: FC<UsersProps> = () => {
   const [action, setAction] = useState<"create" | "delete" | "edit">("create");
   const [showModal, setShowModal] = useState(false);
   const [dataSelected, setDataSelected] = useState({});
-  const { data, isLoading, isError, refetch } = useAllUser();
+  const { data, refetch } = useAllUser();
 
   const onSuccessActions = () => {
     setShowModal(false);
@@ -83,7 +83,13 @@ const Users: FC<UsersProps> = () => {
       edit: (
         <Edit handleSubmit={onSuccessActions} defaultValues={dataSelected} />
       ),
-      delete: <Delete handleCancel={closeModal} handleSuccess={onSuccessActions} dataSelected={dataSelected} />,
+      delete: (
+        <Delete
+          handleCancel={closeModal}
+          handleSuccess={onSuccessActions}
+          dataSelected={dataSelected}
+        />
+      ),
     }[action];
   };
 

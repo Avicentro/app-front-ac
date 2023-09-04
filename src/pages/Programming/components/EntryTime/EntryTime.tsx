@@ -68,20 +68,13 @@ const EntryTime: FC<EntryTimeProps> = () => {
     } finally {
       setLoading(false);
     }
-  }, [
-    dateSelected,
-    dispatch,
-    mutatePostSaveEntryTime,
-    mutatePutSaveEntryTime,
-    timeSelected,
-    refetch,
-  ]);
+  }, []);
 
   useEffect(() => {
     if (data?.data?.length === 0) {
       saveHour();
     }
-  }, [data?.data?.length, saveHour]);
+  }, [data?.data?.length]);
 
   const getTime = useCallback(() => {
     if (data?.data?.entryHour) {
