@@ -61,7 +61,6 @@ const EntryTime: FC<EntryTimeProps> = () => {
         localStorage.setItem(KEY_ID_FOR_ICE_STORAGE, response._id);
         refetch();
       } catch (error: any) {
-        console.log("error", error);
         dispatch(showToast(error?.response?.data?.message, "error"));
       } finally {
         setLoading(false);

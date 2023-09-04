@@ -161,6 +161,7 @@ const IceInfo: FC<IceInfoProps> = ({ dateInView, travelLength }) => {
     if (iceData?.data?.length === 0) {
       addIceInformation();
     } else {
+      localStorage.setItem(KEY_ICE_PRODUCTION, iceData?.data?.[0]._id);
       setSupplierList(
         getLabelSuppliers(iceDataList?.supplier_list, suppliersData?.data)
       );
