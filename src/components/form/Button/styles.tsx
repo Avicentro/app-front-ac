@@ -63,7 +63,6 @@ export const ButtonWrapper = styled.button<ButtonWrapperProps>`
   font-family: "Work Sans SemiBold";
   padding: 8px 30px;
   width: auto;
-  max-width: 300px;
   height: ${({ sizeButton }) => `${sizeButton}px`};
   text-align: center;
   color: ${({ theme, color, typeButton }) =>
