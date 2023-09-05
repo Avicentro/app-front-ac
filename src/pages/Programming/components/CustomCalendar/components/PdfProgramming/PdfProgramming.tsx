@@ -6,8 +6,10 @@ import {
   Image,
   View,
 } from "@react-pdf/renderer";
-import { PropsWithRef } from "react";
+import { PropsWithRef, useEffect } from "react";
 import Html from "react-pdf-html";
+import ApiService from "../../../../../../core/newApi.services";
+import { getFormat } from "../../../../pages/helpers/getFormat";
 const fechaActual = new Date();
 
 // Sumar 1 día (en milisegundos)
@@ -26,7 +28,26 @@ const fechaFormateada =
 
   const initList = 1;
 
-const PdfProgramming = (data: PropsWithRef<any>) => {
+const PdfProgramming = (dataTravel: PropsWithRef<any>) => {
+
+
+  const dataProcess = async() => {
+    const { data } = await ApiService.getData({}, `/programming-entry-time/date/${new Date().toISOString()}`);
+    localStorage.setItem('dataPDF', JSON.stringify(data[0]));
+    console.log(data[0])
+  }
+
+  useEffect(() => {
+    dataProcess()
+  }, []);
+  
+  const DatePdf = (date: Date) => {
+    console.log(date);
+    const newDate = new Date(date).toLocaleTimeString("es-CO", {
+      timeZone: "America/Bogota",
+    });
+    return newDate;
+  }
 
   return (
     <Document>
@@ -36,7 +57,11 @@ const PdfProgramming = (data: PropsWithRef<any>) => {
         <View><Text style={style.title}>
           Programación - Inversiones Avicentro S.A.S
         </Text>
-        <Text style={style.subTitle}>Fecha: {fechaFormateada}</Text></View>        
+        <Text style={style.subTitle}>Fecha Registro: {fechaFormateada}</Text>
+        <Text style={style.subTitle}>Hora de ingreso: {DatePdf(JSON.parse(localStorage.getItem('dataPDF') as string).entryHour)}</Text>
+        <Text style={style.subTitle}>Fecha del proceso: {getFormat(new Date(JSON.parse(localStorage.getItem('dataPDF') as string).initProcess), true)}</Text>
+
+        </View>        
         </View>
         <View style={style.data}>
           <Text style={style.detailDataTableNum}>#</Text>
@@ -46,7 +71,7 @@ const PdfProgramming = (data: PropsWithRef<any>) => {
           <Text style={style.detailDataTableChi}>Cantidad</Text>
           <Text style={style.detailDataTableObs}>Observaciones</Text>
         </View>
-        {data["data"].map((item: any, index: number) => (
+        {dataTravel["data"].map((item: any, index: number) => (
           <View
             style={item.type === "travel" ? style.travel : style.rest}
             key={`${item.id}0${item.n_document}`}
