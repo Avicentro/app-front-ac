@@ -39,6 +39,8 @@ const EntryTime: FC<EntryTimeProps> = () => {
 
   const dispatch = useDispatch();
 
+  console.log("states --->",dateSelected, timeSelected);
+
   const saveHour = useCallback(async () => {
     setLoading(true);
     try {
@@ -56,6 +58,7 @@ const EntryTime: FC<EntryTimeProps> = () => {
         initProcess,
         entryHour: currentDate.toISOString(),
       };
+      console.log(dataToSend);
       if (initProcessId) {
         response = await mutatePutSaveEntryTime.mutateAsync(dataToSend);
       } else {
@@ -68,7 +71,7 @@ const EntryTime: FC<EntryTimeProps> = () => {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [dateSelected, timeSelected]);
 
   useEffect(() => {
     if (data?.data?.[0].length === 0) {
@@ -85,7 +88,6 @@ const EntryTime: FC<EntryTimeProps> = () => {
         timeZone: "America/Bogota",
       });
       setTime(date);
-      console.log(date);
     }
   }, [data?.data?.[0].entryHour]);
 
@@ -94,7 +96,6 @@ const EntryTime: FC<EntryTimeProps> = () => {
       console.log(data?.data?.[0].initProcess)
       const date = getFormat(data?.data?.[0].initProcess || new Date(), true);
       setDate(date);
-      console.log(date);
     }
   }, [data?.data?.[0].initProcess]);
 
