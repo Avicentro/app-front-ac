@@ -79,7 +79,7 @@ const PdfProgramming = (dataTravel: PropsWithRef<any>) => {
             <View style={style.data}>
               {item.type === "travel" && (
                 <View style={style.detailDataNum}>
-                  <Text>{initList + 1}</Text>
+                  <Text>{initList + index}</Text>
                 </View>
               )}
               <View style={style.detailDataTime}>
