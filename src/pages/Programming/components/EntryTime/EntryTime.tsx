@@ -71,6 +71,7 @@ const EntryTime: FC<EntryTimeProps> = () => {
     } finally {
       setLoading(false);
     }
+    window.location.reload();
   }, [dateSelected, timeSelected]);
 
   useEffect(() => {

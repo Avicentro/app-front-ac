@@ -295,7 +295,7 @@ const SummarySchedule: FC<SummaryScheduleProps> = () => {
   return (
     <SummaryScheduleWrapper>
       <div className="header-container">
-        <BackButton />
+        <BackButton path="/programacion" />
         <Button
           typeButton={typeButtonEnum.fill}
           extraProps={{ onClick: () => setModalConfirmDelete(true) }}
