@@ -25,6 +25,12 @@ interface EntryTimeProps {}
 const KEY_ID_FOR_PROCESS_STORAGE = "initProcessId";
 const initProcessId = localStorage.getItem(KEY_ID_FOR_PROCESS_STORAGE);
 
+console.log(initProcessId);
+
+if (!initProcessId) {
+  window.location.reload();
+}
+
 const EntryTime: FC<EntryTimeProps> = () => {
   const [timeSelected, setTimeSelected] = useState("");
   const [time, setTime] = useState("");
