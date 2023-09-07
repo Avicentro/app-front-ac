@@ -91,9 +91,9 @@ const EntryTime: FC<EntryTimeProps> = () => {
   }, [data?.data?.length]);
 
   const getTime = useCallback(() => {
-    if (data?.data?.[0].entryHour) {
-      console.log(data?.data?.[0].entryHour)
-      const date = new Date(data?.data?.[0].entryHour).toLocaleTimeString("es-CO", {
+    if (data?.data?.[0]?.entryHour) {
+      console.log(data?.data?.[0]?.entryHour)
+      const date = new Date(data?.data?.[0]?.entryHour).toLocaleTimeString("es-CO", {
         timeZone: "America/Bogota",
       });
       setTime(date);
@@ -101,9 +101,9 @@ const EntryTime: FC<EntryTimeProps> = () => {
   }, [data?.data?.[0]?.entryHour]);
 
   const getDate = useCallback(() => {
-    if (data?.data?.[0].initProcess) {
-      console.log(data?.data?.[0].initProcess)
-      const date = getFormat(data?.data?.[0].initProcess || new Date(), true);
+    if (data?.data?.[0]?.initProcess) {
+      console.log(data?.data?.[0]?.initProcess)
+      const date = getFormat(data?.data?.[0]?.initProcess || new Date(), true);
       setDate(date);
     }
   }, [data?.data?.[0]?.initProcess]);
