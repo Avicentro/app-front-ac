@@ -84,7 +84,7 @@ const EntryTime: FC<EntryTimeProps> = () => {
     if (data?.data?.[0]?.length === 0) {
       saveHour();
     } else {
-      localStorage.setItem(KEY_ID_FOR_PROCESS_STORAGE, data?.data?.[0]._id);
+      localStorage.setItem(KEY_ID_FOR_PROCESS_STORAGE, data?.data?.[0]?._id);
       localStorage.setItem('dataPDF', JSON.stringify(data?.data?.[0]));
 
     }
