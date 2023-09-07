@@ -98,7 +98,7 @@ const EntryTime: FC<EntryTimeProps> = () => {
       });
       setTime(date);
     }
-  }, [data?.data?.[0].entryHour]);
+  }, [data?.data?.[0]?.entryHour]);
 
   const getDate = useCallback(() => {
     if (data?.data?.[0].initProcess) {
@@ -106,7 +106,7 @@ const EntryTime: FC<EntryTimeProps> = () => {
       const date = getFormat(data?.data?.[0].initProcess || new Date(), true);
       setDate(date);
     }
-  }, [data?.data?.[0].initProcess]);
+  }, [data?.data?.[0]?.initProcess]);
 
   useEffect(() => {
     getDate();
