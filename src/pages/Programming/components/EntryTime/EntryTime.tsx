@@ -74,7 +74,7 @@ const EntryTime: FC<EntryTimeProps> = () => {
     if (data?.data?.length === 0) {
       saveHour();
     }
-  }, [data?.data?.length]);
+  }, [data?.data?.length, saveHour]);
 
   const getTime = useCallback(() => {
     if (data?.data?.entryHour) {
