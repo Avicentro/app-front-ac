@@ -25,6 +25,12 @@ interface EntryTimeProps {}
 const KEY_ID_FOR_PROCESS_STORAGE = "initProcessId";
 const initProcessId = localStorage.getItem(KEY_ID_FOR_PROCESS_STORAGE);
 
+console.log(initProcessId);
+
+if (!initProcessId) {
+  window.location.reload();
+}
+
 const EntryTime: FC<EntryTimeProps> = () => {
   const [timeSelected, setTimeSelected] = useState("");
   const [time, setTime] = useState("");
@@ -38,6 +44,8 @@ const EntryTime: FC<EntryTimeProps> = () => {
   );
 
   const dispatch = useDispatch();
+
+  console.log("states --->",dateSelected, timeSelected);
 
   const saveHour = useCallback(async () => {
     setLoading(true);
@@ -56,6 +64,7 @@ const EntryTime: FC<EntryTimeProps> = () => {
         initProcess,
         entryHour: currentDate.toISOString(),
       };
+      console.log(dataToSend);
       if (initProcessId) {
         response = await mutatePutSaveEntryTime.mutateAsync(dataToSend);
       } else {
@@ -68,29 +77,36 @@ const EntryTime: FC<EntryTimeProps> = () => {
     } finally {
       setLoading(false);
     }
-  }, []);
+    window.location.reload();
+  }, [dateSelected, timeSelected]);
 
   useEffect(() => {
-    if (data?.data?.length === 0) {
+    if (data?.data?.[0]?.length === 0) {
       saveHour();
+    } else {
+      localStorage.setItem(KEY_ID_FOR_PROCESS_STORAGE, data?.data?.[0]?._id);
+      localStorage.setItem('dataPDF', JSON.stringify(data?.data?.[0]));
+
     }
   }, [data?.data?.length, saveHour]);
 
   const getTime = useCallback(() => {
-    if (data?.data?.entryHour) {
-      const date = new Date(data?.data?.entryHour).toLocaleTimeString("es-CO", {
+    if (data?.data?.[0]?.entryHour) {
+      console.log(data?.data?.[0]?.entryHour)
+      const date = new Date(data?.data?.[0]?.entryHour).toLocaleTimeString("es-CO", {
         timeZone: "America/Bogota",
       });
       setTime(date);
     }
-  }, [data?.data?.entryHour]);
+  }, [data?.data?.[0]?.entryHour]);
 
   const getDate = useCallback(() => {
-    if (data?.data?.initProcess) {
-      const date = getFormat(data?.data?.initProcess || new Date(), true);
+    if (data?.data?.[0]?.initProcess) {
+      console.log(data?.data?.[0]?.initProcess)
+      const date = getFormat(data?.data?.[0]?.initProcess || new Date(), true);
       setDate(date);
     }
-  }, [data?.data?.initProcess]);
+  }, [data?.data?.[0]?.initProcess]);
 
   useEffect(() => {
     getDate();

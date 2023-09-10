@@ -11,13 +11,20 @@ import { BackButtonWrapper } from "./styles";
 
 // helpers
 
-interface BackButtonProps {}
+interface BackButtonProps {
+  path?: string
+}
 
-const BackButton: FC<BackButtonProps> = () => {
+const BackButton: FC<BackButtonProps> = ({path}) => {
   const navigate = useNavigate();
 
   const goBack = () => {
-    navigate(-1);
+
+    if (path !== null && path !== undefined) {
+      navigate(path);
+    } else {
+      navigate(-1);
+    }
   };
 
   return (

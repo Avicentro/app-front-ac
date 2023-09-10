@@ -103,8 +103,7 @@ const People: FC<PeopleProps> = () => {
         people.people_type !== "Cliente" &&
         people.people_type !== "Proveedor"
       ) {
-        const type =
-          people.people_type !== "CUSTOMER" ? "Cliente" : "Proveedor";
+        const type = people.people_type === "CUSTOMER" ? "Cliente" : "Proveedor";
         people.people_type = type;
       }
 

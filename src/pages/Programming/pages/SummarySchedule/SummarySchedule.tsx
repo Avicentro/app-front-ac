@@ -38,6 +38,7 @@ import { showToast } from "../../../../store/toast/actions";
 import FullScreenLoaderContainer from "../../../../components/feedback/FullScreenLoaderContainer/FullScreenLoaderContainer";
 import ServerError from "../../../ServerError/ServerError";
 import Card from "../../../../components/display/Card/Card";
+import { getFormat } from "../helpers/getFormat";
 
 type dataSummaryType = {
   dateStart: string;
@@ -181,10 +182,9 @@ const SummarySchedule: FC<SummaryScheduleProps> = () => {
   const getLabelDate = useCallback(
     (key: string) => {
       if (data && data[key as keyof dataSummaryType]) {
-        return formatDateCo({
-          date: data[key as keyof dataSummaryType],
-          addHours: true,
-        });
+        console.log(new Date(data[key as keyof dataSummaryType]));
+        const dateNew = new Date(data[key as keyof dataSummaryType])
+        return getFormat(dateNew, false);
       }
     },
     [data]
@@ -203,6 +203,7 @@ const SummarySchedule: FC<SummaryScheduleProps> = () => {
 
   const getLabelByKey = useCallback(
     ({ key, type = "string" }: { key: any; type?: string }) => {
+      console.log("ajuste de key para fecha -->",key);
       return {
         date: getLabelDate(key),
         string: getLabelString(key),
@@ -294,7 +295,7 @@ const SummarySchedule: FC<SummaryScheduleProps> = () => {
   return (
     <SummaryScheduleWrapper>
       <div className="header-container">
-        <BackButton />
+        <BackButton path="/programacion" />
         <Button
           typeButton={typeButtonEnum.fill}
           extraProps={{ onClick: () => setModalConfirmDelete(true) }}
@@ -390,7 +391,8 @@ const SummarySchedule: FC<SummaryScheduleProps> = () => {
               <div className="schedule-info__text-container">
                 <p className="title">Fecha: </p>
                 <div className="content">
-                  {getLabelByKey({ key: "dateStart", type: "date" })}
+                  {(getLabelByKey({ key: "dateStart", type: "date" }))}
+                  {console.log(getLabelByKey({ key: "dateStart", type: "date" }))}
                 </div>
               </div>
               <div className="schedule-info__text-container">
