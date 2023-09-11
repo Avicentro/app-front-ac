@@ -1,4 +1,4 @@
-import { FC, useCallback, useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 
 // Components
 
@@ -19,8 +19,6 @@ import { sizeButtonEnum } from "../../../../../../models";
 import { useDispatch } from "react-redux";
 import { showToast } from "../../../../../../store/toast/actions";
 import {
-  useAddIceInformation,
-  useAddSupplier,
   useIceInformation,
   usePutIceInformation,
   useThirdsSelected,
@@ -56,21 +54,12 @@ const IceInfo: FC<IceInfoProps> = ({ dateInView, travelLength }) => {
   const TOTAL_BAGS_BY_TRAVEL = travelLength * BAGS_PER_TRAVEL;
 
   //GET
-  const {
-    data: iceData,
-    isLoading: iceDataLoading,
-    isError: iceDataError,
-    refetch,
-  } = useIceInformation(new Date(dateInView).toISOString());
-  const {
-    data: suppliersData,
-    isLoading: suppliersDataLoading,
-    isError: suppliersDataError,
-  } = useThirdsSelected();
+  const { data: iceData, refetch } = useIceInformation(
+    new Date(dateInView).toISOString()
+  );
+  const { data: suppliersData } = useThirdsSelected();
 
   // MUTATE
-  const mutateAddSupplier = useAddSupplier(idIceProductionStorage);
-  const mutateAddIceInformation = useAddIceInformation();
   const mutateAddPutIceInformation = usePutIceInformation(
     idIceProductionStorage || ""
   );
@@ -105,27 +94,6 @@ const IceInfo: FC<IceInfoProps> = ({ dateInView, travelLength }) => {
     resolver: yupResolver(createSchemaByConfig(formConfig)),
   });
 
-  const addIceInformation = useCallback(async () => {
-    try {
-      const emptyIceData = {
-        date: new Date(dateInView).toISOString(),
-        inventory: 0,
-        produccion: 0,
-        supplier: 0,
-        supplier_list: [],
-        difference: 0,
-        required: 0,
-        total: 0,
-      };
-
-      const { _id } = await mutateAddIceInformation.mutateAsync(emptyIceData);
-      localStorage.setItem(KEY_ICE_PRODUCTION, _id);
-      dispatch(showToast("Se han guardado los datos correctamente", "success"));
-    } catch (error: any) {
-      dispatch(showToast(error.response.data.message, "error"));
-    }
-  }, [dateInView, mutateAddIceInformation]);
-
   const addPutIceInformation = async (data: any) => {
     setLoadingProduction(true);
     try {
@@ -158,15 +126,13 @@ const IceInfo: FC<IceInfoProps> = ({ dateInView, travelLength }) => {
   }, [supplierIdSelected, suppliersData]);
 
   useEffect(() => {
-    if (iceData?.data?.length === 0) {
-      addIceInformation();
-    } else {
+    if (iceData?.data?.length !== 0) {
       localStorage.setItem(KEY_ICE_PRODUCTION, iceData?.data?.[0]._id);
       setSupplierList(
         getLabelSuppliers(iceDataList?.supplier_list, suppliersData?.data)
       );
     }
-  }, [iceData?.data?.length, suppliersData]);
+  }, [iceData?.data, iceDataList?.supplier_list, suppliersData?.data]);
 
   const saveSupplier = async () => {
     setLoadingAddSupplier(true);
@@ -200,15 +166,16 @@ const IceInfo: FC<IceInfoProps> = ({ dateInView, travelLength }) => {
 
   const getThirdsOptions = () => {
     if (suppliersData) {
+      const suppliersOption = suppliersData?.data.map((third: any) => ({
+        label: third.name,
+        value: third._id,
+      }));
       return [
         {
           label: "Seleccione",
           value: "",
         },
-        ...suppliersData?.data.map((third: any) => ({
-          label: third.name,
-          value: third._id,
-        })),
+        ...suppliersOption,
       ];
     }
     return [
