@@ -30,14 +30,6 @@ export const formConfig: IConfig[] = [
     type: "text",
     fieldType: fieldTypeEnum.select,
     placeholder: "Tipo de persona",
-    validation: {
-      type: "string",
-      settings: [
-        {
-          type: "required",
-        },
-      ],
-    },
     options: [
       {
         label: "Seleccione",
@@ -64,14 +56,6 @@ export const formConfig: IConfig[] = [
     type: "text",
     fieldType: fieldTypeEnum.select,
     placeholder: "Tipo de documento",
-    validation: {
-      type: "string",
-      settings: [
-        {
-          type: "required",
-        },
-      ],
-    },
     options: [
       {
         label: "Seleccione",
@@ -102,14 +86,6 @@ export const formConfig: IConfig[] = [
     type: "number",
     fieldType: fieldTypeEnum.text,
     placeholder: "Número de documento",
-    validation: {
-      type: "number",
-      settings: [
-        {
-          type: "required",
-        },
-      ],
-    },
   },
   {
     name: "address",
@@ -134,14 +110,6 @@ export const formConfig: IConfig[] = [
     type: "text",
     fieldType: fieldTypeEnum.text,
     placeholder: "Teléfono",
-    validation: {
-      type: "string",
-      settings: [
-        {
-          type: "required",
-        },
-      ],
-    },
   },
   {
     name: "email",
@@ -150,13 +118,5 @@ export const formConfig: IConfig[] = [
     type: "text",
     fieldType: fieldTypeEnum.text,
     placeholder: "Email",
-    validation: {
-      type: "string",
-      settings: [
-        {
-          type: "required",
-        },
-      ],
-    },
   },
 ];

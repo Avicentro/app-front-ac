@@ -16,9 +16,7 @@ import { PeopleWrapper } from "./styles";
 // helpers
 import { typeButtonEnum } from "../../models";
 import { theme } from "../../static/styles/theme";
-import { useAllPeople, useDeletePeople } from "../../hook/usePeople";
-import { useDispatch } from "react-redux";
-import { showToast } from "../../store/toast/actions";
+import { useAllPeople } from "../../hook/usePeople";
 import { COLUMNS_PEOPLE } from "./config/config";
 import Delete from "./components/Delete/Delete";
 
@@ -30,7 +28,7 @@ const People: FC<PeopleProps> = () => {
   const [showModal, setShowModal] = useState(false);
 
   //Get
-  const { data, isLoading, isError, refetch } = useAllPeople();
+  const { data, refetch } = useAllPeople();
 
   const onSuccessActions = () => {
     setShowModal(false);
@@ -103,7 +101,8 @@ const People: FC<PeopleProps> = () => {
         people.people_type !== "Cliente" &&
         people.people_type !== "Proveedor"
       ) {
-        const type = people.people_type === "CUSTOMER" ? "Cliente" : "Proveedor";
+        const type =
+          people.people_type === "CUSTOMER" ? "Cliente" : "Proveedor";
         people.people_type = type;
       }
 
