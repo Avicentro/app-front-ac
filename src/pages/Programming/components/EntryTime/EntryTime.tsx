@@ -13,7 +13,6 @@ import { EntryTimeWrapper } from "./styles";
 // helpers
 import {
   useGetEntryTime,
-  usePostSaveEntryTime,
   usePutSaveEntryTime,
 } from "../../../../hook/useEntryTime";
 import { sizeButtonEnum } from "../../../../models";
@@ -22,18 +21,17 @@ import { getFormat } from "../../pages/helpers/getFormat";
 
 interface EntryTimeProps {}
 
-const KEY_ID_FOR_PROCESS_STORAGE = "initProcessId";
-const initProcessId = localStorage.getItem(KEY_ID_FOR_PROCESS_STORAGE);
-
 const EntryTime: FC<EntryTimeProps> = () => {
   const [timeSelected, setTimeSelected] = useState("");
   const [time, setTime] = useState("");
   const [dateSelected, setDateSelected] = useState("");
   const [date, setDate] = useState("");
   const [loading, setLoading] = useState(false);
-  const mutatePutSaveEntryTime = usePutSaveEntryTime(initProcessId || "");
   const { data, isLoading, isError, refetch } = useGetEntryTime(
     new Date().toISOString() || ""
+  );
+  const mutatePutSaveEntryTime = usePutSaveEntryTime(
+    data?.data?.[0]?._id || ""
   );
 
   const dispatch = useDispatch();
@@ -50,14 +48,12 @@ const EntryTime: FC<EntryTimeProps> = () => {
         currentDate.setHours(parseInt(hours, 10));
         currentDate.setMinutes(parseInt(minutes, 10));
       }
-      let response;
       const dataToSend = {
         initProcess,
         entryHour: currentDate.toISOString(),
       };
-      response = await mutatePutSaveEntryTime.mutateAsync(dataToSend);
+      await mutatePutSaveEntryTime.mutateAsync(dataToSend);
 
-      localStorage.setItem(KEY_ID_FOR_PROCESS_STORAGE, response._id);
       refetch();
     } catch (error: any) {
       dispatch(showToast(error?.response?.data?.message, "error"));
