@@ -8,6 +8,14 @@ export const ProgrammingWrapper = styled.div`
   .title-container {
     grid-column: 1 / -1;
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    .buttons-container {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
   }
   .title {
     margin-bottom: 23px;
@@ -28,6 +36,7 @@ export const ProgrammingWrapper = styled.div`
   @media ${MIN_WIDTH_QUERIES.TABLET.query} {
     .title-container {
       justify-content: space-between;
+      flex-direction: row;
       .buttons-container {
         display: flex;
         gap: 12px;
