@@ -26,15 +26,21 @@ const logo =
 const fechaFormateada =
   año + "-" + (mes < 10 ? "0" : "") + mes + "-" + (dia < 10 ? "0" : "") + dia;
 
-  const initList = 1;
-
 const PdfProgramming = (dataTravel: PropsWithRef<any>) => {
 
+  let valueTravel = 0;
 
   const dataProcess = async() => {
     const { data } = await ApiService.getData({}, `/programming-entry-time/date/${new Date().toISOString()}`);
     localStorage.setItem('dataPDF', JSON.stringify(data[0]));
     console.log(data[0])
+  }
+
+
+  const numberTravel = (type: string): number => {
+    const newValue = valueTravel + (type === "travel" ? 1 : 0);
+    valueTravel = newValue;
+    return newValue;
   }
 
   useEffect(() => {
@@ -79,7 +85,7 @@ const PdfProgramming = (dataTravel: PropsWithRef<any>) => {
             <View style={style.data}>
               {item.type === "travel" && (
                 <View style={style.detailDataNum}>
-                  <Text>{initList + index}</Text>
+                  <Text>{numberTravel(item.type)}</Text>
                 </View>
               )}
               <View style={style.detailDataTime}>
