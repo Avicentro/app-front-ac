@@ -94,14 +94,6 @@ export const formConfig: IConfig[] = [
     type: "text",
     fieldType: fieldTypeEnum.text,
     placeholder: "Dirección",
-    validation: {
-      type: "string",
-      settings: [
-        {
-          type: "required",
-        },
-      ],
-    },
   },
   {
     name: "cellphone",
