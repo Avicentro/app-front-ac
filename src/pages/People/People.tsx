@@ -14,9 +14,9 @@ import { getColumnsWithCallbacks } from "../../components/display/CustomTable/he
 import { PeopleWrapper } from "./styles";
 
 // helpers
-import { typeButtonEnum } from "../../models";
+import { sortOrderEnum, typeButtonEnum } from "../../models";
 import { theme } from "../../static/styles/theme";
-import { useAllPeople } from "../../hook/usePeople";
+import { usePaginatePeople } from "../../hook/usePeople";
 import { COLUMNS_PEOPLE } from "./config/config";
 import Delete from "./components/Delete/Delete";
 
@@ -26,9 +26,14 @@ const People: FC<PeopleProps> = () => {
   const [action, setAction] = useState<"create" | "delete" | "edit">("create");
   const [dataSelected, setDataSelected] = useState<any>({});
   const [showModal, setShowModal] = useState(false);
+  const [page, setPage] = useState(1);
 
-  //Get
-  const { data, refetch } = useAllPeople();
+  const { data, isLoading, refetch } = usePaginatePeople({
+    page: page.toString(),
+    perPage: "10",
+    sortBy: "name",
+    sortOrder: sortOrderEnum.ASC,
+  });
 
   const onSuccessActions = () => {
     setShowModal(false);
@@ -135,8 +140,12 @@ const People: FC<PeopleProps> = () => {
               Crear Persona +
             </Button>
           </div>
+
           <CustomTable
-            data={DataPeople(data?.data) || []}
+            setPage={setPage}
+            loading={isLoading}
+            paging={data?.data.paging}
+            data={DataPeople(data?.data?.items || []) || []}
             columns={getColumnsWithCallbacks(COLUMNS_PEOPLE, actionsToMatch)}
           />
         </Card>

@@ -1,5 +1,7 @@
 import { useQuery, useMutation } from "@tanstack/react-query";
 import ApiService from "../core/newApi.services";
+import { paginateGetParamsType } from "../models";
+import { useGetPaginateData } from "./useGeneral";
 
 // GET
 export const useAllPeople = (dependency?: any) => {
@@ -7,6 +9,21 @@ export const useAllPeople = (dependency?: any) => {
     queryKey: ["allPeople", dependency],
     queryFn: async () => await ApiService.getData({}, "/people/all"),
     retry: true,
+  });
+};
+
+export const usePaginatePeople = ({
+  page,
+  perPage,
+  sortBy,
+  sortOrder,
+}: paginateGetParamsType) => {
+  return useGetPaginateData({
+    page,
+    perPage,
+    sortBy,
+    sortOrder,
+    url: "/people",
   });
 };
 

@@ -151,3 +151,38 @@ export type columnsType = {
   Header: string;
   columns: columnsHeaderType[];
 };
+
+export enum sortOrderEnum {
+  ASC = "ASC",
+  DESC = "DESC",
+}
+
+export type generalPaginateParamsType = {
+  url: string;
+} & paginateGetParamsType;
+
+export type paginateGetParamsType = {
+  page: string;
+  perPage: string;
+  sortBy: string;
+  sortOrder: sortOrderEnum;
+};
+
+export type pagingType = {
+  page: number;
+  perPage: number;
+  totalRecords: number;
+  totalPages: number;
+  hasNextPage: boolean;
+};
+
+export type paginateGetQueryType = {
+  items: any[];
+  paging: pagingType;
+};
+
+export type getReactQueryType<T> = {
+  data: T;
+  message: string;
+  statusCode: number;
+};

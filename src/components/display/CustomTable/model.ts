@@ -1,3 +1,6 @@
+import { Dispatch, SetStateAction } from "react";
+import { pagingType } from "../../../models";
+
 export type columnsHeaderType = {
   Header: string;
   accessor: string;
@@ -15,13 +18,6 @@ export type dataType = {
   [s: string]: any;
 };
 
-export type pagingType = {
-  page: number;
-  elements: number;
-  total_pages: number;
-  total_elements: number;
-};
-
 export type actionType = {
   callback: any;
   columnTarget: string;
@@ -36,9 +32,7 @@ export interface CustomTableProps {
   data: dataType[];
   paging?: pagingType;
   loading?: boolean;
+  setPage?: Dispatch<SetStateAction<number>>;
 }
 
-export interface TableProps extends CustomTableProps {
-  setPage: any;
-  page: number;
-}
+export interface TableProps extends CustomTableProps {}

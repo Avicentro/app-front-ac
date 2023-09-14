@@ -43,6 +43,12 @@ export const TableWrapper = styled.div`
       }
     }
 
+    tbody {
+      .loading {
+        height: 350px;
+      }
+    }
+
     th,
     td {
       margin: 0;
