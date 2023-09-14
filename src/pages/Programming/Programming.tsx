@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 
 // Components
 import Card from "../../components/display/Card/Card";
