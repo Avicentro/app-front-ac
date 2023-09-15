@@ -138,6 +138,13 @@ export const CustomCalendarWrapper = styled.div`
         tr {
           height: 40px;
         }
+        tr:nth-child(n+26):nth-child(-n+38) {
+            display: none;
+          }
+
+          tr:nth-child(39) {
+            border-top: 3px solid ${({ theme }) => theme.primary};
+          }
       }
     }
   }

@@ -17,7 +17,7 @@ import { useDispatch } from "react-redux";
 import { COLUMNS_SCHEDULE } from "./config/config";
 import { showToast } from "../../../../store/toast/actions";
 import { useCreateLogbook } from "../../../../hook/useLogbook";
-import { useAllSchedules } from "../../../../hook/useSchedule";
+import { useDaySchedules } from "../../../../hook/useSchedule";
 import TextArea from "../../../../components/form/TextArea/TextArea";
 import { typeButtonEnum } from "../../../../models";
 import { useNavigate } from "react-router-dom";
@@ -30,7 +30,7 @@ const CurrentTravel: FC<CurrentTravelProps> = () => {
   const [showModal, setShowModal] = useState(false);
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
-  const { data, isLoading, isError } = useAllSchedules(
+  const { data, isLoading } = useDaySchedules(
     {},
     formatDateToInit(new Date()).toISOString()
   );

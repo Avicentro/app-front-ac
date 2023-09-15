@@ -9,7 +9,7 @@ import { HistoryProgrammingWrapper } from "./styles";
 
 // helpers
 import { COLUMNS_SCHEDULE } from "./config/config";
-import { useAllSchedules } from "../../../../hook/useSchedule";
+import { useDaySchedules } from "../../../../hook/useSchedule";
 import { getColumnsWithCallbacks } from "../../../../components/display/CustomTable/helpers/getColumnsWithCallbacks";
 import Card from "../../../../components/display/Card/Card";
 import BackButton from "../../../../components/display/BackButton/BackButton";
@@ -22,7 +22,7 @@ interface HistoryProgrammingProps {}
 const HistoryProgramming: FC<HistoryProgrammingProps> = () => {
   const [dateSelected, setDateSelected] = useState("");
   const [date, setDate] = useState(new Date());
-  const { data, isLoading, isError, refetch } = useAllSchedules(
+  const { data, isLoading, refetch } = useDaySchedules(
     {},
     date.toISOString(),
     date
