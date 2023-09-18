@@ -136,13 +136,13 @@ export const CustomCalendarWrapper = styled.div`
     table {
       tbody {
         tr {
-          height: 40px;
+          height: 5px;
         }
-        tr:nth-child(n+26):nth-child(-n+38) {
+        tr:nth-child(n+130):nth-child(-n+190) {
             display: none;
           }
 
-          tr:nth-child(39) {
+          tr:nth-child(191) {
             border-top: 3px solid ${({ theme }) => theme.primary};
           }
       }
