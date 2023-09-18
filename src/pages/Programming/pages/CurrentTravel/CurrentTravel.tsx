@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 
 // Components
 import Card from "../../../../components/display/Card/Card";
@@ -30,6 +30,7 @@ const CurrentTravel: FC<CurrentTravelProps> = () => {
   const [showModal, setShowModal] = useState(false);
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
+  const [travels, setTravels] = useState([]);
   const { data, isLoading } = useDaySchedules(
     {},
     formatDateToInit(new Date()).toISOString()
@@ -58,6 +59,12 @@ const CurrentTravel: FC<CurrentTravelProps> = () => {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    const newTravels = data?.data.filter((travel: any) => travel.type === 'travel');
+    setTravels(newTravels);
+  }, [data])
+  
 
   return (
     <Container>
@@ -100,7 +107,7 @@ const CurrentTravel: FC<CurrentTravelProps> = () => {
         </div>
         <Card>
           <CustomTable
-            data={data?.data || []}
+            data={travels || []}
             columns={getColumnsWithCallbacks(COLUMNS_SCHEDULE, actionsToMatch)}
             loading={isLoading}
           />
