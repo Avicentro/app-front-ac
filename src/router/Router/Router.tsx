@@ -13,10 +13,14 @@ import Login from "../../pages/Login/Login";
 // Config
 import { generalRoutes } from "../routesConfig/generalRoutes";
 
+let LoaderPage: any = null;
+const LoaderPagePromise = import("../../components/display/Loading/Loading");
+LoaderPagePromise.then(module => LoaderPage = module.default);
+
 const Router: FC = () => {
   return (
     <BrowserRouter>
-      <Suspense fallback={<div> loading...</div>}>
+      <Suspense fallback={LoaderPage}>
         <Routes>
           {generalRoutes.map((route) => (
             <Route

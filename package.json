@@ -33,6 +33,7 @@
     "html2canvas": "^1.4.1",
     "install": "^0.13.0",
     "jspdf": "^2.5.1",
+    "lottie-react": "^2.4.0",
     "npm": "^9.8.1",
     "react": "^18.2.0",
     "react-calendar": "^4.5.0",

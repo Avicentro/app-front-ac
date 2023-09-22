@@ -136,7 +136,7 @@ export const CustomCalendarWrapper = styled.div`
     table {
       tbody {
         tr {
-          height: 5px;
+          height: 5px !important;
         }
         tr:nth-child(n+130):nth-child(-n+190) {
             display: none;
