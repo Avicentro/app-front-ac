@@ -1,6 +1,7 @@
 import { FC } from "react"
 import Lottie from "lottie-react";
 import groovyWalkAnimation from "../../../static/json/groovyWalk.json";
+import { LoadingWrapper } from "./style";
 
 
 interface LoadingProps {
@@ -10,9 +11,9 @@ interface LoadingProps {
 
 const Loading: FC<LoadingProps> = () => {
     return(
-        <div>
-            <Lottie animationData={groovyWalkAnimation} />;
-        </div>
+        <LoadingWrapper>
+            <Lottie animationData={groovyWalkAnimation} className="icon-animate" />;
+        </LoadingWrapper>
     )
 }
 
