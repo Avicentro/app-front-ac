@@ -5,6 +5,7 @@ const COMPONENT_TYPES = {
   SELECT: "select",
   CHECKBOX: "checkbox",
   TEXT_AREA: "textArea",
+  FILTER_TEXT: "filterText",
 };
 
 export default COMPONENT_TYPES;
