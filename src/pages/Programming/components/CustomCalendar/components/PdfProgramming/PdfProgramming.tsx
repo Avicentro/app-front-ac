@@ -225,6 +225,7 @@ const style = StyleSheet.create({
     fontWeight: "bold",
     margin: "auto 0",
     fontSize: 8,
+    marginLeft: 3,
   },
   detailDataNum: {
     display: "flex",
@@ -264,6 +265,7 @@ const style = StyleSheet.create({
     width: 70,
     fontSize: 8,
     fontFamily: "Helvetica-Bold",
+    marginLeft: 3,
   },
   detailDataTableTime: {
     display: "flex",

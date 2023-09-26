@@ -50,6 +50,24 @@ export const useAllSchedules = (data: any, date: string, dependency?: any) => {
   });
 };
 
+export const useDaySchedules = (data: any, date: string, dependency?: any) => {
+  return useQuery({
+    queryKey: ["daySchedules", dependency],
+    queryFn: async () =>
+      await ApiService.getData(data, `programing/travel/day/${date}`),
+    retry: false,
+    onError: () => {
+      return {
+        data: {
+          data: [],
+          isSuccess: false,
+          isError: true,
+        },
+      };
+    },
+  });
+};
+
 // POST
 
 export const useSaveScheduleData = () => {

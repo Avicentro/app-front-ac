@@ -82,6 +82,7 @@ const IceInfo: FC<IceInfoProps> = ({ dateInView, travelLength }) => {
     formConfig,
     dataToMerge,
   });
+  
 
   const {
     control,
@@ -115,6 +116,10 @@ const IceInfo: FC<IceInfoProps> = ({ dateInView, travelLength }) => {
       setLoadingProduction(false);
     }
   };
+
+  useEffect(() => {
+    addPutIceInformation(iceDataList);
+  }, [TOTAL_BAGS_BY_TRAVEL])
 
   useEffect(() => {
     if (supplierIdSelected) {

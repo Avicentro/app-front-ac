@@ -40,6 +40,9 @@ export const CalendarContainer = styled.div`
 `;
 
 export const CustomCalendarWrapper = styled.div`
+  td.fc-timegrid-slot.fc-timegrid-slot-label.fc-scrollgrid-shrink {
+    height: 10px !important;
+  }
   .fc-header-toolbar {
     display: flex;
     flex-direction: column;
@@ -136,11 +139,30 @@ export const CustomCalendarWrapper = styled.div`
     table {
       tbody {
         tr {
-          height: 40px;
+          height: 5px !important;
         }
+        tr:nth-child(n+130):nth-child(-n+190) {
+            display: none;
+          }
+
+          tr:nth-child(191) {
+            border-top: 3px solid ${({ theme }) => theme.primary};
+          }
       }
     }
   }
+  .fc-timegrid-slot-label-frame.fc-scrollgrid-shrink-frame {
+    height: 10px;
+  }
+  .fc-timegrid-slot-label-cushion.fc-scrollgrid-shrink-cushion {
+    font-size: 10px;
+    display: block !important;
+    width: 40px;
+  } 
+
+  td.fc-timegrid-slot {
+    height: 10px !important;
+}
   @media ${MIN_WIDTH_QUERIES.TABLET.query} {
     .fc-header-toolbar {
       flex-direction: row;

@@ -55,11 +55,11 @@ export const formConfig: IConfig[] = [
   },
   {
     name: "supplier",
-    label: "Provedor",
+    label: "Proveedor",
     value: "",
     type: "text",
     fieldType: fieldTypeEnum.select,
-    placeholder: "Provedor",
+    placeholder: "Proveedor",
     validation: {
       type: "string",
       settings: [
