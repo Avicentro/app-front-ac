@@ -107,7 +107,7 @@ export const formConfig: IConfig[] = [
     label: "Rol",
     value: "",
     type: "text",
-    fieldType: fieldTypeEnum.select,
+    fieldType: fieldTypeEnum.filterText,
     placeholder: "Rol",
     validation: {
       type: "string",

@@ -41,7 +41,7 @@ export const formConfig: IConfig[] = [
     label: "Proveedor",
     value: "",
     type: "text",
-    fieldType: fieldTypeEnum.select,
+    fieldType: fieldTypeEnum.filterText,
     placeholder: "Proveedor",
     validation: {
       type: "string",

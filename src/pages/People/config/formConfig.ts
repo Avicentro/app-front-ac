@@ -28,7 +28,7 @@ export const formConfig: IConfig[] = [
     label: "Tipo de persona",
     value: "",
     type: "text",
-    fieldType: fieldTypeEnum.select,
+    fieldType: fieldTypeEnum.filterText,
     placeholder: "Tipo de persona",
     options: [
       {
@@ -54,7 +54,7 @@ export const formConfig: IConfig[] = [
     label: "Tipo de documento",
     value: "CEDULA CIUDADANIA",
     type: "text",
-    fieldType: fieldTypeEnum.select,
+    fieldType: fieldTypeEnum.filterText,
     placeholder: "Tipo de documento",
     options: [
       {

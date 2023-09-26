@@ -6,7 +6,7 @@ export const formConfig: IConfig[] = [
     label: "Tipo de descanso",
     value: "",
     type: "text",
-    fieldType: fieldTypeEnum.select,
+    fieldType: fieldTypeEnum.filterText,
     placeholder: "Tipo de descanso",
     validation: {
       type: "string",

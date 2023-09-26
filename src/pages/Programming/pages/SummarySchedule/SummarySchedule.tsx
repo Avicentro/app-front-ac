@@ -148,7 +148,7 @@ const SummarySchedule: FC<SummaryScheduleProps> = () => {
         name,
         value,
         type: "text",
-        fieldType: fieldTypeEnum.select,
+        fieldType: fieldTypeEnum.filterText,
         placeholder: "Modificar Campo",
         validation: {
           type: "string" as typeValidationsType,

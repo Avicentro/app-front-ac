@@ -50,7 +50,7 @@ export const formConfig: IConfig[] = [
     value: "",
     type: "password",
     mb: 22,
-    fieldType: fieldTypeEnum.select,
+    fieldType: fieldTypeEnum.filterText,
     placeholder: "Rol",
     validation: {
       type: "string",
