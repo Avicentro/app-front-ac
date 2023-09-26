@@ -1,4 +1,11 @@
-import { ChangeEvent, FC, useEffect, useRef, useState } from "react";
+import {
+  ChangeEvent,
+  FC,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { useOutsideClick } from "../../../customHooks/useOutsideClick";
 import TextInput from "../TextInput/TextInput";
 
@@ -31,6 +38,7 @@ const FilterDropDownText: FC<FilterDropDownTextProps> = ({
   const [localOptions, setLocalOptions] = useState<any[]>([]);
 
   const contentRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useOutsideClick(contentRef, () => setShowOptions(false));
 
@@ -40,9 +48,9 @@ const FilterDropDownText: FC<FilterDropDownTextProps> = ({
     setLocalOptions(options);
   }, [options]);
 
-  const getLabelSelected = () => {
+  const getLabelSelected = (value?: any) => {
     const localLabel = localOptions?.find(
-      (option: any) => option.value === valueSelected
+      (option: any) => option.value === (value || valueSelected)
     )?.label;
     return localLabel;
   };
@@ -60,7 +68,8 @@ const FilterDropDownText: FC<FilterDropDownTextProps> = ({
     setValueSelected(value);
     handleChange?.(value);
     setShowOptions(false);
-    setInputValue("");
+    setInputValue((prev) => getLabelSelected(value));
+    inputRef?.current?.blur();
   };
 
   return (
@@ -69,8 +78,15 @@ const FilterDropDownText: FC<FilterDropDownTextProps> = ({
         <TextInput
           name={name}
           label={label}
+          ref={inputRef}
           value={inputValue}
+          placeholder={label}
           handleChange={setInputValue}
+          otherProps={{
+            onClick: () => setShowOptions(true),
+            onfocus: () => setShowOptions(true),
+            onmousedown: () => setShowOptions(true),
+          }}
         />
         {showOptions && (
           <div

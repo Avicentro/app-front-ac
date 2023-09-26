@@ -32,6 +32,8 @@ const FilterDropDown: FC<FilterDropDownProps> = ({
   const [filterContent, setFilterContent] = useState("");
   const [localOptions, setLocalOptions] = useState<any[]>([]);
 
+  const inputRef = useRef<HTMLInputElement>(null);
+
   const contentRef = useRef<HTMLDivElement>(null);
 
   useOutsideClick(contentRef, () => setShowOptions(false));
@@ -60,7 +62,7 @@ const FilterDropDown: FC<FilterDropDownProps> = ({
 
   const selectOption = (value: any) => {
     setValueSelected(value);
-    handleChange && handleChange(value);
+    handleChange?.(value);
     setShowOptions(false);
     setFilterContent("");
   };
@@ -70,14 +72,18 @@ const FilterDropDown: FC<FilterDropDownProps> = ({
     setFilterContent(valueFilter);
   };
 
+  const focusAndOpenOptions = () => {
+    setShowOptions((prev) => !prev);
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  };
+
   return (
     <FilterDropDownWrapper className="dropdown-field">
       {label && <label htmlFor={name}>{label}:</label>}
       <div className="select-field-container" ref={contentRef}>
-        <div
-          className="content-select-container"
-          onClick={() => setShowOptions((prev) => !prev)}
-        >
+        <div className="content-select-container" onClick={focusAndOpenOptions}>
           {getLabelSelected()}
         </div>
         {showOptions && (
@@ -92,9 +98,10 @@ const FilterDropDown: FC<FilterDropDownProps> = ({
             <li className="option filter-input">
               <input
                 type="text"
+                ref={inputRef}
                 value={filterContent}
-                onChange={changeFilter}
                 placeholder="Filtrar"
+                onChange={changeFilter}
               />
             </li>
             {getOptionsFiltered().map(({ label, value }) => (

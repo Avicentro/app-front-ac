@@ -19,29 +19,12 @@ export const formConfig: IConfig[] = [
     },
     options: [],
   },
-  // {
-  //   name: "date",
-  //   label: "Hora de programación",
-  //   value: "",
-  //   type: "text",
-  //   fieldType: fieldTypeEnum.select,
-  //   placeholder: "HH:MM",
-  //   validation: {
-  //     type: "string",
-  //     settings: [
-  //       {
-  //         type: "required",
-  //       },
-  //     ],
-  //   },
-  //   options: [],
-  // },
   {
     name: "customer",
     label: "Cliente",
     value: "",
     type: "text",
-    fieldType: fieldTypeEnum.select,
+    fieldType: fieldTypeEnum.filterText,
     placeholder: "Cliente",
     validation: {
       type: "string",

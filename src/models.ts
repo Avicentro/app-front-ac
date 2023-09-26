@@ -59,6 +59,7 @@ export enum fieldTypeEnum {
   select = "select",
   checkbox = "checkbox",
   textArea = "textArea",
+  filterText = "filterText",
 }
 
 export type optionsType = {
@@ -74,7 +75,7 @@ export type formConfigType = {
   mb?: number;
   type: typeType;
   fieldType: fieldTypeEnum;
-  placeholder: number | string;
+  placeholder: string;
   disabled?: boolean;
   options?: optionsType[];
 };
@@ -91,7 +92,7 @@ export interface TextInputProps {
   type?: typeType;
   name: string;
   value: any;
-  placeholder?: string | number;
+  placeholder?: string;
   handleChange?: (s: any) => any;
   required?: boolean;
   disabled?: boolean;
@@ -110,6 +111,7 @@ export interface TextInputProps {
   error?: boolean;
   errorMessage?: any;
   mb?: number;
+  ref?: any;
 }
 
 // BUTTON:
