@@ -52,14 +52,14 @@ const TravelProgramming: FC<TravelProgrammingProps> = () => {
       key: "options",
       value: allCustomers?.data
         ? getAllCustomers(allCustomers?.data)
-        : [{ label: "No existen clientes", value: "" }],
+        : [{ name: "No existen clientes", id: "" }],
     },
     {
       name: "supplier",
       key: "options",
       value: allCustomers?.data
         ? getAllSupplier(allCustomers?.data)
-        : [{ label: "No existen Proveedores", value: "" }],
+        : [{ name: "No existen Proveedores", id: "" }],
     },
   ];
 

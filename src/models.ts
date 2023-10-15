@@ -60,11 +60,17 @@ export enum fieldTypeEnum {
   checkbox = "checkbox",
   textArea = "textArea",
   filterText = "filterText",
+  autoComplete = "autoComplete",
 }
 
 export type optionsType = {
   label: string | number;
   value: any;
+};
+
+export type optionsAutocompleteType = {
+  name: string;
+  id: unknown;
 };
 
 export type formConfigType = {
@@ -78,6 +84,7 @@ export type formConfigType = {
   placeholder: string;
   disabled?: boolean;
   options?: optionsType[];
+  optionsAutocomplete?: optionsAutocompleteType[];
 };
 
 export interface IConfig extends formConfigType {}

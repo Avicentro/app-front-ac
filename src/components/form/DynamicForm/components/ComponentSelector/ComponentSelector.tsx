@@ -7,7 +7,7 @@ import CheckboxInput from "../../../CheckboxInput/CheckboxInput";
 import FilterDropDown from "../../../FilterDropDown/FilterDropDown";
 import TextArea from "../../../TextArea/TextArea";
 import FilterDropDownText from "../../../FilterDropDownText/FilterDropDownText";
-
+import AutoComplete from "../../../AutoComplete/AutoComplete";
 export interface ComponentSelectorProps extends IConfig {
   handleChange?: (e: any) => any;
   error?: boolean;
@@ -21,6 +21,7 @@ const ComponentSelector: FC<ComponentSelectorProps> = ({ ...props }) => {
       [COMPONENT_TYPES.DATE]: <DatePicker {...props} />,
       [COMPONENT_TYPES.SELECT]: <FilterDropDown {...props} />,
       [COMPONENT_TYPES.FILTER_TEXT]: <FilterDropDownText {...props} />,
+      [COMPONENT_TYPES.AUTO_COMPLETE]: <AutoComplete {...props} />,
       [COMPONENT_TYPES.HOURS_DATE]: <TextInput {...props} />,
       [COMPONENT_TYPES.CHECKBOX]: <CheckboxInput {...props} />,
       [COMPONENT_TYPES.TEXT_AREA]: <TextArea {...props} />,

@@ -6,6 +6,7 @@ const COMPONENT_TYPES = {
   CHECKBOX: "checkbox",
   TEXT_AREA: "textArea",
   FILTER_TEXT: "filterText",
+  AUTO_COMPLETE: "autoComplete",
 };
 
 export default COMPONENT_TYPES;

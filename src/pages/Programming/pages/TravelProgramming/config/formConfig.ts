@@ -24,7 +24,7 @@ export const formConfig: IConfig[] = [
     label: "Cliente",
     value: "",
     type: "text",
-    fieldType: fieldTypeEnum.filterText,
+    fieldType: fieldTypeEnum.autoComplete,
     placeholder: "Cliente",
     validation: {
       type: "string",
@@ -41,7 +41,7 @@ export const formConfig: IConfig[] = [
     label: "Proveedor",
     value: "",
     type: "text",
-    fieldType: fieldTypeEnum.filterText,
+    fieldType: fieldTypeEnum.autoComplete,
     placeholder: "Proveedor",
     validation: {
       type: "string",

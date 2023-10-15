@@ -48,7 +48,7 @@ export const formConfig: IConfig[] = [
     name: "role",
     label: "Rol",
     value: "",
-    type: "password",
+    type: "text",
     mb: 22,
     fieldType: fieldTypeEnum.filterText,
     placeholder: "Rol",
